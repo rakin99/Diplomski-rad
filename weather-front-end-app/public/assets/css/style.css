@@ -1,0 +1,160 @@
+.background-footer {
+    background-color: darkkhaki;
+}
+
+.wrapper{
+    max-width:1110px;
+    margin:0 auto;
+    overflow:hidden;
+}
+
+header{
+    height: 180px;
+    background-image: url('../img/header-background.png');
+}
+
+.clearfix:before,.clearfix:after{
+    content:"";
+    display:table;
+}
+
+.clearfix:after{
+    clear:both;
+}
+
+.clearfix{
+    *zoom:1;
+}
+
+.clearfix::before,.clearfix::after{
+    content:'';
+    display:table;
+}
+
+.clearfix::after{
+    clear:both;
+}
+
+.header .user{
+    background-color: rgb(138, 203, 233);
+    margin-top:10px;
+    float: right;
+    list-style-type: none;
+    opacity: 0.8;
+    margin-right: 10px;
+    padding-left: 10px;
+}
+
+.myNav{
+    margin-top: 130px;
+    opacity: 0.5;
+}
+
+.myNav-link{
+    background-color: #979696;
+    margin-right: 1px;
+    color: black;
+}
+
+.myNav-active{
+    background-color: rgb(252, 252, 252);
+    opacity: 1.0;
+    color:#20308a;
+}
+
+.header .user li{
+    float:left;
+    margin-right:10px;
+    padding-right:10px;
+    border-right:1px dotted #979696;
+    position:relative;
+}
+
+.header .user li a{
+    color:#20308a;
+    text-decoration: none;
+}
+
+.header .user li a:hover{
+    color:rgb(4, 4, 39);
+}
+
+.header .user li .invisible1{
+    height:25px;    
+    width:100%;
+    position:absolute;
+    top:15px;
+    left:0;
+    display:none;
+}
+    
+.header .user li .user-menu{
+    position:absolute;
+    top:34px;
+    right:-50px;
+    width:180px;
+    padding:10px;
+    background:#fff;
+    z-index:9999;
+    border:1px solid silver;
+    display:none;
+}
+
+.header .user li .user-menu ul li{
+    display:block;
+    border:0;
+    margin:0 0 5px;
+    float:none;
+    border-bottom:1px dotted silver;
+    padding-bottom:5px;
+}
+    
+.header .user li .user-menu ul li a{
+    display:block;
+}
+
+.header .user li .user-menu ul li a:hover{
+    color:#323232 !important;
+    text-decoration:none;
+}
+
+.link{
+    color:#20308a !important;
+    margin-right:15px;
+}
+
+.link:hover{text-decoration:underline}
+
+#loggedIn:hover .user-menu{
+    display: block;
+  }
+  
+#loggedIn:hover .invisible1{
+    display: block;
+}
+
+@media only screen and (min-width: 320px) and (max-width: 767px){
+    header{
+        height:auto;
+    }
+    header .wrapper{
+        margin-bottom:0;
+        width:100%;
+    }
+    header .logo{
+        margin-left:12px;
+    }
+    header .user{
+        margin:-8px 12px 0 0;
+        text-align:right;
+    }
+    header .user li{
+        float:none;
+        border:0;
+        margin:0;
+        padding:0;
+    }
+    header .user li .user-menu{
+        right:-2px;
+    }
+}
