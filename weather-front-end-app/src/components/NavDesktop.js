@@ -26,7 +26,7 @@ function NavDesktop(){
                     </NavLink>
                 </li>
                 <li class="form-inline ml-1">
-                    <input class="form-control mr-sm-1" type="search" placeholder="Ime grada..." aria-label="Search"/>
+                    <input class="form-control mr-sm-1" type="search" placeholder="Naziv mesta..." aria-label="Search"/>
                     <button class="btn btn-light" type="submit">Traži</button>
                 </li>
             </ul>
