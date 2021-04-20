@@ -1,4 +1,4 @@
-import {BrowserRouter as Router,Switch,Route} from "react-router-dom";
+import {BrowserRouter as Router} from "react-router-dom";
 import Content from './components/Content';
 import Footer from './components/Footer';
 import Header from './components/Header';
@@ -8,9 +8,7 @@ function App() {
     <div className="container">
       <Router>
         <Header />
-        <Switch>
-          <Content />
-        </Switch>
+        <Content />
         <Footer />
       </Router>
     </div>

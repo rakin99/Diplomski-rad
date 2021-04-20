@@ -12,16 +12,10 @@ function LoggedIn(){
                             <a href="#" className="link">Change password</a>
                         </li>
                         <li style={{padding:'0px'}}>
-                            <a href="#" className="link">Settings</a>
-                        </li>
-                        <li style={{padding:'0px'}}>
-                            <a href="#" className="link">Export all data</a>
+                            <a href="#" className="link">Logout</a>
                         </li>
                     </ul>
                 </div>
-            </li>
-            <li style={{borderRight:'none'}}>
-                <a href="#"><b>Logout</b></a>
             </li>
         </ul>
     )

@@ -9,7 +9,7 @@
 }
 
 header{
-    height: 180px;
+    height: 220px;
     background-image: url('../img/header-background.png');
 }
 
@@ -41,13 +41,14 @@ header{
     float: right;
     list-style-type: none;
     opacity: 0.8;
-    margin-right: 10px;
+    margin-right: 45px;
     padding-left: 10px;
 }
 
 .myNav{
-    margin-top: 130px;
-    opacity: 0.5;
+    margin-top: 125px;
+    opacity: 0.8;
+    float: left;
 }
 
 .myNav-link{
@@ -66,7 +67,6 @@ header{
     float:left;
     margin-right:10px;
     padding-right:10px;
-    border-right:1px dotted #979696;
     position:relative;
 }
 
@@ -121,6 +121,10 @@ header{
 .link{
     color:#20308a !important;
     margin-right:15px;
+}
+
+.ml-10{
+    margin-left: 10rem!important;
 }
 
 .link:hover{text-decoration:underline}
