@@ -1,6 +1,10 @@
 .background-footer {
     /* background-image: linear-gradient(180deg, #98C1D9, #E0FBFC); */
-    background-image: linear-gradient(180deg, rgb(138, 203, 233), rgb(62, 154, 230));
+    /* background-image: linear-gradient(180deg, rgb(17, 83, 114), rgb(62, 154, 230)); */
+}
+
+#currentImg:hover {
+    
 }
 
 footer{
@@ -43,6 +47,12 @@ header{
     clear:both;
 }
 
+.clearfix1::after{
+    content: "";
+    clear: both;
+    display: table;
+}
+
 .header .user{
     box-shadow: 0 0 1px 1px rgb(138, 203, 233);
     border-radius: 5px;
@@ -62,7 +72,7 @@ body{
 }
 
 .main{
-    background-image: linear-gradient(rgb(138, 203, 233), rgb(62, 154, 230), rgb(138, 203, 233));
+    background-image: linear-gradient(rgb(41, 15, 83), rgb(62, 154, 230), rgb(17, 83, 114));
     /* background-image: linear-gradient(#98C1D9, #E0FBFC, #98C1D9); */
     height: 500px;
     box-shadow: 0 0 2px 2px #98C1D9 inset;
