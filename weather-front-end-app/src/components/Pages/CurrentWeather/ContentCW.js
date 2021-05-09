@@ -5,7 +5,7 @@ function ContentCW(props){
         return w.description
     });
     return(
-        <div className='h-50 pt-5 pl-5' style={{color:'white'}}>
+        <div className='h-50 pt-5 pl-5'>
             <h2 id='currentImg'><b>{props.state.currentWeather.name}</b></h2>
             <div className='d-inline-block pl-4'>
                 <img src={props.state.icon} />

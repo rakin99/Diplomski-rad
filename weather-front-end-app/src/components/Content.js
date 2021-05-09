@@ -8,7 +8,7 @@ import Weather7Day from './Pages/7Day/Weather7Day'
 function Content(){
     return(
         <div className="main">
-            <div className='float-left w-50'>
+            <div className='float-left w-50 text-white'>
                 <Switch>
                     <Route path="/" exact component={CurrentWeather}/>
                     <Route path="/current-weather" exact component={CurrentWeather}/>

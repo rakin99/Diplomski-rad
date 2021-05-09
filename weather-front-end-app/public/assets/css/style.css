@@ -3,8 +3,9 @@
     /* background-image: linear-gradient(180deg, rgb(17, 83, 114), rgb(62, 154, 230)); */
 }
 
-#currentImg:hover {
-    
+.oneHourForecast {
+    width: 10%;
+    height: 10%;
 }
 
 footer{
