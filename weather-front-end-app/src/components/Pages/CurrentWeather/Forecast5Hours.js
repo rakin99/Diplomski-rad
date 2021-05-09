@@ -7,7 +7,7 @@ function Forecast5Hours(props){
     });
     // const forecastHour = props.state.map();
     return(
-        <div className='h-50% w-50% ml-3 mt-2'>
+        <div className='ml-2'>
             {hoursForecast}
         </div>
     )

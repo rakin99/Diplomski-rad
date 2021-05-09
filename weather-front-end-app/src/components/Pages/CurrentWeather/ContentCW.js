@@ -6,7 +6,7 @@ function ContentCW(props){
     });
     const time = props.timeConverter(props.state.currentWeather.dt);
     return(
-        <div className='h-50 pt-5 pl-5'>
+        <div className='h-50 pt-5 pl-5 d-inline-block'>
             <h2 id='currentImg' className='w-50 float-left'>
                 <b>{props.state.currentWeather.name}</b>
             </h2>

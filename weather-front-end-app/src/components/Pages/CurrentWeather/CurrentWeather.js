@@ -73,7 +73,7 @@ class CurrentWeather extends Component{
                             {
                                 "id": 800,
                                 "main": "Clear",
-                                "description": "ведро небо",
+                                "description": "грмљавина са слабом кишом",
                                 "icon": "01d"
                             }
                         ],
@@ -192,7 +192,7 @@ class CurrentWeather extends Component{
 
     render(){
         return(
-            <div>
+            <div style={{height:'100%'}}>
                 <ContentCW timeConverter = {this.timeConverter} state={this.state}/>
                 <Forecast5Hours timeConverter = {this.timeConverter} forecast3Hours = {this.state.forecast3Hours}/>
             </div>

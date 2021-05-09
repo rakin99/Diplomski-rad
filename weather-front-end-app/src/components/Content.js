@@ -8,7 +8,7 @@ import Weather7Day from './Pages/7Day/Weather7Day'
 function Content(){
     return(
         <div className="main">
-            <div className='float-left w-50 text-white'>
+            <div className='float-left w-75 text-white'>
                 <Switch>
                     <Route path="/" exact component={CurrentWeather}/>
                     <Route path="/current-weather" exact component={CurrentWeather}/>
@@ -17,7 +17,7 @@ function Content(){
                     <Route path="/air-pollution" component={AirPollution}/>
                 </Switch>
             </div>
-            <div className='float-right w-50'>
+            <div className='float-right w-25'>
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                 </p>
             </div>
