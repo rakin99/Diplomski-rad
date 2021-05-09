@@ -16,7 +16,7 @@ class CurrentWeather extends Component{
                     {
                         "id": 802,
                         "main": "Clouds",
-                        "description": "Razbacani oblaci",
+                        "description": "ведро небо",
                         "icon": "03d"
                     }
                 ],
@@ -50,7 +50,7 @@ class CurrentWeather extends Component{
                 "name": "Novi Sad",
                 "cod": 200
             },
-            forecast3Hours : {
+            forecast5Hours : {
                 "lat": 45.2517,
                 "lon": 19.8369,
                 "timezone": "Europe/Belgrade",
@@ -192,9 +192,9 @@ class CurrentWeather extends Component{
 
     render(){
         return(
-            <div style={{height:'100%'}}>
+            <div>
                 <ContentCW timeConverter = {this.timeConverter} state={this.state}/>
-                <Forecast5Hours timeConverter = {this.timeConverter} forecast3Hours = {this.state.forecast3Hours}/>
+                <Forecast5Hours timeConverter = {this.timeConverter} forecast5Hours = {this.state.forecast5Hours}/>
             </div>
         );
     }

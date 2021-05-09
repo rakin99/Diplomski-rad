@@ -2,9 +2,11 @@ import React from 'react'
 
 function ContentCW(props){
     const description = props.state.currentWeather.weather.map(w => {
-        return w.description
+        var convert = require('cyrillic-to-latin')
+        return convert(w.description)
     });
     const time = props.timeConverter(props.state.currentWeather.dt);
+    console.log(description)
     return(
         <div className='h-50 pt-5 pl-5 d-inline-block'>
             <h2 id='currentImg' className='w-50 float-left'>
