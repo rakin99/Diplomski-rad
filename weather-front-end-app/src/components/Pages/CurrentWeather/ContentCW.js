@@ -4,13 +4,17 @@ function ContentCW(props){
     const description = props.state.currentWeather.weather.map(w => {
         return w.description
     });
+    const time = props.timeConverter(props.state.currentWeather.dt);
     return(
         <div className='h-50 pt-5 pl-5'>
-            <h2 id='currentImg'><b>{props.state.currentWeather.name}</b></h2>
-            <div className='d-inline-block pl-4'>
+            <h2 id='currentImg' className='w-50 float-left'>
+                <b>{props.state.currentWeather.name}</b>
+            </h2>
+            <h2 className='w-50 float-right text-center'>{time}</h2>
+            <div className='d-inline-block pl-4 mt-4'>
                 <img src={props.state.icon} />
                 <h3 className='d-inline-block'>
-                    <b>{props.state.currentWeather.main.temp} °c</b>
+                    <b>{props.state.currentWeather.main.temp} °c </b>
                     <p style={{fontSize:'8pt'}}>{description}</p>
                 </h3>
                 <div>

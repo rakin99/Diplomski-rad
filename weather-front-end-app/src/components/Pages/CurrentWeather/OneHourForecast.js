@@ -17,8 +17,8 @@ class OneHourForecast extends Component{
                 <h6>{time}</h6>
                 <hr className='mb-0 mt-0' />
                 <img src={this.state.icon}></img>
-                <p className='mb-0 mt-0'>{this.state.hourForecast.temp} °c</p>
-                <p className='mb-2' style={{fontSize:'7pt'}}>{this.state.hourForecast.weather[0].description}</p>
+                <p className='mb-1 mt-0'>{this.state.hourForecast.temp} °c</p>
+                <p className='mb-0' style={{fontSize:'7pt'}}>{this.state.hourForecast.weather[0].description}</p>
             </div>
         )
     }

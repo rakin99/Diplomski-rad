@@ -185,14 +185,15 @@ class CurrentWeather extends Component{
     timeConverter(UNIX_timestamp){
         var a = new Date(UNIX_timestamp * 1000);
         var hour = a.getHours();
-        var time = hour + 'h';
+        var min = a.getMinutes()==0 ? '':':'+a.getMinutes();
+        var time = hour + min + 'h';
         return time;
       }
 
     render(){
         return(
             <div>
-                <ContentCW state={this.state}/>
+                <ContentCW timeConverter = {this.timeConverter} state={this.state}/>
                 <Forecast5Hours timeConverter = {this.timeConverter} forecast3Hours = {this.state.forecast3Hours}/>
             </div>
         );
