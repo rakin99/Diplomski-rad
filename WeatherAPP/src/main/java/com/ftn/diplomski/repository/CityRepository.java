@@ -9,6 +9,6 @@ import com.ftn.diplomski.model.City;
 public interface CityRepository extends JpaRepository<City, Long>{
 
 	@Query(value = "SELECT * FROM weather.city\r\n" + 
-			"where id_city = :id",	nativeQuery = true)
-	City findByCityId(@Param("id") Long id);
+			"where name_city LIKE concat('%',:searchPlace,'%');",	nativeQuery = true)
+	City findByName(@Param("searchPlace") String searchPlace);
 }

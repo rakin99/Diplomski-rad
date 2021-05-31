@@ -14,6 +14,7 @@ import com.ftn.diplomski.modelDTO.CurrentWeatherDTO;
 import com.ftn.diplomski.service.CityInterface;
 import com.ftn.diplomski.service.CoordinationInterface;
 import com.ftn.diplomski.service.CurrentWeatherInterface;
+import com.ftn.diplomski.service.WordConverterInterface;
 import com.google.gson.Gson;
 
 @Service
@@ -24,6 +25,9 @@ public class CurrentWeatherService implements CurrentWeatherInterface{
 	
 	@Autowired
 	private CoordinationInterface coordS;
+	
+	@Autowired
+	private WordConverterInterface convertS;
 	
 	@Override
 	public CurrentWeatherDTO getCurrentWeather(String searchPlace) {
@@ -36,13 +40,15 @@ public class CurrentWeatherService implements CurrentWeatherInterface{
 		CurrentWeather currentWeather = gson.fromJson(result, CurrentWeather.class); 
 		City city = cityS.findById(currentWeather.getId());
 		if(city==null) {
+			System.out.println("City je null");
 			city = new City();
 			Coordination coord = coordS.save(currentWeather.getCoord());
 			city.setCoord(coord);
 			city.setId(currentWeather.getId());
-			city.setNameCity(currentWeather.getName());
+			city.setNameCity(convertS.cyrilicToLatin(currentWeather.getName()));
 			cityS.save(city);
 		}
+		currentWeather.setName(city.getNameCity());
 
 		return new CurrentWeatherDTO(currentWeather);
 	}

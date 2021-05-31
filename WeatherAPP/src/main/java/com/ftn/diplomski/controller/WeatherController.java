@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.ftn.diplomski.model.Forecast;
 import com.ftn.diplomski.modelDTO.CurrentWeatherDTO;
 import com.ftn.diplomski.service.CurrentWeatherInterface;
+import com.ftn.diplomski.service.ForecastInterface;
 
 @CrossOrigin(origins = "*", maxAge = 3600,methods = {	RequestMethod.DELETE,
 		RequestMethod.GET,
@@ -26,6 +28,9 @@ public class WeatherController {
 	@Autowired
 	private CurrentWeatherInterface currentWS;
 	
+	@Autowired
+	private ForecastInterface forecastS;
+	
 	@GetMapping(value = "/current-weather")
 	public ResponseEntity<CurrentWeatherDTO> getCurrentWeather(@RequestParam String searchPlace){
 		try {
@@ -35,6 +40,16 @@ public class WeatherController {
 			throw new ResponseStatusException(
 			          HttpStatus.NOT_FOUND, e.getMessage(), e);
 		}
-		 
+	}
+	
+	@GetMapping(value = "/forecast-5-hours")
+	public ResponseEntity<Forecast> getForecast5Hours(@RequestParam String searchPlace){
+		try {
+			return ResponseEntity.ok().body(forecastS.getForecast5Hours(searchPlace));
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new ResponseStatusException(
+			          HttpStatus.NOT_FOUND, e.getMessage(), e);
+		}
 	}
 }
