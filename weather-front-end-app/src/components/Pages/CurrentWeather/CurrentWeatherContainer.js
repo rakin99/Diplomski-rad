@@ -1,6 +1,7 @@
 import React from "react"
 import CurrentWeatherService from "./CurrentWeatherService"
 import CurrentWeather from "./CurrentWeather"
+import ErrorMessage from "../../ErrorMessage";
 
 var currentWeatherService = new CurrentWeatherService();
 class CurrentWeatherContainer extends React.Component{
@@ -9,49 +10,7 @@ class CurrentWeatherContainer extends React.Component{
         super();
         this.state={
             searchPlace:'',
-            currentWeather:{
-                "coord": {
-                    "lon": 19.8369,
-                    "lat": 45.2517
-                },
-                "weather": [
-                    {
-                        "id": 802,
-                        "main": "Clouds",
-                        "description": "ведро небо",
-                        "icon": "03d"
-                    }
-                ],
-                "base": "stations",
-                "main": {
-                    "temp": 11.98,
-                    "feels_like": 11.22,
-                    "temp_min": 11.11,
-                    "temp_max": 12.78,
-                    "pressure": 1014,
-                    "humidity": 76
-                },
-                "visibility": 10000,
-                "wind": {
-                    "speed": 3.6,
-                    "deg": 250
-                },
-                "clouds": {
-                    "all": 40
-                },
-                "dt": 1618917466,
-                "sys": {
-                    "type": 1,
-                    "id": 7030,
-                    "country": "RS",
-                    "sunrise": 1618890404,
-                    "sunset": 1618939917
-                },
-                "timezone": 7200,
-                "id": 3194360,
-                "name": "Novi Sad",
-                "cod": 200
-            },
+            currentWeather:'',
             forecast5Hours : {
                 "lat": 45.2517,
                 "lon": 19.8369,
@@ -175,7 +134,8 @@ class CurrentWeatherContainer extends React.Component{
                     }
                 ]
             },
-            icon:"http://openweathermap.org/img/wn/"
+            icon:'',
+            errorMessage:''
         }
         this.search=this.search.bind(this);
     }
@@ -195,25 +155,31 @@ class CurrentWeatherContainer extends React.Component{
     async search(searchPlace){
         await currentWeatherService.getCurrentWeather(searchPlace).then(res => 
             {
-                localStorage.setItem('searchPlace',searchPlace);
-                this.setState(
-                    {
-                        icon:this.state.icon+this.state.currentWeather.weather[0].icon+'@2x.png',
-                        searchPlace:searchPlace
-                    })
-                console.log(res.name)
+                if(res.status==404){
+                    this.setState({errorMessage:'Žao nam je, nema rezultata.'});
+                }else{
+                    localStorage.setItem('searchPlace',searchPlace);
+                    this.setState(
+                        {
+                            currentWeather:res,
+                            icon:"http://openweathermap.org/img/wn/"+res.weather[0].icon+'@2x.png',
+                            searchPlace:searchPlace,
+                        })
+                }
             });
     }
     
     render(){
+        const currentWeather = this.state.currentWeather !== '' && <CurrentWeather
+                                                                            currentWeather = {this.state.currentWeather}
+                                                                            forecast5Hours = {this.state.forecast5Hours}
+                                                                            icon = {this.state.icon}
+                                                                    />
+        const errorMessage = this.state.errorMessage !== '' && <ErrorMessage message = {this.state.errorMessage} />
         return(
             <div>
-                <h1>{this.state.searchPlace}</h1>
-                <CurrentWeather
-                 currentWeather = {this.state.currentWeather}
-                 forecast5Hours = {this.state.forecast5Hours}
-                 icon = {this.state.icon}
-            />
+                {currentWeather}
+                {errorMessage}
             </div>
         )
     }
