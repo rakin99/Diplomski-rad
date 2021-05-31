@@ -1,9 +1,9 @@
 import React from 'react'
 import NavDesktop from './NavDesktop'
 
-function Navigation(){
+function Navigation(props){
     return(
-        <NavDesktop />
+        <NavDesktop search = {props.search} keyUp = {props.keyUp}/>
     )
 }
 
