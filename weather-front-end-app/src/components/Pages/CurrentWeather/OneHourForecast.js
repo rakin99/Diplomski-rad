@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import TimeConverter from '../../services/TimeConverter';
 
 class OneHourForecast extends Component{
 
@@ -11,16 +12,17 @@ class OneHourForecast extends Component{
     }
 
     render(){
-        const time=this.props.timeConverter(this.state.hourForecast.dt);
+        const timeConverter = new TimeConverter();
+        const time=timeConverter.convertTime(this.state.hourForecast.dt);
         var convert = require('cyrillic-to-latin')
         return(
-            <div className='d-inline-block ml-5 mt-4 small text-center oneHourForecast' style={{verticalAlign: 'top'}}>
+            <div className='d-inline-block ml-5 mt-4 small text-center oneHourForecast align-top'>
                 <h6>{time}</h6>
                 <hr className='mb-0 mt-0' />
                 <img src={this.state.icon}></img>
-                <label className=''>{this.state.hourForecast.temp} °c</label>
+                <label className=''>{Math.round(this.state.hourForecast.temp)} °c</label>
                 <p className='mb-2'>{this.state.hourForecast.wind_speed} m/s</p>
-                <p className='' style={{fontSize:'7pt'}}>{convert(this.state.hourForecast.weather[0].description)}</p>
+                <p className='font-7pt'>{convert(this.state.hourForecast.weather[0].description)}</p>
             </div>
         )
     }

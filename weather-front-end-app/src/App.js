@@ -16,6 +16,7 @@ class App extends Component {
   }
 
   search(searchPlace){
+    localStorage.setItem('searchPlace',searchPlace);
     this.setState({searchPlace:searchPlace})
   }
 

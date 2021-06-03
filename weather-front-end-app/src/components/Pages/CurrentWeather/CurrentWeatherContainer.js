@@ -36,7 +36,6 @@ class CurrentWeatherContainer extends React.Component{
                 if(res.status==404){
                     this.setState({errorMessage:'Žao nam je, nema rezultata.'});
                 }else{
-                    localStorage.setItem('searchPlace',searchPlace);
                     this.setState(
                         {
                             currentWeather:res,
