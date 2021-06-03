@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.ftn.diplomski.model.Forecast;
 import com.ftn.diplomski.modelDTO.CurrentWeatherDTO;
+import com.ftn.diplomski.modelDTO.ForecastDTO;
 import com.ftn.diplomski.service.CurrentWeatherInterface;
 import com.ftn.diplomski.service.ForecastInterface;
 
@@ -43,11 +44,20 @@ public class WeatherController {
 	}
 	
 	@GetMapping(value = "/forecast-5-hours")
-	public ResponseEntity<Forecast> getForecast5Hours(@RequestParam String searchPlace){
+	public ResponseEntity<ForecastDTO> getForecast5Hours(@RequestParam String searchPlace){
 		try {
 			return ResponseEntity.ok().body(forecastS.getForecast5Hours(searchPlace));
 		}catch (Exception e) {
-			e.printStackTrace();
+			throw new ResponseStatusException(
+			          HttpStatus.NOT_FOUND, e.getMessage(), e);
+		}
+	}
+	
+	@GetMapping(value = "/forecast-48-hours")
+	public ResponseEntity<ForecastDTO> getForecast48Hours(@RequestParam String searchPlace,@RequestParam int numPage){
+		try {
+			return ResponseEntity.ok().body(forecastS.getForecast48Hours(searchPlace,numPage));
+		}catch (Exception e) {
 			throw new ResponseStatusException(
 			          HttpStatus.NOT_FOUND, e.getMessage(), e);
 		}
