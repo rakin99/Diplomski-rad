@@ -27,6 +27,10 @@
     width: 95%!important;
 }
 
+.row-h{
+    height: 100.444px;
+}
+
 .btn-pagination{
     border: 0px;
     border-radius: 10px;

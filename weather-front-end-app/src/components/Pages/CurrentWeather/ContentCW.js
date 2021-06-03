@@ -17,12 +17,12 @@ function ContentCW(props){
             <div className='d-inline-block pl-4 mt-4'>
                 <img src={props.icon} />
                 <h3 className='d-inline-block'>
-                    <b>{props.currentWeather.main.temp} °c </b>
+                    <b>{Math.floor(props.currentWeather.main.temp*10)/10} °c </b>
                     <p style={{fontSize:'8pt'}}>{description}</p>
                 </h3>
                 <div>
-                    <p className='d-inline'><b>Min:</b> {props.currentWeather.main.temp_min} °c</p>
-                    <p className='d-inline pl-4'><b>Max:</b> {props.currentWeather.main.temp_max} °c</p>
+                    <p className='d-inline'><b>Min:</b> {Math.floor(props.currentWeather.main.temp_min*10)/10} °c</p>
+                    <p className='d-inline pl-4'><b>Max:</b> {Math.floor(props.currentWeather.main.temp_max*10)/10} °c</p>
                     <p className='mt-1'><b>Vetar:</b> {props.currentWeather.wind.speed} m/s</p>
                 </div>
             </div>

@@ -4,20 +4,6 @@ import Table48h from './Table48h';
 
 class Content48h extends Component{
 
-    constructor(){
-        super();
-        this.state = {
-            date:''
-        }
-        this.updateDate = this.updateDate.bind(this);
-    }
-
-    updateDate(d){
-        this.setState({
-            date:d
-        })
-    }
-
     render(){
         var timeConverter = new TimeConverter();
         return(
@@ -25,18 +11,22 @@ class Content48h extends Component{
                 <div className="row">
                     <div className="col-sm-6">
                         <h2>
-                            <b>{this.props.cityName}</b>
+                            <b>{this.props.weather48h.cityName}</b>
                         </h2>
                     </div>
                     <div className="col-sm-5">
                         <div className="float-right">
                             <h4>
-                                {timeConverter.convertTimeToDate(this.state.date)}
+                                {timeConverter.convertTimeToDate(this.props.weather48h.date)}
                             </h4>
                         </div>
                     </div>
                 </div>
-                <Table48h hourly={this.props.weather48h.hourly} updateDate={this.updateDate}/>
+                <Table48h 
+                    hourly={this.props.weather48h.hourly} 
+                    increaseNumberPage={this.props.increaseNumberPage} 
+                    reduceNumberPage={this.props.reduceNumberPage}
+                />
             </div>
         )
     }

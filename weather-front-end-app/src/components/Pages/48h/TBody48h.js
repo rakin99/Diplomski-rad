@@ -12,7 +12,7 @@ function TBody48h(props){
         return <td className="text-center font-10pt align-middle" key={h.dt}>{Math.round(h.temp)} °c</td>
     })
     const wind = props.filteredHourly.map(h=> {
-        return <td className="text-center font-10pt align-middle" key={h.dt}>{h.wind_speed} m/s</td>
+        return <td className="text-center font-10pt align-middle" key={h.dt}>{Math.floor(h.wind_speed*10)/10} m/s</td>
     })
     const humidity = props.filteredHourly.map(h=> {
         return <td className="text-center font-10pt align-middle" key={h.dt}>{h.humidity}%</td>
@@ -22,7 +22,7 @@ function TBody48h(props){
     })
     return(
         <tbody className="text-light">
-            <tr>
+            <tr className="row-h">
                 <td className="align-middle"><b>Vreme</b></td>
                 {weather}
             </tr>

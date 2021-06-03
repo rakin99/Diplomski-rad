@@ -14,8 +14,10 @@ class TimeConverter{
     }
 
     convertTimeToDate(UNIX_timestamp){
+        // console.log("Date: "+UNIX_timestamp)
         var months = ['Januar','Februar','Mart','April','Maj','Jun','Jul','Avgust','Sebtembar','Oktobar','Novembar','Decembar'];
         var a = new Date(UNIX_timestamp * 1000);
+        // console.log("Date: "+JSON.stringify(a))
         return a.getDate() + ". " + months[a.getMonth()] + " " + a.getFullYear() + ".";
     }
 }
