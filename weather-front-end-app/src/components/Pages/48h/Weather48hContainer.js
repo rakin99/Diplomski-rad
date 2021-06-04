@@ -10,7 +10,8 @@ class Weather48hContainer extends Component{
         super();
         this.state = {
             numberPage:0,
-            weather48h : ''
+            weather48h : '',
+            errorMessage:''
         }
         this.search = this.search.bind(this);
         this.reduceNumberPage = this.reduceNumberPage.bind(this);
@@ -65,7 +66,6 @@ class Weather48hContainer extends Component{
 
     render(){
         const content48h = this.state.weather48h!=='' && <Content48h 
-                                                            cityName = {this.state.cityName} 
                                                             weather48h={this.state.weather48h} 
                                                             increaseNumberPage={this.increaseNumberPage} 
                                                             reduceNumberPage={this.reduceNumberPage}/>

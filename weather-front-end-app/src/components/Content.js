@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { Route, Switch } from 'react-router'
-import AirPollution from './Pages/AirPollution/AirPollutin'
-import Weather7Day from './Pages/7Day/Weather7Day'
+import Weather7DayContainer from './Pages/7Day/Weather7DayContainer'
 import AlertsIndices from './Alerts-Indeces'
 import CurrentWeatherContainer from './Pages/CurrentWeather/CurrentWeatherContainer'
 import Weather48hContainer from './Pages/48h/Weather48hContainer'
+import AirPollutionContainer from './Pages/AirPollution/AirPollutinContainer'
 
 class Content extends Component{
 
@@ -45,8 +45,8 @@ class Content extends Component{
                         <PropsRoute path="/" exact component={CurrentWeatherContainer} searchPlace = {this.props.searchPlace}/>
                         <PropsRoute path="/current-weather" component={CurrentWeatherContainer} searchPlace = {this.props.searchPlace}/>
                         <PropsRoute path="/48h-weather" component={Weather48hContainer} searchPlace = {this.props.searchPlace}/>
-                        <PropsRoute path="/7-day-weather" component={Weather7Day}/>
-                        <PropsRoute path="/air-pollution" component={AirPollution} searchPlace = {this.props.searchPlace}/>
+                        <PropsRoute path="/7-day-weather" component={Weather7DayContainer} searchPlace = {this.props.searchPlace}/>
+                        <PropsRoute path="/air-pollution" component={AirPollutionContainer} searchPlace = {this.props.searchPlace}/>
                     </Switch>
                 </div>
                 <AlertsIndices />

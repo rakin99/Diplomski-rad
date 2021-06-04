@@ -1,15 +1,19 @@
 import React, { Component } from 'react'
 import TimeConverter from '../../services/TimeConverter';
-import Pagination48h from './Pagination48h';
-import TBody48h from './TBody48h';
+import TBody7Days from './TBody7Days';
 
-class Table48h extends Component{
+class Table7Days extends Component{
 
     render(){
         const timeConverter = new TimeConverter();
-        const ths = this.props.hourly.map(h=>{
+        const ths = this.props.daily.map(d=>{
             // console.log("Deljivo je sa tri: "+this.props.hourly.indexOf(h))
-            return <th key={h.dt}>{timeConverter.convertTime(h.dt)}</th>
+            return <th key={d.dt}>
+                        {timeConverter.convertTimeToDayOfWeek(d.dt)}
+                        <p className="font-9pt mb-0 text-center">
+                            {timeConverter.convertTimeToDayAndMonth(d.dt)}
+                        </p>
+                    </th>
         })
         return(
             <div className="w-95 mt-3">
@@ -20,12 +24,11 @@ class Table48h extends Component{
                             {ths}
                         </tr>
                     </thead>
-                    <TBody48h hourly = {this.props.hourly}/>
+                    <TBody7Days daily = {this.props.daily}/>
                 </table>
-                <Pagination48h reduceNumberPage={this.props.reduceNumberPage} increaseNumberPage={this.props.increaseNumberPage}/>
             </div>
         )
     }
 }
 
-export default Table48h
+export default Table7Days
