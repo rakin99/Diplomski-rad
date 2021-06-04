@@ -31,6 +31,10 @@
     width: 95%!important;
 }
 
+.w-60{
+    width: 60%!important;
+}
+
 .row-h{
     height: 100.444px;
 }
@@ -38,6 +42,10 @@
 .btn-pagination{
     border: 0px;
     border-radius: 10px;
+    background-color: rgb(17, 83, 114);
+}
+
+.my-bg{
     background-color: rgb(17, 83, 114);
 }
 
