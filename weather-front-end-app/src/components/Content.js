@@ -4,7 +4,7 @@ import Weather7DayContainer from './Pages/7Day/Weather7DayContainer'
 import AlertsIndices from './Alerts-Indeces'
 import CurrentWeatherContainer from './Pages/CurrentWeather/CurrentWeatherContainer'
 import Weather48hContainer from './Pages/48h/Weather48hContainer'
-import AirPollutionContainer from './Pages/AirPollution/AirPollutinContainer'
+import AirPollutionContainer from './Pages/AirPollution/AirPollutionContainer'
 
 class Content extends Component{
 

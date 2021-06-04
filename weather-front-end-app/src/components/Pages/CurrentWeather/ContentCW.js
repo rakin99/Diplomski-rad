@@ -18,7 +18,7 @@ function ContentCW(props){
                 <img src={props.icon} />
                 <h3 className='d-inline-block'>
                     <b>{Math.floor(props.currentWeather.main.temp*10)/10} °c </b>
-                    <p style={{fontSize:'8pt'}}>{description}</p>
+                    <p className="font-7pt">{description}</p>
                 </h3>
                 <div>
                     <p className='d-inline'><b>Min:</b> {Math.floor(props.currentWeather.main.temp_min*10)/10} °c</p>
