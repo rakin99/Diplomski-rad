@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-class AirPollution extends Component{
+class AirPollutionContainer extends Component{
 
     constructor(){
         super();
@@ -26,4 +26,4 @@ class AirPollution extends Component{
     }
 }
 
-export default AirPollution
+export default AirPollutionContainer

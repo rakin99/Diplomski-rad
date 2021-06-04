@@ -20,6 +20,23 @@ class TimeConverter{
         // console.log("Date: "+JSON.stringify(a))
         return a.getDate() + ". " + months[a.getMonth()] + " " + a.getFullYear() + ".";
     }
+
+    convertTimeToDayAndMonth(UNIX_timestamp){
+        // console.log("Date: "+UNIX_timestamp)
+        var months = ['Januar','Februar','Mart','April','Maj','Jun','Jul','Avgust','Sebtembar','Oktobar','Novembar','Decembar'];
+        var a = new Date(UNIX_timestamp * 1000);
+        // console.log("Date: "+JSON.stringify(a))
+        const day = a.getDate()<10 ? '0'+a.getDate():a.getDate()
+        return day + ". " + months[a.getMonth()];
+    }
+
+    convertTimeToDayOfWeek(UNIX_timestamp){
+        // console.log("Date: "+UNIX_timestamp)
+        var dayOfWeek = ['Nedelja','Ponedeljak','Utorak','Sreda','Četvrtak','Petak','Subota'];
+        var a = new Date(UNIX_timestamp * 1000);
+        // console.log("Date: "+JSON.stringify(a))
+        return dayOfWeek[a.getDay()];
+    }
 }
 
 export default TimeConverter
