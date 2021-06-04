@@ -71,4 +71,26 @@ public class ForecastService implements ForecastInterface {
 		return dto;
 	}
 
+	@Override
+	public ForecastDTO getForecast7Days(String searchPlace) {
+		System.out.println("\nGet forecast 7 days");
+		
+		City city = cityS.findByName(searchPlace);
+		if(city==null) {
+			System.out.println("Nisam ga naso u bazi!");
+			city = cityS.getCityFromNet(searchPlace);
+		}
+		
+		String uri = "https://api.openweathermap.org/data/2.5/onecall?lat="+ city.getCoord().getLat() +"&lon="+city.getCoord().getLon()+"&exclude=alerts,hourly,minutely,current&appid=6f2d2019a1c929b9d3599e7d511bfe03&units=metric&lang=sr";
+		
+	    RestTemplate restTemplate = new RestTemplate();
+	    String result = restTemplate.getForObject(uri, String.class);
+	    System.out.println("Res: "+result);
+	    Gson gson = new Gson();
+		Forecast forecast = gson.fromJson(result, Forecast.class);
+		forecast.setDaily(forecast.getDaily().subList(1, forecast.getDaily().size()-1));
+		ForecastDTO dto = new ForecastDTO(searchPlace,forecast,forecast.getDaily().get(0).getDt());
+		return dto;
+	}
+
 }

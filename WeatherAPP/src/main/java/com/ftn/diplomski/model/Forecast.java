@@ -10,14 +10,16 @@ public class Forecast {
 	private String timezone;
 	private Long timezone_offset;
 	private List<Hour> hourly = new ArrayList<Hour>();
+	private List<Day> daily = new ArrayList<Day>();
 	
-	public Forecast(double lat, double lon, String timezone, Long timezone_offset, List<Hour> hourly) {
+	public Forecast(double lat, double lon, String timezone, Long timezone_offset, List<Hour> hourly, List<Day> daily) {
 		super();
 		this.lat = lat;
 		this.lon = lon;
 		this.timezone = timezone;
 		this.timezone_offset = timezone_offset;
 		this.hourly = hourly;
+		this.daily = daily;
 	}
 
 	public Forecast() {
@@ -66,5 +68,13 @@ public class Forecast {
 
 	public void setHourly(List<Hour> hourly) {
 		this.hourly = hourly;
+	}
+
+	public List<Day> getDaily() {
+		return daily;
+	}
+
+	public void setDaily(List<Day> daily) {
+		this.daily = daily;
 	}
 }

@@ -62,4 +62,14 @@ public class WeatherController {
 			          HttpStatus.NOT_FOUND, e.getMessage(), e);
 		}
 	}
+	
+	@GetMapping(value = "/forecast-7-days")
+	public ResponseEntity<ForecastDTO> getForecast7Days(@RequestParam String searchPlace){
+		try {
+			return ResponseEntity.ok().body(forecastS.getForecast7Days(searchPlace));
+		}catch (Exception e) {
+			throw new ResponseStatusException(
+			          HttpStatus.NOT_FOUND, e.getMessage(), e);
+		}
+	}
 }
