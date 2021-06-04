@@ -5,12 +5,13 @@ import TBody7Days from './TBody7Days';
 class Table7Days extends Component{
 
     render(){
+        console.log("Render")
         const timeConverter = new TimeConverter();
         const ths = this.props.daily.map(d=>{
             // console.log("Deljivo je sa tri: "+this.props.hourly.indexOf(h))
-            return <th key={d.dt}>
+            return <th className="text-center" key={d.dt}>
                         {timeConverter.convertTimeToDayOfWeek(d.dt)}
-                        <p className="font-9pt mb-0 text-center">
+                        <p className="font-9pt mb-0">
                             {timeConverter.convertTimeToDayAndMonth(d.dt)}
                         </p>
                     </th>

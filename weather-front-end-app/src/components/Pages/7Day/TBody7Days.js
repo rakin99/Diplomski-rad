@@ -6,7 +6,7 @@ function TBody7Days(props){
     const weather = props.daily.map(d=> {
         return <td className="text-center font-7pt align-top" key={d.dt}>
                 <img src={`http://openweathermap.org/img/wn/${d.weather[0].icon}.png`}/>
-                {convert(d.weather[0].description)}
+                <p className="mb-0">{convert(d.weather[0].description)}</p>
             </td>
     })
     const temp = props.daily.map(d=> {

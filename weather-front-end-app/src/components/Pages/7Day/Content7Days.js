@@ -9,7 +9,7 @@ class Content7Days extends Component{
                 <div className="row">
                     <div className="col-sm-6">
                         <h2>
-                            <b>{this.props.cityName}</b>
+                            <b>{this.props.weather7Days.cityName}</b>
                         </h2>
                     </div>
                 </div>

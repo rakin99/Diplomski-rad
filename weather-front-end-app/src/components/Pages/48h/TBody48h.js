@@ -5,7 +5,7 @@ function TBody48h(props){
     const weather = props.hourly.map(h=> {
         return <td className="text-center font-7pt align-top" key={h.dt}>
                 <img src={`http://openweathermap.org/img/wn/${h.weather[0].icon}.png`}/>
-                {convert(h.weather[0].description)}
+                <p className="mb-0">{convert(h.weather[0].description)}</p>
             </td>
     })
     const temp = props.hourly.map(h=> {
