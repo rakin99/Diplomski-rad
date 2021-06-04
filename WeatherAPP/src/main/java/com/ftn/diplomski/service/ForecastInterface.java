@@ -1,6 +1,5 @@
 package com.ftn.diplomski.service;
 
-import com.ftn.diplomski.model.Forecast;
 import com.ftn.diplomski.modelDTO.ForecastDTO;
 
 public interface ForecastInterface {
