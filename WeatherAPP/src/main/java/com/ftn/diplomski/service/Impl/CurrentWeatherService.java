@@ -36,6 +36,7 @@ public class CurrentWeatherService implements CurrentWeatherInterface{
 
 	    RestTemplate restTemplate = new RestTemplate();
 	    String result = restTemplate.getForObject(uri, String.class);
+	    System.out.println("Result: "+result);
 	    Gson gson = new Gson();
 		CurrentWeather currentWeather = gson.fromJson(result, CurrentWeather.class); 
 		City city = cityS.findById(currentWeather.getId());
