@@ -33,7 +33,7 @@ class AirPollutionContainer extends Component{
 
     increaseNumberPage(){
         // console.log("increaseNumberPage: "+this.state.forecastsAirPollution[this.state.numberPage+1])
-        if(this.state.numberPage < 16){
+        if(this.state.numberPage < this.state.forecastsAirPollution.length-1){
             // console.log("Prosao u if")
             const num = this.state.numberPage + 1;
             this.setState({
@@ -71,12 +71,14 @@ class AirPollutionContainer extends Component{
         await airPollutionService.getForecastAirPollution(searchPlace).then(res => 
             {
                 // console.log(res)
-                this.setState(
-                    {
-                        forecastsAirPollution:res.list,
-                        forecastAirPollution:res.list[this.state.numberPage],
-                    }
-                )
+                if(res.status!=404){
+                    this.setState(
+                        {
+                            forecastsAirPollution:res.list,
+                            forecastAirPollution:res.list[this.state.numberPage],
+                        }
+                    )
+                }
             }
         );
     }

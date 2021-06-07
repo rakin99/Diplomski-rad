@@ -49,6 +49,26 @@
     background-color: rgb(17, 83, 114);
 }
 
+.yellow{
+    color: yellow;
+}
+
+.lightgreen{
+    color: rgb(21, 186, 21);
+}
+
+.darkgreen{
+    color: rgb(26, 191, 180);
+}
+
+.orange{
+    color: orange;
+}
+
+.red{
+    color: red;
+}
+
 .btn-pagination:hover{
     background-color: rgb(10, 50, 100);
     border-radius: 10px;
