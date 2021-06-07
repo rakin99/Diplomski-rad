@@ -15,7 +15,6 @@ import com.ftn.diplomski.modelDTO.ForecastDTO;
 import com.ftn.diplomski.service.CityInterface;
 import com.ftn.diplomski.service.ForecastInterface;
 import com.google.gson.Gson;
-import com.mysql.fabric.xmlrpc.base.Array;
 
 @Service
 public class ForecastService implements ForecastInterface {
@@ -34,13 +33,13 @@ public class ForecastService implements ForecastInterface {
 		}
 		
 		String uri = "https://api.openweathermap.org/data/2.5/onecall?lat="+ city.getCoord().getLat() +"&lon="+city.getCoord().getLon()+"&exclude=alerts,daily,minutely,current&appid=6f2d2019a1c929b9d3599e7d511bfe03&units=metric&lang=sr";
-		
+		System.out.println(uri);
 	    RestTemplate restTemplate = new RestTemplate();
 	    String result = restTemplate.getForObject(uri, String.class);
 	    Gson gson = new Gson();
 		Forecast forecast = gson.fromJson(result, Forecast.class);
 		forecast.setHourly(forecast.getHourly().subList(1, 6));
-		ForecastDTO dto = new ForecastDTO(searchPlace,forecast,forecast.getHourly().get(0).getDt());
+		ForecastDTO dto = new ForecastDTO(city.getNameCity(),forecast,forecast.getHourly().get(0).getDt());
 		return dto;
 	}
 
@@ -67,7 +66,7 @@ public class ForecastService implements ForecastInterface {
 			}
 		}
 		forecast.setHourly(hourly);
-		ForecastDTO dto = new ForecastDTO(searchPlace,forecast,forecast.getHourly().get(0).getDt());
+		ForecastDTO dto = new ForecastDTO(city.getNameCity(),forecast,forecast.getHourly().get(0).getDt());
 		return dto;
 	}
 
@@ -85,11 +84,11 @@ public class ForecastService implements ForecastInterface {
 		
 	    RestTemplate restTemplate = new RestTemplate();
 	    String result = restTemplate.getForObject(uri, String.class);
-	    System.out.println("Res: "+result);
+//	    System.out.println("Res: "+result);
 	    Gson gson = new Gson();
 		Forecast forecast = gson.fromJson(result, Forecast.class);
-		forecast.setDaily(forecast.getDaily().subList(1, forecast.getDaily().size()-1));
-		ForecastDTO dto = new ForecastDTO(searchPlace,forecast,forecast.getDaily().get(0).getDt());
+		forecast.setDaily(forecast.getDaily().subList(1, forecast.getDaily().size()));
+		ForecastDTO dto = new ForecastDTO(city.getNameCity(),forecast,forecast.getDaily().get(0).getDt());
 		return dto;
 	}
 

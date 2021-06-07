@@ -1,5 +1,7 @@
 package com.ftn.diplomski.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,10 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "coordination")
-public class Coordination {
-	
+public class Coordination implements Serializable{
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_coord", nullable = false, unique = true)
@@ -25,6 +28,9 @@ public class Coordination {
 	
 	@OneToOne(mappedBy = "coord")
     private City city;
+	
+	@OneToOne(mappedBy = "coord")
+    private Areas areas;
 	
 	public Coordination() {
 		super();

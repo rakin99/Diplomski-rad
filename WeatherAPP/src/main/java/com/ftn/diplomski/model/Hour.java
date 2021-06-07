@@ -3,8 +3,6 @@ package com.ftn.diplomski.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mysql.fabric.xmlrpc.base.Array;
-
 public class Hour {
 	
 	private Long dt;

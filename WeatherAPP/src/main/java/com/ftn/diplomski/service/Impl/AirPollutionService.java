@@ -40,7 +40,7 @@ public class AirPollutionService implements AirPollutionInterface{
 	    String result = restTemplate.getForObject(uri, String.class);
 	    Gson gson = new Gson();
 		AirPollution pollution = gson.fromJson(result, AirPollution.class);
-		AirPollutionDTO dto = new AirPollutionDTO(searchPlace,pollution);
+		AirPollutionDTO dto = new AirPollutionDTO(city.getNameCity(),pollution);
 		return dto;
 	}
 
@@ -76,13 +76,13 @@ public class AirPollutionService implements AirPollutionInterface{
 		}
 		pollution.setList(pollution.getList().subList(index, pollution.getList().size()-1));
 		List<AirInformation> list = new ArrayList<AirInformation>();
-		for (int i = 0; i < pollution.getList().size()-1; i++) {
+		for (int i = 0; i < pollution.getList().size(); i++) {
 			if(i%6==0) {
 				list.add(pollution.getList().get(i));
 			}
 		}
 		pollution.setList(list);
-		AirPollutionDTO dto = new AirPollutionDTO(searchPlace,pollution);
+		AirPollutionDTO dto = new AirPollutionDTO(city.getNameCity(),pollution);
 		return dto;
 	}
 
