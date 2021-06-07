@@ -43,6 +43,7 @@ public class CityService implements CityInterface {
 	    Gson gson = new Gson();
 		City city = gson.fromJson(result, City.class);
 		city.setNameCity(convertS.cyrilicToLatin(city.getNameCity()));
+		System.out.println("\nCuvam city!");
 		city = save(city);
 		return city;
 	}

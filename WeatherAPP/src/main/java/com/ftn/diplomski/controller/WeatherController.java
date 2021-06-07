@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.ftn.diplomski.model.Forecast;
 import com.ftn.diplomski.modelDTO.CurrentWeatherDTO;
 import com.ftn.diplomski.modelDTO.ForecastDTO;
 import com.ftn.diplomski.service.CurrentWeatherInterface;
@@ -37,7 +36,6 @@ public class WeatherController {
 		try {
 			return ResponseEntity.ok().body(currentWS.getCurrentWeather(searchPlace));
 		}catch (Exception e) {
-			e.printStackTrace();
 			throw new ResponseStatusException(
 			          HttpStatus.NOT_FOUND, e.getMessage(), e);
 		}
