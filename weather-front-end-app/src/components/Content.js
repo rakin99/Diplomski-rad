@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { Route, Switch } from 'react-router'
 import Weather7DayContainer from './Pages/7Day/Weather7DayContainer'
-import AlertsIndices from './Alerts-Indeces'
 import CurrentWeatherContainer from './Pages/CurrentWeather/CurrentWeatherContainer'
 import Weather48hContainer from './Pages/48h/Weather48hContainer'
 import AirPollutionContainer from './Pages/AirPollution/AirPollutionContainer'
+import AlertsIndicesContainer from './AlertIndices/Alerts-IndicesContainer'
 
 class Content extends Component{
 
@@ -49,7 +49,7 @@ class Content extends Component{
                         <PropsRoute path="/air-pollution" component={AirPollutionContainer} searchPlace = {this.props.searchPlace}/>
                     </Switch>
                 </div>
-                <AlertsIndices />
+                <AlertsIndicesContainer />
             </div>
         )
     }

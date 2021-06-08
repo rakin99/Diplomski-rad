@@ -1,37 +1,15 @@
 import React, { Component } from 'react'
+import AlertsService from '../services/AlertsService';
+import AreaService from '../services/AreaService';
 
-class AlertsIndices extends Component{
+var areasService = new AreaService();
+var alertsService = new AlertsService();
+class AlertsIndicesContainer extends Component{
     
     constructor(){
         super();
         this.state = {
-            alerts:{
-                "country_code": "RS",
-                "lon": 19.84,
-                "timezone": "Europe/Belgrade",
-                "lat": 45.25,
-                "alerts": [
-                    {
-                        "regions": [
-                            "Бачка,RS"
-                        ],
-                        "ends_utc": "2021-05-09T23:00:00",
-                        "effective_local": "2021-05-09T01:00:00",
-                        "onset_utc": "2021-05-08T23:00:00",
-                        "expires_local": "2021-05-10T01:00:00",
-                        "expires_utc": "2021-05-09T23:00:00",
-                        "ends_local": "2021-05-10T01:00:00",
-                        "uri": "https://meteoalarm.org?geocode=EMMA_ID:RS002",
-                        "onset_local": "2021-05-09T01:00:00",
-                        "effective_utc": "2021-05-08T23:00:00",
-                        "severity": "Advisory",
-                        "title": "Extreme Low Temperature",
-                        "description": "English(en-GB): Ground frost Damage to agriculture – vegetable, vineyards and fruit are especially vulnerable. Unfavourable conditions for chronically sick, people under therapy and medical control or meteoropaths.\nSerbian(sr): Prizemni mraz Štete u poljoprivredi - povrćarstvo, vinogradarstvo i voćarstvo, posebno su ugroženi. Nepovoljni vremenski uslovi za hronične bolesnike, ljudi pod terapijom, medicinskom kontrolom ili meteoropate."
-                    }
-                ],
-                "city_name": "Novi Sad",
-                "state_code": "VO"
-            },
+            alerts:'',
             mosquitoActivity:{
                 "Name": "Prognoza za aktivnost komaraca",
                 "ID": 17,
@@ -98,24 +76,60 @@ class AlertsIndices extends Component{
                     "MobileLink": "http://m.accuweather.com/sr/rs/novi-sad/298486/allergies-weather/298486",
                     "Link": "http://www.accuweather.com/sr/rs/novi-sad/298486/allergies-weather/298486"
                 }
-            ]
+            ],
+            areas:[]
+        }
+        this.searchAreas=this.searchAreas.bind(this);
+        this.getAlertsIndices=this.getAlertsIndices.bind(this);
+    }
+
+    async searchAreas(event){
+        const searchString = event.target.value;
+        console.log("Search string: "+searchString);
+        await areasService.getAreas(searchString).then(res => 
+            {   
+                // console.log(res)
+                this.setState(
+                    {
+                        areas:res
+                    })
+            }
+        );
+    }
+
+    async getAlertsIndices(event){
+        const areaName = event.target.value;
+        console.log("Aread name:"+areaName);
+        if(areaName!==''){
+            await alertsService.getAlerts(areaName).then(res => 
+                {   
+                    console.log(res)
+                    this.setState(
+                        {
+                            alerts:res
+                        })
+                }
+            );
         }
     }
 
     render(){
-        const alert = this.state.alerts.alerts[0].description.substring(this.state.alerts.alerts[0].description.indexOf('(sr):')+6);
+        const alerts = (this.state.alerts!=='' && this.state.alerts.alerts!==undefined && this.state.alerts.alerts.length!==0) && <h6 className='mt-3 mb-0'><b>Upozorenja:</b></h6>;
+        const alert = (this.state.alerts!=='' && this.state.alerts.alerts!==undefined && this.state.alerts.alerts.length!==0) && this.state.alerts.alerts[0].description.substring(this.state.alerts.alerts[0].description.indexOf('(sr):')+6);
         const pollen = this.state.pollen.map(p=>{
             return <p key={p.ID} className='mt-0 mb-0'>{p.Text}</p>
         })
+        const areas = this.state.areas.length != 0 && this.state.areas.map(a=>{
+                                                                                return <option key={a.id} value={a.name}></option>
+                                                                            })
         return(
             <div className='float-right w-25'>
                 <div className='alerts-indices-div'>
-                    <input list="cities" className='form-control form-control-sm col-10'/>
-                    <datalist id='cities'>
-                        <option value='Novi Sad'></option>
-                        <option value='Beograd'></option>
+                    <input list="areas" className='form-control form-control-sm col-10' onKeyUp={this.searchAreas} onBlur={this.getAlertsIndices}/>
+                    <datalist id='areas'>
+                        {areas}
                     </datalist>
-                    <h6 className='mt-3 mb-0'><b>Upozorenja:</b></h6>
+                    {alerts}
                     <p>{alert}</p>
                     <h6 className='mb-0'><b>Aktivnost komaraca:</b></h6>
                     <p>{this.state.mosquitoActivity.Text}</p>
@@ -127,4 +141,4 @@ class AlertsIndices extends Component{
     }
 }
 
-export default AlertsIndices
+export default AlertsIndicesContainer
