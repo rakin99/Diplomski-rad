@@ -6,7 +6,8 @@ function ContentCAP(props){
     const timeConverter = new TimeConverter();
     const time = timeConverter.convertTime(props.currentAirPollution.list[0].dt);
     const date = timeConverter.convertTimeToDate(props.currentAirPollution.list[0].dt);
-    const airDesc = ['vrlo dobar','dobar','umeren','loš','vrlo loš']
+    const airDesc = ['vrlo dobar','dobar','umeren','loš','vrlo loš'];
+    const colorText = ['darkgreen','lightgreen','yellow','orange','red']
     return(
         <div className='h-50 pt-4 pl-5'>
             <div className="row">
@@ -23,8 +24,8 @@ function ContentCAP(props){
             </div>
              <div className='pl-4 mt-3'>
                 <h4>
-                    <b>Kvalitet vazduha: </b>
-                    {airDesc[props.currentAirPollution.list[0].main.aqi-1]}
+                    Kvalitet vazduha: 
+                    <b className={colorText[props.currentAirPollution.list[0].main.aqi-1]}> {airDesc[props.currentAirPollution.list[0].main.aqi-1]}</b>
                 </h4>
             </div>
             <div className='pl-4 mt-3 row'>
