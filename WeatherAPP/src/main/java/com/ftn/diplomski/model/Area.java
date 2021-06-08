@@ -14,8 +14,8 @@ import javax.persistence.Table;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "areas")
-public class Areas implements Serializable{
+@Table(name = "area")
+public class Area implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,14 +29,14 @@ public class Areas implements Serializable{
     @JoinColumn(name = "id_coord", referencedColumnName = "id_coord")
     private Coordination coord;
 
-	public Areas(Long id, String name, Coordination coord) {
+	public Area(Long id, String name, Coordination coord) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.coord = coord;
 	}
 	
-	public Areas() {
+	public Area() {
 		super();
 		this.id = (long) 0;
 		this.name = "";

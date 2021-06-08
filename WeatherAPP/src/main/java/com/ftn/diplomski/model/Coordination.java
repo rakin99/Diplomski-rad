@@ -30,7 +30,7 @@ public class Coordination implements Serializable{
     private City city;
 	
 	@OneToOne(mappedBy = "coord")
-    private Areas areas;
+    private Area areas;
 	
 	public Coordination() {
 		super();
