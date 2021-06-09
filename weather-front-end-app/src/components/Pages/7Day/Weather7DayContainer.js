@@ -30,7 +30,7 @@ class Weather7DayContainer extends Component{
     async search(searchPlace){
         await weatherService.getForecast7Days(searchPlace).then(res => 
             {
-                console.log(res)
+                // console.log(res)
                 if(res.status==404){
                     this.setState({errorMessage:'Žao nam je, nema rezultata.'});
                 }else{

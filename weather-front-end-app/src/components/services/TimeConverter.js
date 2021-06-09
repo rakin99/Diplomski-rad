@@ -37,6 +37,12 @@ class TimeConverter{
         // console.log("Date: "+JSON.stringify(a))
         return dayOfWeek[a.getDay()];
     }
+
+    convertFromString(stringDate){
+        const t = stringDate.indexOf('T');
+        const date = new Date(stringDate.substring(0,t))
+        return this.convertTimeToDayAndMonth(date.getTime()/1000);
+    }
 }
 
 export default TimeConverter
