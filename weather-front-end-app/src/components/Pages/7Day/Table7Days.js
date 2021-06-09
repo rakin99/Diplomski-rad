@@ -5,7 +5,7 @@ import TBody7Days from './TBody7Days';
 class Table7Days extends Component{
 
     render(){
-        console.log("Render")
+        // console.log("Render")
         const timeConverter = new TimeConverter();
         const ths = this.props.daily.map(d=>{
             // console.log("Deljivo je sa tri: "+this.props.hourly.indexOf(h))

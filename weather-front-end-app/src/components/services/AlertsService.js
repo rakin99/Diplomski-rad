@@ -1,6 +1,6 @@
 class AlertsService{
     constructor(){
-      this.url='http://localhost:8080/api/alerts-indices'
+      this.url='http://localhost:8080/api/alerts'
     }
   
     getAlerts(areaName){
