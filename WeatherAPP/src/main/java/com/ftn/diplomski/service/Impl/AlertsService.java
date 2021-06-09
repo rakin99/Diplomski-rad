@@ -15,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import com.ftn.diplomski.model.Alerts;
 import com.ftn.diplomski.model.Area;
 import com.ftn.diplomski.model.Forecast;
+import com.ftn.diplomski.modelDTO.AlertsDTO;
 import com.ftn.diplomski.repository.AlertsRepository;
 import com.ftn.diplomski.service.AlertsInterface;
 import com.ftn.diplomski.service.AreaInterface;
@@ -36,18 +37,19 @@ public class AlertsService implements AlertsInterface {
 		return repository.save(alerts);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
-	public Alerts getAlerts(String areaName) {
+	public AlertsDTO getAlerts(String areaName) {
 		System.out.println("\nGet alerts");
 		Area area = areaService.findByName(areaName);
 		System.out.println("Lat: "+area.getCoord().getLat()+" Lon: "+area.getCoord().getLon());
 		Date maxDate = maxDate(area.getCoord().getLat(), area.getCoord().getLon());
 		if(maxDate==null || (maxDate.getYear()<new Date().getYear()+1900 && maxDate.getMonth()<new Date().getMonth() && maxDate.getDate()<new Date().getDate())) {
-			return getAlertsFromApi(areaName);
+			return new AlertsDTO(getAlertsFromApi(areaName));
 		}
 		Alerts alerts = getAlertsFromDataBase(areaName);
 //		System.out.println(alerts.toString());
-		return alerts;
+		return new AlertsDTO(alerts);
 	}
 
 	@Override

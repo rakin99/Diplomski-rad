@@ -25,14 +25,18 @@ public class Area implements Serializable{
 	@Column(name = "name_area", nullable = false)
 	private String name;
 	
+	@Column(name = "key_area", nullable = false, unique = true)
+	private Long key;
+	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_coord", referencedColumnName = "id_coord")
     private Coordination coord;
 
-	public Area(Long id, String name, Coordination coord) {
+	public Area(Long id, String name,Long key, Coordination coord) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.key = key;
 		this.coord = coord;
 	}
 	
@@ -40,6 +44,7 @@ public class Area implements Serializable{
 		super();
 		this.id = (long) 0;
 		this.name = "";
+		this.key = (long) 0;
 		this.coord = new Coordination();
 	}
 
@@ -65,5 +70,13 @@ public class Area implements Serializable{
 
 	public void setCoord(Coordination coord) {
 		this.coord = coord;
+	}
+
+	public Long getKey() {
+		return key;
+	}
+
+	public void setKey(Long key) {
+		this.key = key;
 	}
 }
