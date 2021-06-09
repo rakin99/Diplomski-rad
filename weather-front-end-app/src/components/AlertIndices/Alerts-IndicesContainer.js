@@ -77,10 +77,12 @@ class AlertsIndicesContainer extends Component{
                     "Link": "http://www.accuweather.com/sr/rs/novi-sad/298486/allergies-weather/298486"
                 }
             ],
-            areas:[]
+            areas:[],
+            area:''
         }
         this.searchAreas=this.searchAreas.bind(this);
         this.getAlertsIndices=this.getAlertsIndices.bind(this);
+        this.setArea=this.setArea.bind(this);
     }
 
     async searchAreas(event){
@@ -97,13 +99,19 @@ class AlertsIndicesContainer extends Component{
         );
     }
 
-    async getAlertsIndices(event){
+    setArea(event){
         const areaName = event.target.value;
         console.log("Aread name:"+areaName);
-        if(areaName!==''){
-            await alertsService.getAlerts(areaName).then(res => 
+        this.setState({
+            area:areaName
+        })
+    }
+
+    async getAlertsIndices(){
+        if(this.state.area!==''){
+            await alertsService.getAlerts(this.state.area).then(res => 
                 {   
-                    console.log(res)
+                    // console.log(res)
                     this.setState(
                         {
                             alerts:res
@@ -125,7 +133,8 @@ class AlertsIndicesContainer extends Component{
         return(
             <div className='float-right w-25'>
                 <div className='alerts-indices-div'>
-                    <input list="areas" className='form-control form-control-sm col-10' onKeyUp={this.searchAreas} onBlur={this.getAlertsIndices}/>
+                    <input list="areas" className='form-control form-control-sm col-10 d-inline' onKeyUp={this.searchAreas} onBlur={this.setArea}/>
+                    <button className='ml-1 btn-light rounded' onClick={this.getAlertsIndices}>✓</button>
                     <datalist id='areas'>
                         {areas}
                     </datalist>
