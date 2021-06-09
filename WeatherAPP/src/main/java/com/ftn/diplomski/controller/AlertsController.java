@@ -20,14 +20,14 @@ import com.ftn.diplomski.service.Impl.AlertsService;
 		RequestMethod.PUT,
 		RequestMethod.POST})
 @RestController
-@RequestMapping(value = "api/alerts-indices")
-public class AlertsIndicesController {
+@RequestMapping(value = "api/alerts")
+public class AlertsController {
 
 	@Autowired
 	private AlertsInterface alertsService;
 	
 	@GetMapping()
-	public ResponseEntity<AlertsDTO> getCurrentAirPollution(@RequestParam String areaName){
+	public ResponseEntity<AlertsDTO> getAlerts(@RequestParam String areaName){
 		return new ResponseEntity<AlertsDTO>(alertsService.getAlerts(areaName),HttpStatus.OK);
 	}
 }

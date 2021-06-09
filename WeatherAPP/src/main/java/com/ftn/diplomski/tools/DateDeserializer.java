@@ -16,9 +16,10 @@ public class DateDeserializer implements JsonDeserializer<Date>{
 	@Override
 	  public Date deserialize(JsonElement element, Type arg1, JsonDeserializationContext arg2) throws JsonParseException {
 	      String date = element.getAsString();
-	      
 	      SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-	      format.setTimeZone(TimeZone.getTimeZone("GMT"));
+	      if(!element.toString().contains("T")) {
+	    	  return new Date(Long.parseLong(element.toString())*1000);
+	      }
 
 	      try {
 	          return format.parse(date);
