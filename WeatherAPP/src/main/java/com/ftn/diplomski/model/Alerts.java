@@ -148,7 +148,7 @@ public class Alerts implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Alerts [id=" + id + ", date=" + date + ", country_code=" + country_code + ", lon=" + lon + ", timezone="
+		return "AlertsDTO [id=" + id + ", date=" + date + ", country_code=" + country_code + ", lon=" + lon + ", timezone="
 				+ timezone + ", lat=" + lat + ", city_name=" + city_name + ", state_code=" + state_code + ", alerts="
 				+ alerts + "]";
 	}

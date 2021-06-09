@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ftn.diplomski.model.Alerts;
+import com.ftn.diplomski.modelDTO.AlertsDTO;
 import com.ftn.diplomski.service.AlertsInterface;
 import com.ftn.diplomski.service.Impl.AlertsService;
 
@@ -26,7 +27,7 @@ public class AlertsIndicesController {
 	private AlertsInterface alertsService;
 	
 	@GetMapping()
-	public ResponseEntity<Alerts> getCurrentAirPollution(@RequestParam String areaName){
-		return new ResponseEntity<Alerts>(alertsService.getAlerts(areaName),HttpStatus.OK);
+	public ResponseEntity<AlertsDTO> getCurrentAirPollution(@RequestParam String areaName){
+		return new ResponseEntity<AlertsDTO>(alertsService.getAlerts(areaName),HttpStatus.OK);
 	}
 }

@@ -62,7 +62,6 @@ public class Alert implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name="id_alerts", referencedColumnName="id_alerts", nullable=false)
-	@JsonIgnore
 	private Alerts alerts;
 
 	public Alert(Long id, Date ends_utc, Date effective_local, Date onset_utc,
@@ -203,7 +202,7 @@ public class Alert implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Alert [id=" + id + ", ends_utc=" + ends_utc + ", effective_local=" + effective_local + ", onset_utc="
+		return "AlertDTO [id=" + id + ", ends_utc=" + ends_utc + ", effective_local=" + effective_local + ", onset_utc="
 				+ onset_utc + ", expires_local=" + expires_local + ", expires_utc=" + expires_utc + ", ends_local="
 				+ ends_local + ", uri=" + uri + ", onset_local=" + onset_local + ", effective_utc=" + effective_utc
 				+ ", severity=" + severity + ", title=" + title + ", description=" + description + "]";
