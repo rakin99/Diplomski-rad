@@ -44,7 +44,7 @@ public class AlertsService implements AlertsInterface {
 		Area area = areaService.findByName(areaName);
 		System.out.println("Lat: "+area.getCoord().getLat()+" Lon: "+area.getCoord().getLon());
 		Date maxDate = maxDate(area.getCoord().getLat(), area.getCoord().getLon());
-		if(maxDate==null || (maxDate.getYear()<new Date().getYear()+1900 && maxDate.getMonth()<new Date().getMonth() && maxDate.getDate()<new Date().getDate())) {
+		if(maxDate==null || (maxDate.getYear()<=new Date().getYear() && maxDate.getMonth()<=new Date().getMonth() && maxDate.getDate()<new Date().getDate())) {
 			return new AlertsDTO(getAlertsFromApi(areaName));
 		}
 		Alerts alerts = getAlertsFromDataBase(areaName);

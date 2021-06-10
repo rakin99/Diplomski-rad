@@ -48,7 +48,8 @@ public class MosquitoService implements MosquitoInterface {
 		Area area = areaService.findByName(areaName);
 		System.out.println("Lat: "+area.getCoord().getLat()+" Lon: "+area.getCoord().getLon());
 		Date maxDate = maxDate(area.getKey());
-		if(maxDate==null || (maxDate.getYear()<new Date().getYear()+1900 && maxDate.getMonth()<new Date().getMonth() && maxDate.getDate()<new Date().getDate())) {
+		System.out.println("Max date: "+(new Date().getMonth()+1));
+		if(maxDate==null || (maxDate.getYear()<=new Date().getYear() && maxDate.getMonth()<=new Date().getMonth() && maxDate.getDate()<new Date().getDate())) {
 			List<Mosquito> mosquitos = getMosquitoFromApi(areaName);
 			List<MosquitoDTO> dtos = new ArrayList<MosquitoDTO>();
 			for (Mosquito mosquito : mosquitos) {
@@ -78,7 +79,7 @@ public class MosquitoService implements MosquitoInterface {
 //				"        \"Name\": \"Prognoza za aktivnost komaraca\",\r\n" + 
 //				"        \"ID\": 17,\r\n" + 
 //				"        \"Ascending\": true,\r\n" + 
-//				"        \"LocalDateTime\": \"2021-06-09T07:00:00+02:00\",\r\n" + 
+//				"        \"LocalDateTime\": \"2021-06-10T07:00:00+02:00\",\r\n" + 
 //				"        \"EpochDateTime\": 1623214800,\r\n" + 
 //				"        \"Value\": 2.0,\r\n" + 
 //				"        \"Category\": \"Umereno\",\r\n" + 

@@ -20,7 +20,7 @@ public class Mosquito implements Serializable{
 	@Column(name = "id_mosquito", nullable = false, unique = true)
 	private Long id;
 	
-	@Column(name = "location_key", nullable = false, unique = true)
+	@Column(name = "location_key", nullable = false)
 	private Long key;
 	
 	@Column(name = "name", nullable = false)
