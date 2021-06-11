@@ -39,7 +39,7 @@ class Content extends Component{
           }
 
         return(
-            <div className="main">
+            <div className="main my_main">
                 <div className='float-left w-75 text-white'>
                     <Switch>
                         <PropsRoute path="/" exact component={CurrentWeatherContainer} searchPlace = {this.props.searchPlace}/>

@@ -145,7 +145,7 @@ body{
 .main{
     background-image: linear-gradient(rgb(41, 15, 83), rgb(62, 154, 230), rgb(17, 83, 114));
     /* background-image: linear-gradient(#98C1D9, #E0FBFC, #98C1D9); */
-    height: 500px;
+    height: 520px;
     box-shadow: 0 0 2px 2px #98C1D9 inset;
     border-radius: 10px;
 }
