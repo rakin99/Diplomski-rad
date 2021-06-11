@@ -1,28 +1,29 @@
 package com.ftn.diplomski.modelDTO;
 
-
 import java.util.Date;
 
-import com.ftn.diplomski.model.Mosquito;
+import com.ftn.diplomski.model.Pollen;
 
-public class MosquitoDTO{
-	
+public class PollenDTO{
+
+	private Long ID;
 	private Date LocalDateTime;
 	private Date EpochDateTime;
 	private String Text;
 
-	public MosquitoDTO(Date localDateTime, Date epochDateTime, String text) {
+	public PollenDTO(Long iD,Date localDateTime, Date epochDateTime, String text) {
 		super();
+		ID=iD;
 		LocalDateTime = localDateTime;
 		EpochDateTime = epochDateTime;
 		Text = text;
 	}
 	
-	public MosquitoDTO(Mosquito m) {
-		this(m.getLocalDateTime(), m.getEpochDateTime(), m.getText());
+	public PollenDTO(Pollen p) {
+		this(p.getID(),p.getLocalDateTime(), p.getEpochDateTime(), p.getText());
 	}
 
-	public MosquitoDTO() {
+	public PollenDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -49,5 +50,13 @@ public class MosquitoDTO{
 
 	public void setText(String text) {
 		Text = text;
+	}
+
+	public Long getID() {
+		return ID;
+	}
+
+	public void setID(Long iD) {
+		ID = iD;
 	}
 }
