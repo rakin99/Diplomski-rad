@@ -46,18 +46,13 @@ public class MosquitoService implements MosquitoInterface {
 	public List<MosquitoDTO> getMosquito(String areaName) {
 		System.out.println("\nGet Mosquito");
 		Area area = areaService.findByName(areaName);
-		System.out.println("Lat: "+area.getCoord().getLat()+" Lon: "+area.getCoord().getLon());
 		Date maxDate = maxDate(area.getKey());
-		System.out.println("Max date: "+(new Date().getMonth()+1));
+		List<Mosquito> mosquitos = null;
 		if(maxDate==null || (maxDate.getYear()<=new Date().getYear() && maxDate.getMonth()<=new Date().getMonth() && maxDate.getDate()<new Date().getDate())) {
-			List<Mosquito> mosquitos = getMosquitoFromApi(areaName);
-			List<MosquitoDTO> dtos = new ArrayList<MosquitoDTO>();
-			for (Mosquito mosquito : mosquitos) {
-				dtos.add(new MosquitoDTO(mosquito));
-			}
-			return dtos;
+			mosquitos = getMosquitoFromApi(areaName);
+		}else {
+			mosquitos = getMosquitoFromDataBase(areaName);
 		}
-		List<Mosquito> mosquitos = getMosquitoFromDataBase(areaName);
 		List<MosquitoDTO> dtos = new ArrayList<MosquitoDTO>();
 		for (Mosquito mosquito : mosquitos) {
 			dtos.add(new MosquitoDTO(mosquito));

@@ -3,6 +3,7 @@ ALTER TABLE area CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE alert CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE alerts CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE mosquito CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+ALTER TABLE pollen CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE alert MODIFY description LONGTEXT;
 
 INSERT INTO coordination(id_coord, lat_coord, lon_coord) VALUE(1,45.7742,19.1122);

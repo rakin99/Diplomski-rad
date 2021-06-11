@@ -42,13 +42,13 @@ public class AlertsService implements AlertsInterface {
 	public AlertsDTO getAlerts(String areaName) {
 		System.out.println("\nGet alerts");
 		Area area = areaService.findByName(areaName);
-		System.out.println("Lat: "+area.getCoord().getLat()+" Lon: "+area.getCoord().getLon());
 		Date maxDate = maxDate(area.getCoord().getLat(), area.getCoord().getLon());
+		Alerts alerts = null;
 		if(maxDate==null || (maxDate.getYear()<=new Date().getYear() && maxDate.getMonth()<=new Date().getMonth() && maxDate.getDate()<new Date().getDate())) {
-			return new AlertsDTO(getAlertsFromApi(areaName));
+			alerts = getAlertsFromApi(areaName);
+		}else {
+			alerts = getAlertsFromDataBase(areaName);
 		}
-		Alerts alerts = getAlertsFromDataBase(areaName);
-//		System.out.println(alerts.toString());
 		return new AlertsDTO(alerts);
 	}
 
@@ -63,7 +63,7 @@ public class AlertsService implements AlertsInterface {
 		System.out.println("\ngetAlertsFromApi");
 		Area area = areaService.findByName(areaName);
 		String uri = "https://weatherbit-v1-mashape.p.rapidapi.com/alerts?lat="+area.getCoord().getLat()+"&lon="+area.getCoord().getLon()+"&units=metric&lang=sr";
-		System.out.println(uri);
+//		System.out.println(uri);
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("x-rapidapi-key", "509f30df3fmsh0ea7e8f61e0e95ep1f8b72jsn77d53241cd96");
@@ -89,7 +89,7 @@ public class AlertsService implements AlertsInterface {
 	public Alerts getAlertsFromDataBase(String areaName) {
 		System.out.println("\ngetAlertsFromDataBase");
 		Area area = areaService.findByName(areaName);
-		System.out.println(area.getCoord().getLat()+" " + area.getCoord().getLon()+" " + new Date().getDate()+" " + (new Date().getMonth()+1)+" " + (new Date().getYear()+1900));
+//		System.out.println(area.getCoord().getLat()+" " + area.getCoord().getLon()+" " + new Date().getDate()+" " + (new Date().getMonth()+1)+" " + (new Date().getYear()+1900));
 		Alerts alerts = repository.getAlertsFromDataBase(area.getCoord().getLat(), area.getCoord().getLon(), new Date().getDate(), new Date().getMonth()+1, new Date().getYear()+1900);
 		return alerts;
 	}
