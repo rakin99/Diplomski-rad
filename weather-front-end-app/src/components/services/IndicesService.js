@@ -6,6 +6,10 @@ class IndicesService{
     getIndicesMosquito(areaName){
       return fetch(`${this.url}/mosquitoes?areaName=${areaName}`).then(res => res.json())
     }
+
+    getIndicesPollen(areaName){
+      return fetch(`${this.url}/pollen?areaName=${areaName}`).then(res => res.json())
+    }
   }
   
   export default IndicesService

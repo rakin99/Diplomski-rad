@@ -15,60 +15,7 @@ class AlertsIndicesContainer extends Component{
         this.state = {
             alerts:'',
             mosquitoActivity:[],
-            pollen:[
-                {
-                    "Name": "Polen drveća",
-                    "ID": -14,
-                    "Ascending": false,
-                    "LocalDateTime": "2021-05-09T07:00:00+02:00",
-                    "EpochDateTime": 1620536400,
-                    "Value": 1.0,
-                    "Category": "Nisko",
-                    "CategoryValue": 1,
-                    "Text": "Nivo polena drveća će biti nizak.",
-                    "MobileLink": "http://m.accuweather.com/sr/rs/novi-sad/298486/allergies-weather/298486",
-                    "Link": "http://www.accuweather.com/sr/rs/novi-sad/298486/allergies-weather/298486"
-                },
-                {
-                    "Name": "Polen ambrozije",
-                    "ID": -13,
-                    "Ascending": false,
-                    "LocalDateTime": "2021-05-09T07:00:00+02:00",
-                    "EpochDateTime": 1620536400,
-                    "Value": 1.0,
-                    "Category": "Nisko",
-                    "CategoryValue": 1,
-                    "Text": "Nivo polena ambrozije će biti nizak.",
-                    "MobileLink": "http://m.accuweather.com/sr/rs/novi-sad/298486/allergies-weather/298486",
-                    "Link": "http://www.accuweather.com/sr/rs/novi-sad/298486/allergies-weather/298486"
-                },
-                {
-                    "Name": "Plesan",
-                    "ID": -12,
-                    "Ascending": false,
-                    "LocalDateTime": "2021-05-09T07:00:00+02:00",
-                    "EpochDateTime": 1620536400,
-                    "Value": 1.0,
-                    "Category": "Nisko",
-                    "CategoryValue": 1,
-                    "Text": "Nivo buđi će biti nizak.",
-                    "MobileLink": "http://m.accuweather.com/sr/rs/novi-sad/298486/allergies-weather/298486",
-                    "Link": "http://www.accuweather.com/sr/rs/novi-sad/298486/allergies-weather/298486"
-                },
-                {
-                    "Name": "Polen iz trave",
-                    "ID": -11,
-                    "Ascending": false,
-                    "LocalDateTime": "2021-05-09T07:00:00+02:00",
-                    "EpochDateTime": 1620536400,
-                    "Value": 1.0,
-                    "Category": "Nisko",
-                    "CategoryValue": 1,
-                    "Text": "Nivo polena iz trave će biti nizak.",
-                    "MobileLink": "http://m.accuweather.com/sr/rs/novi-sad/298486/allergies-weather/298486",
-                    "Link": "http://www.accuweather.com/sr/rs/novi-sad/298486/allergies-weather/298486"
-                }
-            ],
+            pollen:[],
             areas:[],
             area:''
         }
@@ -122,10 +69,21 @@ class AlertsIndicesContainer extends Component{
         if(this.state.area!=='' || areaName!=null){
             await indicesService.getIndicesMosquito(this.state.area!==''?this.state.area:areaName).then(res => 
                 {   
-                    console.log(res)
+                    // console.log(res)
                     this.setState(
                         {
                             mosquitoActivity:res
+                        })
+                }
+            );
+        }
+        if(this.state.area!=='' || areaName!=null){
+            await indicesService.getIndicesPollen(this.state.area!==''?this.state.area:areaName).then(res => 
+                {   
+                    // console.log(res)
+                    this.setState(
+                        {
+                            pollen:res
                         })
                 }
             );
@@ -137,13 +95,14 @@ class AlertsIndicesContainer extends Component{
         const expires_local = (this.state.alerts!=='' && this.state.alerts.alerts!==undefined && this.state.alerts.alerts.length!==0) && timeConverter.convertFromString(this.state.alerts.alerts[0].expires_local);
         const alerts = (this.state.alerts!=='' && this.state.alerts.alerts!==undefined && this.state.alerts.alerts.length!==0) && <h6 className='mt-3 mb-0'><b>{effective_local} - {expires_local}</b></h6>;
         const alert = (this.state.alerts!=='' && this.state.alerts.alerts!==undefined && this.state.alerts.alerts.length!==0) && this.state.alerts.alerts[0].description.substring(this.state.alerts.alerts[0].description.indexOf('(sr):')+6);
-        const pollen = this.state.pollen.map(p=>{
-            return <p key={p.ID} className='mt-0 mb-0'>{p.Text}</p>
+        const pollen = this.state.pollen.length!=0 && this.state.pollen.map(p=>{
+            return <p key={p.id} className='mt-0 mb-0'>{p.text}</p>
         })
         const areas = this.state.areas.length != 0 && this.state.areas.map(a=>{
                                                                                 return <option key={a.id} value={a.name}></option>
                                                                             })
         const mosquitoActivity = this.state.mosquitoActivity.length!=0 && <span><h6 className='mb-0'><b>Aktivnost komaraca:</b></h6> <p>{this.state.mosquitoActivity[0].text}</p></span> ;
+        const indexPollen = this.state.pollen.length!=0 && <span><h6 className='mb-0'><b>Polen:</b></h6> {pollen}</span>;
         return(
             <div className='float-right w-25'>
                 <div className='alerts-indices-div'>
@@ -155,8 +114,7 @@ class AlertsIndicesContainer extends Component{
                     {alerts}
                     <p>{alert}</p>
                     {mosquitoActivity}
-                    <h6 className='mb-0'><b>Polen:</b></h6>
-                    {pollen}
+                    {indexPollen}
                 </div>
             </div>
         )
