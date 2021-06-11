@@ -92,6 +92,7 @@ class AirPollutionContainer extends Component{
                                                                             />
         const errorMessage = this.state.errorMessage!=='' && <ErrorMessage
                                                                                 message = {this.state.errorMessage}
+                                                                                h={2}
                                                                             />
         return(
             <div>

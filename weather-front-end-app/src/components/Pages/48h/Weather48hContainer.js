@@ -69,7 +69,7 @@ class Weather48hContainer extends Component{
                                                             weather48h={this.state.weather48h} 
                                                             increaseNumberPage={this.increaseNumberPage} 
                                                             reduceNumberPage={this.reduceNumberPage}/>
-        const errorMessage = this.state.errorMessage!=='' && <ErrorMessage message={this.state.errorMessage}/>;                                                    
+        const errorMessage = this.state.errorMessage!=='' && <ErrorMessage h={2} message={this.state.errorMessage}/>;                                                    
         return(
             <div>
                 {content48h}

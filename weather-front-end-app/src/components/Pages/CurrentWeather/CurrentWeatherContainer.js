@@ -63,7 +63,7 @@ class CurrentWeatherContainer extends React.Component{
                                                                             forecast5Hours = {this.state.forecast5Hours}
                                                                             icon = {this.state.icon}
                                                                     />
-        const errorMessage = this.state.errorMessage !== '' && <ErrorMessage message = {this.state.errorMessage} />
+        const errorMessage = this.state.errorMessage !== '' && <ErrorMessage h={2} message = {this.state.errorMessage} />
         return(
             <div>
                 {currentWeather}

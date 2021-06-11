@@ -3,6 +3,7 @@ import AlertsService from '../services/AlertsService';
 import AreaService from '../services/AreaService';
 import IndicesService from '../services/IndicesService';
 import TimeConverter from '../services/TimeConverter';
+import ErrorMessage from "../ErrorMessage";
 
 var areasService = new AreaService();
 var alertsService = new AlertsService();
@@ -17,7 +18,8 @@ class AlertsIndicesContainer extends Component{
             mosquitoActivity:[],
             pollen:[],
             areas:[],
-            area:''
+            area:'',
+            errorMessage:''
         }
         this.searchAreas=this.searchAreas.bind(this);
         this.getAlertsIndices=this.getAlertsIndices.bind(this);
@@ -58,11 +60,19 @@ class AlertsIndicesContainer extends Component{
             await alertsService.getAlerts(this.state.area!==''?this.state.area:areaName).then(res => 
                 {   
                     // console.log(res)
-                    this.setState(
-                        {
-                            alerts:res,
-                            area:areaName
+                    if(res.status!=500){
+                        this.setState(
+                            {
+                                alerts:res,
+                                area:areaName,
+                                errorMessage:''
+                            })
+                    }else{
+                        this.setState({
+                            alerts:[],
+                            errorMessage:'Žao nam je, nema rezultata.'
                         })
+                    }
                 }
             );
         }
@@ -70,10 +80,18 @@ class AlertsIndicesContainer extends Component{
             await indicesService.getIndicesMosquito(this.state.area!==''?this.state.area:areaName).then(res => 
                 {   
                     // console.log(res)
-                    this.setState(
-                        {
-                            mosquitoActivity:res
+                    if(res.status!=500){
+                        this.setState(
+                            {
+                                mosquitoActivity:res,
+                                errorMessage:''
+                            })
+                    }else{
+                        this.setState({
+                            mosquitoActivity:[],
+                            errorMessage:'Žao nam je, nema rezultata.'
                         })
+                    }
                 }
             );
         }
@@ -81,10 +99,18 @@ class AlertsIndicesContainer extends Component{
             await indicesService.getIndicesPollen(this.state.area!==''?this.state.area:areaName).then(res => 
                 {   
                     // console.log(res)
-                    this.setState(
-                        {
-                            pollen:res
+                    if(res.status!=500){
+                        this.setState(
+                            {
+                                pollen:res,
+                                errorMessage:''
+                            })
+                    }else{
+                        this.setState({
+                            pollen:[],
+                            errorMessage:'Žao nam je, nema rezultata.'
                         })
+                    }
                 }
             );
         }
@@ -103,6 +129,7 @@ class AlertsIndicesContainer extends Component{
                                                                             })
         const mosquitoActivity = this.state.mosquitoActivity.length!=0 && <span><h6 className='mb-0'><b>Aktivnost komaraca:</b></h6> <p>{this.state.mosquitoActivity[0].text}</p></span> ;
         const indexPollen = this.state.pollen.length!=0 && <span><h6 className='mb-0'><b>Polen:</b></h6> {pollen}</span>;
+        const errorMessage = this.state.errorMessage !== '' && <ErrorMessage h={6} message = {this.state.errorMessage} />
         return(
             <div className='float-right w-25'>
                 <div className='alerts-indices-div'>
@@ -115,6 +142,7 @@ class AlertsIndicesContainer extends Component{
                     <p>{alert}</p>
                     {mosquitoActivity}
                     {indexPollen}
+                    {errorMessage}
                 </div>
             </div>
         )

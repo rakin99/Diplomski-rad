@@ -49,7 +49,7 @@ class Weather7DayContainer extends Component{
                                                                 cityName={this.state.cityName}
                                                                 weather7Days={this.state.weather7Days} 
                                                             />
-        const errorMessage = this.state.errorMessage!=='' && <ErrorMessage message = {this.state.errorMessage}/>
+        const errorMessage = this.state.errorMessage!=='' && <ErrorMessage h={2} message = {this.state.errorMessage}/>
         return(
             <div>
                 {content7Day}
