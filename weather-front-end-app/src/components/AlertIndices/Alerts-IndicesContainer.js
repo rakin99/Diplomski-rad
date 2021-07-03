@@ -24,6 +24,7 @@ class AlertsIndicesContainer extends Component{
         this.searchAreas=this.searchAreas.bind(this);
         this.getAlertsIndices=this.getAlertsIndices.bind(this);
         this.setArea=this.setArea.bind(this);
+        this.clearInput = this.clearInput.bind(this);
     }
 
     componentDidMount(){
@@ -46,21 +47,35 @@ class AlertsIndicesContainer extends Component{
 
     setArea(event){
         const areaName = event.target.value;
-        // console.log("Aread name:"+areaName);
-        localStorage.setItem('areaName',areaName);
+        console.log("Aread name:"+areaName); 
         this.setState({
             area:areaName
         })
     }
 
+    async clearInput(){
+        console.log("Clear input...")
+        await areasService.getAreas('').then(res => 
+            {   
+                console.log(res)
+                this.setState(
+                    {
+                        area:'',
+                        areas:res
+                    })
+            }
+        );
+    }
+
     async getAlertsIndices(){
-        const areaName = localStorage.getItem('areaName');
-        // console.log(areaName)
-        if(this.state.area!=='' || areaName!=null){
+        const areaName = this.state.area!==''?this.state.area:localStorage.getItem('areaName');
+        console.log('Area: '+areaName)
+        if(areaName!=null){
             await alertsService.getAlerts(this.state.area!==''?this.state.area:areaName).then(res => 
                 {   
                     // console.log(res)
                     if(res.status!=500){
+                        localStorage.setItem('areaName',areaName);
                         this.setState(
                             {
                                 alerts:res,
@@ -76,7 +91,7 @@ class AlertsIndicesContainer extends Component{
                 }
             );
         }
-        if(this.state.area!=='' || areaName!=null){
+        if(areaName!=null){
             await indicesService.getIndicesMosquito(this.state.area!==''?this.state.area:areaName).then(res => 
                 {   
                     // console.log(res)
@@ -95,7 +110,7 @@ class AlertsIndicesContainer extends Component{
                 }
             );
         }
-        if(this.state.area!=='' || areaName!=null){
+        if(areaName!=null){
             await indicesService.getIndicesPollen(this.state.area!==''?this.state.area:areaName).then(res => 
                 {   
                     // console.log(res)
@@ -117,6 +132,7 @@ class AlertsIndicesContainer extends Component{
     }
 
     render(){
+        // console.log(JSON.stringify(this.state.area))
         const effective_local = (this.state.alerts!=='' && this.state.alerts.alerts!==undefined && this.state.alerts.alerts.length!==0) && timeConverter.convertFromString(this.state.alerts.alerts[0].effective_local);
         const expires_local = (this.state.alerts!=='' && this.state.alerts.alerts!==undefined && this.state.alerts.alerts.length!==0) && timeConverter.convertFromString(this.state.alerts.alerts[0].expires_local);
         const alerts = (this.state.alerts!=='' && this.state.alerts.alerts!==undefined && this.state.alerts.alerts.length!==0) && <h6 className='mt-3 mb-0'><b>{effective_local} - {expires_local}</b></h6>;
@@ -133,8 +149,9 @@ class AlertsIndicesContainer extends Component{
         return(
             <div className='float-right w-25'>
                 <div className='alerts-indices-div'>
-                    <input list="areas" className='form-control form-control-sm col-10 d-inline' defaultValue={this.state.area} onKeyUp={this.searchAreas} onBlur={this.setArea}/>
+                    <input list="areas" className='form-control form-control-sm col-9 d-inline' value={this.state.area} onKeyUp={this.searchAreas} onChange={this.setArea}/>
                     <button className='ml-1 btn-light rounded' onClick={this.getAlertsIndices}>✓</button>
+                    <button className='ml-1 btn-light rounded' onClick={this.clearInput}>X</button>
                     <datalist id='areas'>
                         {areas}
                     </datalist>

@@ -5,7 +5,7 @@ class AreaService{
     }
   
     getAreas(searchString){
-      return fetch(`${this.url}?size=5&searchString=${searchString}`).then(res => res.json())
+      return fetch(`${this.url}?size=30&searchString=${searchString}`).then(res => res.json())
     }
   }
   
