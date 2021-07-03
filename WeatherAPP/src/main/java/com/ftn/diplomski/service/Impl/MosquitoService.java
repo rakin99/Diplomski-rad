@@ -41,14 +41,17 @@ public class MosquitoService implements MosquitoInterface {
 		return repository.save(mosquito);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public List<MosquitoDTO> getMosquito(String areaName) {
 		System.out.println("\nGet Mosquito");
 		Area area = areaService.findByName(areaName);
 		Date maxDate = maxDate(area.getKey());
 		List<Mosquito> mosquitos = null;
-		if(maxDate==null || (maxDate.getYear()<=new Date().getYear() && maxDate.getMonth()<=new Date().getMonth() && maxDate.getDate()<new Date().getDate())) {
+		maxDate.setTime(maxDate.getTime()+86400000);
+		Date d = new Date();
+		System.out.println("\nMax date: "+maxDate.getTime());
+		System.out.println("\nDate: "+d.getTime());
+		if(maxDate==null || (maxDate.getTime()<d.getTime())) {
 			mosquitos = getMosquitoFromApi(areaName);
 		}else {
 			mosquitos = getMosquitoFromDataBase(areaName);
@@ -60,6 +63,7 @@ public class MosquitoService implements MosquitoInterface {
 		return dtos;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public List<Mosquito> getMosquitoFromApi(String areaName) {
 		System.out.println("\ngetMosquitoFromApi");
@@ -90,6 +94,7 @@ public class MosquitoService implements MosquitoInterface {
 	    List<Mosquito> mosquitos = Arrays.asList(gson.fromJson(result, Mosquito[].class));
 	    for (Mosquito mosquito : mosquitos) {
 	    	mosquito.setKey(area.getKey());
+	    	mosquito.setLocalDateTime(new Date(mosquito.getLocalDateTime().getYear(),mosquito.getLocalDateTime().getMonth(),mosquito.getLocalDateTime().getDate()));
 			mosquito.setId(save(mosquito).getId());
 		}
 		return mosquitos;

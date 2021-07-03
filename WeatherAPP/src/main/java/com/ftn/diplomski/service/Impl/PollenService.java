@@ -36,14 +36,17 @@ public class PollenService implements PollenInterface {
 		return repository.save(pollen);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public List<PollenDTO> getPollen(String areaName) {
 		System.out.println("\nGet Pollen");
 		Area area = areaService.findByName(areaName);
 		Date maxDate = maxDate(area.getKey());
 		List<Pollen> pollen = null;
-		if(maxDate==null || (maxDate.getYear()<=new Date().getYear() && maxDate.getMonth()<=new Date().getMonth() && maxDate.getDate()<new Date().getDate())) {
+		maxDate.setTime(maxDate.getTime()+86400000);
+		Date d = new Date();
+		System.out.println("\nMax date: "+maxDate.getTime());
+		System.out.println("\nDate: "+d.getTime());
+		if(maxDate==null || (maxDate.getTime()<d.getTime())) {
 			pollen = getPollenFromApi(areaName);
 		}else {
 			pollen = getPollenFromDataBase(areaName);
@@ -55,6 +58,7 @@ public class PollenService implements PollenInterface {
 		return dtos;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public List<Pollen> getPollenFromApi(String areaName) {
 		System.out.println("\ngetPollenFromApi");
@@ -124,6 +128,7 @@ public class PollenService implements PollenInterface {
 	    List<Pollen> pollen = Arrays.asList(gson.fromJson(result, Pollen[].class));
 	    for (Pollen p : pollen) {
 	    	p.setKey(area.getKey());
+	    	p.setLocalDateTime(new Date(p.getLocalDateTime().getYear(),p.getLocalDateTime().getMonth(),p.getLocalDateTime().getDate()));
 	    	p.setId(save(p).getId());
 		}
 		return pollen;

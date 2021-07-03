@@ -37,14 +37,17 @@ public class AlertsService implements AlertsInterface {
 		return repository.save(alerts);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public AlertsDTO getAlerts(String areaName) {
 		System.out.println("\nGet alerts");
 		Area area = areaService.findByName(areaName);
 		Date maxDate = maxDate(area.getCoord().getLat(), area.getCoord().getLon());
+		maxDate.setTime(maxDate.getTime()+86400000);
+		Date d = new Date();
+		System.out.println("\nMax date: "+maxDate.getTime());
+		System.out.println("\nDate: "+d.toString());
 		Alerts alerts = null;
-		if(maxDate==null || (maxDate.getYear()<=new Date().getYear() && maxDate.getMonth()<=new Date().getMonth() && maxDate.getDate()<new Date().getDate())) {
+		if(maxDate==null || (maxDate.getTime()<d.getTime())) {
 			alerts = getAlertsFromApi(areaName);
 		}else {
 			alerts = getAlertsFromDataBase(areaName);
@@ -58,6 +61,7 @@ public class AlertsService implements AlertsInterface {
 		return repository.maxDate(lat,lon);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public Alerts getAlertsFromApi(String areaName) {
 		System.out.println("\ngetAlertsFromApi");
@@ -78,7 +82,9 @@ public class AlertsService implements AlertsInterface {
 	    gsonBuilder.registerTypeAdapter(Date.class, new DateDeserializer());
 	    Gson gson = gsonBuilder.create();
 		Alerts alerts = gson.fromJson(result.getBody(), Alerts.class);
-		alerts.setDate(new Date());
+		Date d = new Date();
+		Date date = new Date(d.getYear(),d.getMonth(),d.getDate());
+		alerts.setDate(date);
 		alerts.setAlertsMemberAlerts();
 		alerts = save(alerts);
 		return alerts;
