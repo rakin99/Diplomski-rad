@@ -11,6 +11,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import com.ftn.diplomski.model.AirPollution;
@@ -27,6 +28,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 @Service
+@Transactional(rollbackFor=Exception.class)
 public class MosquitoService implements MosquitoInterface {
 
 	@Autowired
@@ -44,18 +46,19 @@ public class MosquitoService implements MosquitoInterface {
 	@Override
 	public List<MosquitoDTO> getMosquito(String areaName) {
 		System.out.println("\nGet Mosquito");
-		Area area = areaService.findByName(areaName);
-		Date maxDate = maxDate(area.getKey());
+//		Area area = areaService.findByName(areaName);
+//		Date maxDate = maxDate();
+//		Date d = new Date();
+//		if(maxDate!=null) {
+//			maxDate.setTime(maxDate.getTime()+86400000);
+//			System.out.println("\nMax date: "+maxDate.getTime());
+//			System.out.println("\nDate: "+d.getTime());
+//		}
 		List<Mosquito> mosquitos = null;
-		maxDate.setTime(maxDate.getTime()+86400000);
-		Date d = new Date();
-		System.out.println("\nMax date: "+maxDate.getTime());
-		System.out.println("\nDate: "+d.getTime());
-		if(maxDate==null || (maxDate.getTime()<d.getTime())) {
-			mosquitos = getMosquitoFromApi(areaName);
-		}else {
-			mosquitos = getMosquitoFromDataBase(areaName);
-		}
+//		if(maxDate==null || (maxDate.getTime()<d.getTime())) {
+//			mosquitos = getMosquitoFromApi(area);
+//		}
+		mosquitos = getMosquitoFromDataBase(areaName);
 		List<MosquitoDTO> dtos = new ArrayList<MosquitoDTO>();
 		for (Mosquito mosquito : mosquitos) {
 			dtos.add(new MosquitoDTO(mosquito));
@@ -65,9 +68,9 @@ public class MosquitoService implements MosquitoInterface {
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public List<Mosquito> getMosquitoFromApi(String areaName) {
+	public List<Mosquito> getMosquitoFromApi(Area area) {
 		System.out.println("\ngetMosquitoFromApi");
-		Area area = areaService.findByName(areaName);
+//		Area area = areaService.findByName(areaName);
 		String uri = "http://dataservice.accuweather.com/indices/v1/daily/1day/"+area.getKey()+"/groups/59?apikey=epzdghDAHtEQdn0aSiCciSXpvny51yuT&language=sr&details=true";
 		
 	    RestTemplate restTemplate = new RestTemplate();
@@ -111,9 +114,31 @@ public class MosquitoService implements MosquitoInterface {
 	}
 
 	@Override
-	public Date maxDate(Long key) {
+	public Date maxDate() {
 		// TODO Auto-generated method stub
-		return repository.maxDate(key);
+		return repository.maxDate();
+	}
+
+	@Override
+	public void saveMosquitoForAllAreas() {
+		System.out.println("\nSave Mosquito For All Areas\n");
+		Date maxDate = maxDate();
+		Date d = new Date();
+		if(maxDate!=null) {
+			maxDate.setTime(maxDate.getTime()+86400000);
+//			System.out.println("\nMax date: "+maxDate.getTime());
+//			System.out.println("\nDate: "+d.toString());
+		}
+		if(maxDate==null || (maxDate.getTime()<d.getTime())) {
+			List<Area> areas = areaService.findAll();
+			System.out.println("Pocinjem sa zahtevima ka apiju");
+			for (Area area : areas) {
+					getMosquitoFromApi(area);
+			}
+			System.out.println("Sacuvao sve aktivnosti komaraca");
+		}else {
+			System.out.println("\nNisam prosao u IF!\n");
+		}
 	}
 
 }

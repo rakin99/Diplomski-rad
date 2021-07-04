@@ -36,4 +36,10 @@ public class AreaService implements AreaInterface{
 		return repository.findByName(name);
 	}
 
+	@Override
+	public List<Area> findAll() {
+		// TODO Auto-generated method stub
+		return repository.findAll();
+	}
+
 }

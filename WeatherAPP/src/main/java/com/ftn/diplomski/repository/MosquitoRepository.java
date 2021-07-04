@@ -11,9 +11,8 @@ import com.ftn.diplomski.model.Mosquito;
 
 public interface MosquitoRepository extends JpaRepository<Mosquito, Long> {
 
-	@Query(value = "SELECT max(local_date_time) FROM weather.mosquito\r\n" + 
-			"			where location_key=:key",nativeQuery = true)
-	Date maxDate(@Param("key") Long lat);
+	@Query(value = "SELECT max(local_date_time) FROM weather.mosquito\r\n",nativeQuery = true)
+	Date maxDate();
 
 	@Query(value = "SELECT * FROM weather.mosquito\r\n" + 
 			"where location_key=:key and day(local_date_time)=:day and month(local_date_time)=:month and year(local_date_time)=:year",nativeQuery = true)

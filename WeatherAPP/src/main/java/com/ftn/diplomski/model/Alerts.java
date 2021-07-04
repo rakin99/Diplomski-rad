@@ -25,7 +25,7 @@ public class Alerts implements Serializable{
 	@Column(name = "id_alerts", nullable = false, unique = true)
 	private Long id;
 	
-	@Column(name = "date", nullable = false, unique = true)
+	@Column(name = "date", nullable = false, unique = false)
 	private Date date;
 	
 	@Column(name = "country_code", nullable = false, unique = false)

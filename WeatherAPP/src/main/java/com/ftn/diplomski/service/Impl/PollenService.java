@@ -39,18 +39,19 @@ public class PollenService implements PollenInterface {
 	@Override
 	public List<PollenDTO> getPollen(String areaName) {
 		System.out.println("\nGet Pollen");
-		Area area = areaService.findByName(areaName);
-		Date maxDate = maxDate(area.getKey());
+//		Area area = areaService.findByName(areaName);
+//		Date maxDate = maxDate();
 		List<Pollen> pollen = null;
-		maxDate.setTime(maxDate.getTime()+86400000);
-		Date d = new Date();
-		System.out.println("\nMax date: "+maxDate.getTime());
-		System.out.println("\nDate: "+d.getTime());
-		if(maxDate==null || (maxDate.getTime()<d.getTime())) {
-			pollen = getPollenFromApi(areaName);
-		}else {
-			pollen = getPollenFromDataBase(areaName);
-		}
+//		Date d = new Date();
+//		if(maxDate!=null) {
+//			maxDate.setTime(maxDate.getTime()+86400000);
+////			System.out.println("\nMax date: "+maxDate.getTime());
+////			System.out.println("\nDate: "+d.getTime());
+//		}
+//		if(maxDate==null || (maxDate.getTime()<d.getTime())) {
+//			pollen = getPollenFromApi(area);
+//		}
+		pollen = getPollenFromDataBase(areaName);
 		List<PollenDTO> dtos = new ArrayList<PollenDTO>();
 		for (Pollen p : pollen) {
 			dtos.add(new PollenDTO(p));
@@ -60,9 +61,9 @@ public class PollenService implements PollenInterface {
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public List<Pollen> getPollenFromApi(String areaName) {
+	public List<Pollen> getPollenFromApi(Area area) {
 		System.out.println("\ngetPollenFromApi");
-		Area area = areaService.findByName(areaName);
+//		Area area = areaService.findByName(areaName);
 		String uri = "http://dataservice.accuweather.com/indices/v1/daily/1day/"+area.getKey()+"/groups/30?apikey=y54vBB02AY7sepadhRyLkWSw2P4II3kH&language=sr&details=true";
 		
 	    RestTemplate restTemplate = new RestTemplate();
@@ -145,9 +146,31 @@ public class PollenService implements PollenInterface {
 	}
 
 	@Override
-	public Date maxDate(Long key) {
+	public Date maxDate() {
 		// TODO Auto-generated method stub
-		return repository.maxDate(key);
+		return repository.maxDate();
+	}
+
+	@Override
+	public void savePollenForAllAreas() {
+		System.out.println("\nSave Pollen For All Areas\n");
+		Date maxDate = maxDate();
+		Date d = new Date();
+		if(maxDate!=null) {
+			maxDate.setTime(maxDate.getTime()+86400000);
+//			System.out.println("\nMax date: "+maxDate.getTime());
+//			System.out.println("\nDate: "+d.toString());
+		}
+		if(maxDate==null || (maxDate.getTime()<d.getTime())) {
+			List<Area> areas = areaService.findAll();
+			System.out.println("Pocinjem sa zahtevima ka apiju");
+			for (Area area : areas) {
+					getPollenFromApi(area);
+			}
+			System.out.println("Sacuvao nivo polena");
+		}else {
+			System.out.println("\nNisam prosao u IF!\n");
+		}
 	}
 
 }
