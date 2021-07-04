@@ -2,6 +2,8 @@ package com.ftn.diplomski.configuration;
 
 import java.util.Date;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -25,9 +27,16 @@ public class AutoRequestConfiguration {
 	private PollenInterface pollenService;
 	
 	@Scheduled(cron = "0 28 9 * * ?")
-	public void scheduleFixedDelayTask() {
+	public void autoRequestForApis() {
 		alertsService.saveAlertsForAllAreas();
 		mosquitoService.saveMosquitoForAllAreas();
 		pollenService.savePollenForAllAreas();
 	}
+
+    @PostConstruct
+    public void initRequestForApis() {
+    	alertsService.saveAlertsForAllAreas();
+		mosquitoService.saveMosquitoForAllAreas();
+		pollenService.savePollenForAllAreas();
+    }
 }
