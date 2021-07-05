@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import com.ftn.diplomski.model.Area;
@@ -22,6 +23,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 @Service
+@Transactional(rollbackFor=Exception.class)
 public class PollenService implements PollenInterface {
 
 	@Autowired

@@ -4,7 +4,11 @@ ALTER TABLE alert CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE alerts CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE mosquito CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE pollen CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+ALTER TABLE users CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE alert MODIFY description LONGTEXT;
+
+INSERT INTO users(id, username, password, role, alerts, area, last_search_area, last_search_place)--password: rakin99
+VALUES(1, 'rakindejan@gmail.com', '$2a$10$ICJS6CRYqX636bjUsKPQEenmASoFSycNdTKe78GEN9u2FINXSkHya', 'USER', true, 'Zapadnobački okrug', 'Mačvanski okrug', 'Novi Sad');
 
 INSERT INTO coordination(id_coord, lat_coord, lon_coord) VALUE(1,45.7742,19.1122);
 INSERT INTO area(name_area, id_coord, key_area) VALUE('Zapadnobački okrug',1,301401);

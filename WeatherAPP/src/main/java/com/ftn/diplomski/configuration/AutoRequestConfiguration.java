@@ -26,7 +26,7 @@ public class AutoRequestConfiguration {
 	@Autowired
 	private PollenInterface pollenService;
 	
-	@Scheduled(cron = "0 28 9 * * ?")
+	@Scheduled(cron = "0 00 10 * * ?")
 	public void autoRequestForApis() {
 		alertsService.saveAlertsForAllAreas();
 		mosquitoService.saveMosquitoForAllAreas();
