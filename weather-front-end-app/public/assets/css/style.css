@@ -89,6 +89,46 @@ footer{
     overflow:hidden;
 }
 
+.buttons .inner{float:right}
+
+.close {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    width: 32px;
+    height: 32px;
+    opacity: 0.3;
+  }
+
+  .close:hover {
+    opacity: 1;
+  }
+  .close:before, .close:after {
+    position: absolute;
+    left: 15px;
+    content: ' ';
+    height: 15px;
+    width: 2px;
+    background-color: #333;
+}
+
+.close:before {
+    transform: rotate(45deg);
+    
+}
+
+.close:after {
+    transform: rotate(-45deg);
+}
+
+.new-member-inner{width:450px;overflow:auto}
+
+.new-member-inner .form{border-bottom:1px solid silver;padding-bottom:25px;margin:0 0 15px;width:100%}
+
+.new-member-inner .form input[type='text']{width:100%}
+
+.new-member-inner .buttons .inner{text-align:center}
+
 header{
     height: 220px;
     background-image: url('../img/header-background.png');
@@ -168,11 +208,16 @@ body{
     color:#20308a;
 }
 
+#register{
+    border-right:none;
+}
+
 .header .user li{
     float:left;
     margin-right:10px;
     padding-right:10px;
     position:relative;
+    border-right:1px dotted #20308a;
 }
 
 .header .user li a{

@@ -47,7 +47,7 @@ class AlertsIndicesContainer extends Component{
 
     setArea(event){
         const areaName = event.target.value;
-        console.log("Aread name:"+areaName); 
+        // console.log("Aread name:"+areaName); 
         this.setState({
             area:areaName
         })
@@ -69,7 +69,7 @@ class AlertsIndicesContainer extends Component{
 
     async getAlertsIndices(){
         const areaName = this.state.area!==''?this.state.area:localStorage.getItem('areaName');
-        console.log('Area: '+areaName)
+        // console.log('Area: '+areaName)
         if(areaName!=null){
             await alertsService.getAlerts(this.state.area!==''?this.state.area:areaName).then(res => 
                 {   
@@ -149,7 +149,7 @@ class AlertsIndicesContainer extends Component{
         return(
             <div className='float-right w-25'>
                 <div className='alerts-indices-div'>
-                    <input list="areas" className='form-control form-control-sm col-9 d-inline' value={this.state.area} onKeyUp={this.searchAreas} onChange={this.setArea}/>
+                    <input list="areas" className='form-control form-control-sm col-9 d-inline' value={this.state.area} onKeyUp={this.searchAreas} onChange={this.setArea} onFocus={this.searchAreas}/>
                     <button className='ml-1 btn-light rounded' onClick={this.getAlertsIndices}>✓</button>
                     <button className='ml-1 btn-light rounded' onClick={this.clearInput}>X</button>
                     <datalist id='areas'>

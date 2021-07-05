@@ -10,9 +10,12 @@ class App extends Component {
     super();
     this.state = {
       searchPlace:'',
+      login:false,
+      register:false
     }
     this.search = this.search.bind(this);
     this.keyUp = this.keyUp.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   search(searchPlace){
@@ -26,12 +29,35 @@ class App extends Component {
     }
   }
 
+  handleClick(event){
+    const id = event.target.id;
+    if(id===''){
+      this.setState({
+        login:false,
+        register:false
+      })
+    }
+		this.setState(prevState => {
+      if(id.toLowerCase().includes('login')){
+        const updateState=!prevState.login
+        return{
+          login:updateState
+        }
+      }else if(id.toLowerCase().includes('register')){
+        const updateState=!prevState.register
+        return{
+          register:updateState
+        }
+      }
+		})
+  }
+
   render(){
     return (
       <div className="container">
         <Router>
-          <Header search = {this.search} keyUp = {this.keyUp}/>
-          <Content searchPlace = {this.state.searchPlace}/>
+          <Header search = {this.search} keyUp = {this.keyUp} handleClick = {this.handleClick}/>
+          <Content searchPlace = {this.state.searchPlace} login={this.state.login} register={this.state.register} handleClick = {this.handleClick}/>
           <Footer />
         </Router>
       </div>

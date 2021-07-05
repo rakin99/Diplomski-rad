@@ -5,15 +5,24 @@ import CurrentWeatherContainer from './Pages/CurrentWeather/CurrentWeatherContai
 import Weather48hContainer from './Pages/48h/Weather48hContainer'
 import AirPollutionContainer from './Pages/AirPollution/AirPollutionContainer'
 import AlertsIndicesContainer from './AlertIndices/Alerts-IndicesContainer'
+import Login from './Login'
+import Modal from 'react-awesome-modal';
+import Register from './Register'
 
 class Content extends Component{
 
     constructor(){
         super();
+        this.state={
+          isChecked:true
+        }
+        this.changeChecked=this.changeChecked.bind(this);
     }
 
-    componentDidUpdate(){
-        // console.log("Mesto u Content: "+this.props.mesto)
+    changeChecked(value){
+      this.setState({
+        isChecked:value
+      })
     }
 
     render(){
@@ -38,18 +47,51 @@ class Content extends Component{
             );
           }
 
+        const login = this.props.login && <Login 
+                          // handleSubmit={this.props.handleSubmit} 
+                          // add={this.props.add} 
+                          handleClick={this.props.handleClick}
+                          // newClient={this.props.newClient}
+                          // countries={this.props.countries}
+                        />
+        const register = this.props.register && <Register
+                          // handleSubmit={this.props.handleSubmit} 
+                          // add={this.props.add} 
+                          handleClick={this.props.handleClick}
+                          changeChecked={this.changeChecked}
+                          // newClient={this.props.newClient}
+                          // countries={this.props.countries}
+                        />
         return(
             <div className="main my_main">
-                <div className='float-left w-75 text-white'>
-                    <Switch>
-                        <PropsRoute path="/" exact component={CurrentWeatherContainer} searchPlace = {this.props.searchPlace}/>
-                        <PropsRoute path="/current-weather" component={CurrentWeatherContainer} searchPlace = {this.props.searchPlace}/>
-                        <PropsRoute path="/48h-weather" component={Weather48hContainer} searchPlace = {this.props.searchPlace}/>
-                        <PropsRoute path="/7-day-weather" component={Weather7DayContainer} searchPlace = {this.props.searchPlace}/>
-                        <PropsRoute path="/air-pollution" component={AirPollutionContainer} searchPlace = {this.props.searchPlace}/>
-                    </Switch>
-                </div>
-                <AlertsIndicesContainer />
+              <Modal
+                    visible={this.props.login}
+                    width="470px"
+                    height="300px"
+                    effect="fadeInUp"
+                    onClickAway={this.props.handleClick}
+					    >
+						    {login}
+              </Modal>
+              <Modal
+                    visible={this.props.register}
+                    width="470px"
+                    height={!this.state.isChecked ? "430px":"340px"}
+                    effect="fadeInUp"
+                    onClickAway={this.props.handleClick}
+					    >
+						    {register}
+              </Modal>
+              <div className='float-left w-75 text-white'>
+                  <Switch>
+                      <PropsRoute path="/" exact component={CurrentWeatherContainer} searchPlace = {this.props.searchPlace}/>
+                      <PropsRoute path="/current-weather" component={CurrentWeatherContainer} searchPlace = {this.props.searchPlace}/>
+                      <PropsRoute path="/48h-weather" component={Weather48hContainer} searchPlace = {this.props.searchPlace}/>
+                      <PropsRoute path="/7-day-weather" component={Weather7DayContainer} searchPlace = {this.props.searchPlace}/>
+                      <PropsRoute path="/air-pollution" component={AirPollutionContainer} searchPlace = {this.props.searchPlace}/>
+                  </Switch>
+              </div>
+              <AlertsIndicesContainer />
             </div>
         )
     }
