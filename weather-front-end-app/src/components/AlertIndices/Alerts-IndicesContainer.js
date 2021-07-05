@@ -54,10 +54,10 @@ class AlertsIndicesContainer extends Component{
     }
 
     async clearInput(){
-        console.log("Clear input...")
+        // console.log("Clear input...")
         await areasService.getAreas('').then(res => 
             {   
-                console.log(res)
+                // console.log(res)
                 this.setState(
                     {
                         area:'',

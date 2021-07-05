@@ -21,8 +21,25 @@ class Login extends Component{
         })
     }
 
-    handleSubmit(){
-        authenticationService.login(this.state)
+    async handleSubmit(){
+        authenticationService.login(this.state).then(res => 
+            {   
+                // console.log("Res: "+JSON.stringify({
+                //         username: this.state.username,
+                //         roles: authenticationService.getRoles(res.value),
+                //         token: res.value
+                //     }))
+                
+                if(res.status!=500){
+                    localStorage.setItem('loggedUser',JSON.stringify({
+                        username: this.state.username,
+                        roles: authenticationService.getRoles(res.value),
+                        token: res.value
+                    }));
+                }
+                authenticationService.getRolesFromStorage();
+            }
+        );
     }
 
     render(){

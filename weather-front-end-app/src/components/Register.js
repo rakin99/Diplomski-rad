@@ -53,7 +53,7 @@ class Register extends Component{
         }
     }
 
-    handleSubmit(event){
+    async handleSubmit(event){
         // console.log(JSON.stringify(this.state))
         var message=[];
         if(this.state.username.trim()===''){
@@ -78,7 +78,19 @@ class Register extends Component{
                 'password':this.state.password,
                 'alerts':this.state.alerts,
                 'area':this.state.area
-            });
+            }).then(res => 
+                {   
+                    // console.log("Res: "+JSON.stringify({
+                    //         username: this.state.username,
+                    //         roles: authenticationService.getRoles(res.value),
+                    //         token: res.value
+                    //     }))
+                    
+                    if(res.status!=500){
+                        alert('Uspešno ste se registrovali!')
+                    }
+                }
+            );
         }
     }
 
