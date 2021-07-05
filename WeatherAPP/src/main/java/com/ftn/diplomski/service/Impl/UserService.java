@@ -13,11 +13,13 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ftn.diplomski.model.User;
 import com.ftn.diplomski.modelDTO.JwtDTO;
 import com.ftn.diplomski.modelDTO.LoginDTO;
+import com.ftn.diplomski.modelDTO.UserDTO;
 import com.ftn.diplomski.repository.UserRepository;
 import com.ftn.diplomski.security.TokenUtils;
 import com.ftn.diplomski.service.UserInterface;
@@ -33,6 +35,9 @@ public class UserService implements UserInterface, UserDetailsService {
 	
 	@Autowired
 	private TokenUtils tokenUtils;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@Override
 	public JwtDTO login(LoginDTO dto) {
@@ -98,5 +103,22 @@ public class UserService implements UserInterface, UserDetailsService {
 	    		  user.getPassword(),
 	    		  grantedAuthorities);
 	    }
+	}
+
+	@Override
+	public UserDTO register(UserDTO dto) {
+		User existUser = this.findByUsername(dto.getUsername());
+		if (existUser != null) {
+			return null;
+		}
+		User user = new User();
+		user.setUsername(dto.getUsername());
+		user.setPassword(passwordEncoder.encode(dto.getPassword()));
+		user.setAlerts(dto.isAlerts());
+		user.setArea(dto.getArea());
+		user.setRole("USER");
+		
+		user = save(user);
+		return new UserDTO(user);
 	}
 }

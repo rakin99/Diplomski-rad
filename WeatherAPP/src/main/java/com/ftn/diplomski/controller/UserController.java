@@ -4,13 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.ftn.diplomski.modelDTO.JwtDTO;
 import com.ftn.diplomski.modelDTO.LoginDTO;
+import com.ftn.diplomski.modelDTO.UserDTO;
 import com.ftn.diplomski.service.UserInterface;
 import com.ftn.diplomski.service.Impl.UserService;
 
@@ -32,5 +35,15 @@ public class UserController {
         } catch (Exception ex) {
             return ResponseEntity.status(401).build();
         }
+	}
+	
+	@PostMapping("/register")
+	public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO dto, UriComponentsBuilder ucBuilder){
+		System.out.println("\nAdd User");
+		UserDTO user = userService.register(dto);
+		if(user==null) {
+			return ResponseEntity.status(409).build();
+		}
+		return new ResponseEntity<UserDTO>(user, HttpStatus.OK);
 	}
 }

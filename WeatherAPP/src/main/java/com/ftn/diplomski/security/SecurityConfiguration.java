@@ -60,7 +60,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
 			.authorizeRequests()
-				.antMatchers("/index.html", "/api/user/login").permitAll() //, "/api/register"
+				.antMatchers(
+						"/api/user/login",
+						"/api/user/register",
+						"/api/weather/current-weather",
+						"/api/weather/forecast-5-hours",
+						"/api/weather/forecast-48-hours",
+						"/api/weather/forecast-7-days",
+						"/api/indices/mosquitoes",
+						"/api/indices/pollen",
+						"/api/alerts",
+						"/api/area",
+						"/api/air-pollution/current-pollution",
+						"/api/air-pollution/forecast-pollution"
+						).permitAll() //, "/api/register"
 //				.antMatchers(HttpMethod.POST, "/api/**")
 //					.hasAuthority("ROLE_ADMINISTRATOR") //only administrator can add and edit data
 				.anyRequest().authenticated();
