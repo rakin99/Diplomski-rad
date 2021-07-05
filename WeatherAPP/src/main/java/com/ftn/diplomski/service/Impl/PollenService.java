@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import com.ftn.diplomski.model.Area;
@@ -22,6 +23,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 @Service
+@Transactional(rollbackFor=Exception.class)
 public class PollenService implements PollenInterface {
 
 	@Autowired
@@ -36,18 +38,22 @@ public class PollenService implements PollenInterface {
 		return repository.save(pollen);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public List<PollenDTO> getPollen(String areaName) {
 		System.out.println("\nGet Pollen");
-		Area area = areaService.findByName(areaName);
-		Date maxDate = maxDate(area.getKey());
+//		Area area = areaService.findByName(areaName);
+//		Date maxDate = maxDate();
 		List<Pollen> pollen = null;
-		if(maxDate==null || (maxDate.getYear()<=new Date().getYear() && maxDate.getMonth()<=new Date().getMonth() && maxDate.getDate()<new Date().getDate())) {
-			pollen = getPollenFromApi(areaName);
-		}else {
-			pollen = getPollenFromDataBase(areaName);
-		}
+//		Date d = new Date();
+//		if(maxDate!=null) {
+//			maxDate.setTime(maxDate.getTime()+86400000);
+////			System.out.println("\nMax date: "+maxDate.getTime());
+////			System.out.println("\nDate: "+d.getTime());
+//		}
+//		if(maxDate==null || (maxDate.getTime()<d.getTime())) {
+//			pollen = getPollenFromApi(area);
+//		}
+		pollen = getPollenFromDataBase(areaName);
 		List<PollenDTO> dtos = new ArrayList<PollenDTO>();
 		for (Pollen p : pollen) {
 			dtos.add(new PollenDTO(p));
@@ -55,10 +61,11 @@ public class PollenService implements PollenInterface {
 		return dtos;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
-	public List<Pollen> getPollenFromApi(String areaName) {
+	public List<Pollen> getPollenFromApi(Area area) {
 		System.out.println("\ngetPollenFromApi");
-		Area area = areaService.findByName(areaName);
+//		Area area = areaService.findByName(areaName);
 		String uri = "http://dataservice.accuweather.com/indices/v1/daily/1day/"+area.getKey()+"/groups/30?apikey=y54vBB02AY7sepadhRyLkWSw2P4II3kH&language=sr&details=true";
 		
 	    RestTemplate restTemplate = new RestTemplate();
@@ -124,6 +131,7 @@ public class PollenService implements PollenInterface {
 	    List<Pollen> pollen = Arrays.asList(gson.fromJson(result, Pollen[].class));
 	    for (Pollen p : pollen) {
 	    	p.setKey(area.getKey());
+	    	p.setLocalDateTime(new Date(p.getLocalDateTime().getYear(),p.getLocalDateTime().getMonth(),p.getLocalDateTime().getDate()));
 	    	p.setId(save(p).getId());
 		}
 		return pollen;
@@ -140,9 +148,31 @@ public class PollenService implements PollenInterface {
 	}
 
 	@Override
-	public Date maxDate(Long key) {
+	public Date maxDate() {
 		// TODO Auto-generated method stub
-		return repository.maxDate(key);
+		return repository.maxDate();
+	}
+
+	@Override
+	public void savePollenForAllAreas() {
+		System.out.println("\nSave Pollen For All Areas\n");
+		Date maxDate = maxDate();
+		Date d = new Date();
+		if(maxDate!=null) {
+			maxDate.setTime(maxDate.getTime()+86400000);
+//			System.out.println("\nMax date: "+maxDate.getTime());
+//			System.out.println("\nDate: "+d.toString());
+		}
+		if(maxDate==null || (maxDate.getTime()<d.getTime())) {
+			List<Area> areas = areaService.findAll();
+			System.out.println("Pocinjem sa zahtevima ka apiju");
+			for (Area area : areas) {
+					getPollenFromApi(area);
+			}
+			System.out.println("Sacuvao nivo polena");
+		}else {
+			System.out.println("\nNisam prosao u IF!\n");
+		}
 	}
 
 }

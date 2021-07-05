@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import com.ftn.diplomski.model.Alerts;
@@ -24,6 +25,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 @Service
+@Transactional(rollbackFor=Exception.class)
 public class AlertsService implements AlertsInterface {
 
 	@Autowired
@@ -37,31 +39,34 @@ public class AlertsService implements AlertsInterface {
 		return repository.save(alerts);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public AlertsDTO getAlerts(String areaName) {
 		System.out.println("\nGet alerts");
-		Area area = areaService.findByName(areaName);
-		Date maxDate = maxDate(area.getCoord().getLat(), area.getCoord().getLon());
+//		Area area = areaService.findByName(areaName);
+//		Date maxDate = maxDate();
+//		maxDate.setTime(maxDate.getTime()+86400000);
+//		Date d = new Date();
+//		System.out.println("\nMax date: "+maxDate.getTime());
+//		System.out.println("\nDate: "+d.toString());
 		Alerts alerts = null;
-		if(maxDate==null || (maxDate.getYear()<=new Date().getYear() && maxDate.getMonth()<=new Date().getMonth() && maxDate.getDate()<new Date().getDate())) {
-			alerts = getAlertsFromApi(areaName);
-		}else {
-			alerts = getAlertsFromDataBase(areaName);
-		}
+//		if(maxDate==null || (maxDate.getTime()<d.getTime())) {
+//			getAlertsFromApi(area);
+//		}
+		alerts = getAlertsFromDataBase(areaName);
 		return new AlertsDTO(alerts);
 	}
 
 	@Override
-	public Date maxDate(double lat,double lon) {
+	public Date maxDate() {
 		// TODO Auto-generated method stub
-		return repository.maxDate(lat,lon);
+		return repository.maxDate();
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
-	public Alerts getAlertsFromApi(String areaName) {
+	public void getAlertsFromApi(Area area) {
 		System.out.println("\ngetAlertsFromApi");
-		Area area = areaService.findByName(areaName);
+//		Area area = areaService.findByName(areaName);
 		String uri = "https://weatherbit-v1-mashape.p.rapidapi.com/alerts?lat="+area.getCoord().getLat()+"&lon="+area.getCoord().getLon()+"&units=metric&lang=sr";
 //		System.out.println(uri);
 		
@@ -78,10 +83,12 @@ public class AlertsService implements AlertsInterface {
 	    gsonBuilder.registerTypeAdapter(Date.class, new DateDeserializer());
 	    Gson gson = gsonBuilder.create();
 		Alerts alerts = gson.fromJson(result.getBody(), Alerts.class);
-		alerts.setDate(new Date());
+		Date d = new Date();
+		Date date = new Date(d.getYear(),d.getMonth(),d.getDate());
+		alerts.setDate(date);
 		alerts.setAlertsMemberAlerts();
 		alerts = save(alerts);
-		return alerts;
+//		return alerts;
 	}
 
 	@SuppressWarnings("deprecation")
@@ -94,4 +101,25 @@ public class AlertsService implements AlertsInterface {
 		return alerts;
 	}
 
+	@Override
+	public void saveAlertsForAllAreas() {
+		System.out.println("\nSave Alerts For All Areas\n");
+		Date maxDate = maxDate();
+		Date d = new Date();
+		if(maxDate!=null) {
+			maxDate.setTime(maxDate.getTime()+86400000);
+//			System.out.println("\nMax date: "+maxDate.getTime());
+//			System.out.println("\nDate: "+d.toString());
+		}
+		if(maxDate==null || (maxDate.getTime()<d.getTime())) {
+			List<Area> areas = areaService.findAll();
+			System.out.println("Pocinjem sa zahtevima ka apiju");
+			for (Area area : areas) {
+					getAlertsFromApi(area);
+			}
+			System.out.println("Sacuvao sva upozorenja");
+		}else {
+			System.out.println("\nNisam prosao u IF!\n");
+		}
+	}
 }

@@ -115,6 +115,7 @@ public class Pollen implements Serializable{
 		return LocalDateTime;
 	}
 
+	@SuppressWarnings("deprecation")
 	public void setLocalDateTime(Date localDateTime) {
 		LocalDateTime = localDateTime;
 	}

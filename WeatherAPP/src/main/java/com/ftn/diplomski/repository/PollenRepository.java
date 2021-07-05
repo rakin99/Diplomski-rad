@@ -10,9 +10,8 @@ import com.ftn.diplomski.model.Pollen;
 
 public interface PollenRepository extends JpaRepository<Pollen, Long>{
 
-	@Query(value = "SELECT max(local_date_time) FROM weather.pollen\r\n" + 
-			"			where location_key=:key",nativeQuery = true)
-	Date maxDate(@Param("key") Long lat);
+	@Query(value = "SELECT max(local_date_time) FROM weather.pollen\r\n",nativeQuery = true)
+	Date maxDate();
 
 	@Query(value = "SELECT * FROM weather.pollen\r\n" + 
 			"where location_key=:key and day(local_date_time)=:day and month(local_date_time)=:month and year(local_date_time)=:year",nativeQuery = true)
