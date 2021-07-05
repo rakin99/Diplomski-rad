@@ -56,7 +56,7 @@ class Login extends Component{
                     <h2>Prijava</h2>
                     <ul className="form">
                         <li>
-                            <label>Korisničko ime:</label>
+                            <label>E-mail:</label>
                             <input type="text" name="username" defaultValue={this.state.username} className="form-control mr-sm-1" />
                         </li>								
                         <li>
