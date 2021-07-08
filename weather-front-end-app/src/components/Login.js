@@ -22,7 +22,7 @@ class Login extends Component{
     }
 
     async handleSubmit(){
-        authenticationService.login(this.state).then(res => 
+        await authenticationService.login(this.state).then(res => 
             {   
                 // console.log("Res: "+JSON.stringify({
                 //         username: this.state.username,
@@ -36,8 +36,8 @@ class Login extends Component{
                         roles: authenticationService.getRoles(res.value),
                         token: res.value
                     }));
+                    this.props.getLoggedUser();
                 }
-                authenticationService.getRolesFromStorage();
             }
         );
     }

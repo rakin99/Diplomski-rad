@@ -2,8 +2,10 @@ import React from "react"
 import WeatherService from "../../services/WeatherService"
 import CurrentWeather from "./CurrentWeather"
 import ErrorMessage from "../../ErrorMessage";
+import AuthenticationService from "../../services/AuthenticationService";
 
 var weatherService = new WeatherService();
+var authenticationService = new AuthenticationService();
 class CurrentWeatherContainer extends React.Component{
 
     constructor(){
@@ -18,12 +20,21 @@ class CurrentWeatherContainer extends React.Component{
         this.search=this.search.bind(this);
     }
 
-    componentDidMount(){
+    async componentDidMount(){
         const searchPlace = localStorage.getItem('searchPlace');
         if(this.props.searchPlace!==''){
             this.search(this.props.searchPlace)
-        }else if(searchPlace!=null){
-            console.log("Else if")
+        }else if(authenticationService.getUserFromStorage()!=null){
+            await authenticationService.getLoggedUser().then(res =>{
+                if(res.id>0){
+                    this.search(res.lastSearchPlace);
+                }else{
+                    this.search('Novi Sad');
+                }
+            });
+        }
+        else if(searchPlace!=null){
+            // console.log("Else if")
             this.search(localStorage.getItem('searchPlace'))
         }else{
             this.search('Novi Sad') 

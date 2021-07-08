@@ -4,11 +4,13 @@ import AreaService from '../services/AreaService';
 import IndicesService from '../services/IndicesService';
 import TimeConverter from '../services/TimeConverter';
 import ErrorMessage from "../ErrorMessage";
+import AuthenticationService from '../services/AuthenticationService';
 
 var areasService = new AreaService();
 var alertsService = new AlertsService();
 var indicesService = new IndicesService();
 var timeConverter = new TimeConverter();
+var authenticationService = new AuthenticationService();
 class AlertsIndicesContainer extends Component{
     
     constructor(){
@@ -25,6 +27,9 @@ class AlertsIndicesContainer extends Component{
         this.getAlertsIndices=this.getAlertsIndices.bind(this);
         this.setArea=this.setArea.bind(this);
         this.clearInput = this.clearInput.bind(this);
+        this.getAlerts=this.getAlerts.bind(this);
+        this.getMosquito=this.getMosquito.bind(this);
+        this.getPollen=this.getPollen.bind(this);
     }
 
     componentDidMount(){
@@ -69,66 +74,84 @@ class AlertsIndicesContainer extends Component{
 
     async getAlertsIndices(){
         const areaName = this.state.area!==''?this.state.area:localStorage.getItem('areaName');
-        // console.log('Area: '+areaName)
-        if(areaName!=null){
-            await alertsService.getAlerts(this.state.area!==''?this.state.area:areaName).then(res => 
-                {   
-                    // console.log(res)
-                    if(res.status!=500){
-                        localStorage.setItem('areaName',areaName);
-                        this.setState(
-                            {
-                                alerts:res,
-                                area:areaName,
-                                errorMessage:''
-                            })
-                    }else{
-                        this.setState({
-                            alerts:[],
-                            errorMessage:'Žao nam je, nema rezultata.'
-                        })
-                    }
+        
+        if(authenticationService.getUserFromStorage()!=null){
+            await authenticationService.getLoggedUser().then(res =>{
+                console.log(JSON.stringify(res))
+                if(res.id>0){
+                    this.getAlerts(res.lastSearchArea);
+                    this.getMosquito(res.lastSearchArea);
+                    this.getPollen(res.lastSearchArea);
                 }
-            );
+            });
         }
         if(areaName!=null){
-            await indicesService.getIndicesMosquito(this.state.area!==''?this.state.area:areaName).then(res => 
-                {   
-                    // console.log(res)
-                    if(res.status!=500){
-                        this.setState(
-                            {
-                                mosquitoActivity:res,
-                                errorMessage:''
-                            })
-                    }else{
-                        this.setState({
-                            mosquitoActivity:[],
-                            errorMessage:'Žao nam je, nema rezultata.'
-                        })
-                    }
-                }
-            );
+            this.getAlerts(areaName);
+            this.getMosquito(areaName);
+            this.getPollen(areaName);
         }
-        if(areaName!=null){
-            await indicesService.getIndicesPollen(this.state.area!==''?this.state.area:areaName).then(res => 
-                {   
-                    // console.log(res)
-                    if(res.status!=500){
-                        this.setState(
-                            {
-                                pollen:res,
-                                errorMessage:''
-                            })
-                    }else{
-                        this.setState({
-                            pollen:[],
-                            errorMessage:'Žao nam je, nema rezultata.'
+    }
+
+    async getAlerts(areaName){
+        await alertsService.getAlerts(this.state.area!==''?this.state.area:areaName).then(res => 
+            {   
+                // console.log(res)
+                if(res.status!=500){
+                    localStorage.setItem('areaName',areaName);
+                    this.setState(
+                        {
+                            alerts:res,
+                            area:areaName,
+                            errorMessage:''
                         })
-                    }
+                }else{
+                    this.setState({
+                        alerts:[],
+                        errorMessage:'Žao nam je, nema rezultata.'
+                    })
                 }
-            );
-        }
+            }
+        );
+    }
+
+    async getMosquito(areaName){
+        await indicesService.getIndicesMosquito(this.state.area!==''?this.state.area:areaName).then(res => 
+            {   
+                // console.log(res)
+                if(res.status!=500){
+                    this.setState(
+                        {
+                            mosquitoActivity:res,
+                            errorMessage:''
+                        })
+                }else{
+                    this.setState({
+                        mosquitoActivity:[],
+                        errorMessage:'Žao nam je, nema rezultata.'
+                    })
+                }
+            }
+        );
+    }
+
+    async getPollen(areaName){
+        await indicesService.getIndicesPollen(this.state.area!==''?this.state.area:areaName).then(res => 
+            {   
+                // console.log(res)
+                if(res.status!=500){
+                    this.setState(
+                        {
+                            pollen:res,
+                            errorMessage:''
+                        })
+                }else{
+                    this.setState({
+                        pollen:[],
+                        errorMessage:'Žao nam je, nema rezultata.'
+                    })
+                }
+            }
+        );
     }
 
     render(){
