@@ -1,5 +1,6 @@
 package com.ftn.diplomski.service.Impl;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,7 +87,6 @@ public class UserService implements UserInterface, UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = repository.findOneByUsername(username);
-
 	    if (user == null) {
 	      throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
 	    } else {
@@ -120,5 +120,42 @@ public class UserService implements UserInterface, UserDetailsService {
 		
 		user = save(user);
 		return new UserDTO(user);
+	}
+
+	@Override
+	public void changeSearchPlace(Principal principal,String searchPlace) {
+		if(principal!=null) {
+			System.out.println("\nE-mail: "+principal.getName());
+			User user = repository.findOneByUsername(principal.getName());
+			user.setLastSearchPlace(searchPlace);
+			repository.save(user);
+		}else {
+			System.out.println("\nPrincipal je null!");
+		}
+	}
+
+	@Override
+	public void changeSearchArea(Principal principal, String searchArea) {
+		if(principal!=null) {
+			System.out.println("\nE-mail: "+principal.getName());
+			User user = repository.findOneByUsername(principal.getName());
+			user.setLastSearchArea(searchArea);
+			repository.save(user);
+		}else {
+			System.out.println("\nPrincipal je null!");
+		}
+	}
+
+	@Override
+	public UserDTO getLoggedUser(Principal principal) {
+		if(principal!=null) {
+			return new UserDTO(findByUsername(principal.getName()));
+		}
+		return new UserDTO();
+	}
+
+	@Override
+	public List<User> findByArea(String area) {
+		return repository.findByArea(area);
 	}
 }

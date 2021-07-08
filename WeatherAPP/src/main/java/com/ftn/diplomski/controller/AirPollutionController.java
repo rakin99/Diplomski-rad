@@ -1,5 +1,7 @@
 package com.ftn.diplomski.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.ftn.diplomski.modelDTO.AirPollutionDTO;
 import com.ftn.diplomski.service.AirPollutionInterface;
+import com.ftn.diplomski.service.UserInterface;
 
 @CrossOrigin(origins = "*", maxAge = 3600,methods = {	RequestMethod.DELETE,
 		RequestMethod.GET,
@@ -25,8 +28,12 @@ public class AirPollutionController {
 	@Autowired
 	private AirPollutionInterface apS;
 	
+	@Autowired
+	private UserInterface userService;
+	
 	@GetMapping(value = "/current-pollution")
-	public ResponseEntity<AirPollutionDTO> getCurrentAirPollution(@RequestParam String searchPlace){
+	public ResponseEntity<AirPollutionDTO> getCurrentAirPollution(@RequestParam String searchPlace,Principal principal){
+		userService.changeSearchPlace(principal, searchPlace);
 		try {
 			return ResponseEntity.ok().body(apS.getCurrentAirPollution(searchPlace));
 		}catch (Exception e) {
@@ -37,7 +44,8 @@ public class AirPollutionController {
 	}
 	
 	@GetMapping(value = "/forecast-pollution")
-	public ResponseEntity<AirPollutionDTO> getForecastAirPollution(@RequestParam String searchPlace){
+	public ResponseEntity<AirPollutionDTO> getForecastAirPollution(@RequestParam String searchPlace,Principal principal){
+		userService.changeSearchPlace(principal, searchPlace);
 		try {
 			return ResponseEntity.ok().body(apS.getForecastAirPollution(searchPlace));
 		}catch (Exception e) {

@@ -122,4 +122,11 @@ public class AlertsService implements AlertsInterface {
 			System.out.println("\nNisam prosao u IF!\n");
 		}
 	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	public List<Alerts> getAllAlertsFromDataBase() {
+		// TODO Auto-generated method stub
+		return repository.getAllAlertsFromDataBase(new Date().getDate(), new Date().getMonth()+1, new Date().getYear()+1900);
+	}
 }
