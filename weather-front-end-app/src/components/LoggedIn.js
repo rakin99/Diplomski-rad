@@ -6,9 +6,7 @@ class LoggedIn extends Component{
         return(
             <ul className="user">
                 <li id="loggedIn" >
-                    <a href="#"
-                        onClick={this.props.handleClick}
-                    ><b id="login">Prijavi se</b></a>
+                    <a href="#"><b id="login">{this.props.loggedIn.username}</b></a>
                     <div className="invisible1"></div>
                     <div className="user-menu">
                         <ul style={{padding:'0px'}}>
@@ -16,13 +14,10 @@ class LoggedIn extends Component{
                                 <a href="#" className="link">Change password</a>
                             </li>
                             <li style={{padding:'0px'}}>
-                                <a href="#" className="link">Logout</a>
+                                <a href="#" className="link" onClick={this.props.logout}>Logout</a>
                             </li>
                         </ul>
                     </div>
-                </li>
-                <li id="register" className="last">
-                    <a href="#" onClick={this.props.handleClick}><b id='register'>Registracija</b></a>
                 </li>
             </ul>
         )

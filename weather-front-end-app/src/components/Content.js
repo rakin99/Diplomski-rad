@@ -51,6 +51,7 @@ class Content extends Component{
                           // handleSubmit={this.props.handleSubmit} 
                           // add={this.props.add} 
                           handleClick={this.props.handleClick}
+                          getLoggedUser={this.props.getLoggedUser}
                           // newClient={this.props.newClient}
                           // countries={this.props.countries}
                         />
