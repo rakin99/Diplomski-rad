@@ -20,6 +20,7 @@ class Register extends Component{
         this.handleChange=this.handleChange.bind(this);
         this.handleSubmit=this.handleSubmit.bind(this);
         this.searchAreas=this.searchAreas.bind(this);
+        this.check=this.check.bind(this);
     }
 
     async searchAreas(event){
@@ -36,21 +37,35 @@ class Register extends Component{
         );
     }
 
-    handleChange(event){
-        if(event.target.type==='checkbox'){
-            this.setState(prevState=>{
-                const updateState=!prevState.alerts;
-                this.props.changeChecked(updateState);
-                return{
-                    alerts:updateState
-                }
+    async componentDidMount(){
+        if(this.props.settings){
+            await authenticationService.getLoggedUser().then(res=>{
+                this.setState({
+                    username:res.username,
+                    alerts:res.alerts,
+                    area:res.area
+                })
             })
-        }else{
+        }
+    }
+
+    handleChange(event){
+        if(event.target.type!=='checkbox'){
             const {name,value} = event.target;
             this.setState({
                 [name]:value
             })
         }
+    }
+
+    check(){
+        this.setState(prevState=>{
+            const updateState=!prevState.alerts;
+            this.props.changeChecked(updateState);
+            return{
+                alerts:updateState
+            }
+        })
     }
 
     async handleSubmit(event){
@@ -59,7 +74,7 @@ class Register extends Component{
         if(this.state.username.trim()===''){
             message.push("Unesite korisničko ime!")
         }
-        if(this.state.password.trim()===''){
+        if(this.state.password.trim()==='' && !this.props.settings){
             message.push("Unesite lozinku!")
         }
         if(this.state.password.trim()!==this.state.repeatPassword.trim()){
@@ -72,30 +87,38 @@ class Register extends Component{
             errorMessage:message
         })
         if(message.length==0){
-            this.props.handleClick(event);
-            authenticationService.register({
-                'username':this.state.username,
-                'password':this.state.password,
-                'alerts':this.state.alerts,
-                'area':this.state.area
-            }).then(res => 
-                {   
-                    // console.log("Res: "+JSON.stringify({
-                    //         username: this.state.username,
-                    //         roles: authenticationService.getRoles(res.value),
-                    //         token: res.value
-                    //     }))
-                    
-                    if(res.status!=500){
-                        alert('Uspešno ste se registrovali!')
+            if(!this.props.settings){
+                authenticationService.register({
+                    'username':this.state.username,
+                    'password':this.state.password,
+                    'alerts':this.state.alerts,
+                    'area':this.state.area
+                }).then(res => 
+                    {   
+                        if(res.status!=500){
+                            alert('Uspešno ste se registrovali!')
+                        }
                     }
-                }
-            );
+                );
+            }else{
+                authenticationService.edit({
+                    'username':this.state.username,
+                    'password':this.state.password,
+                    'alerts':this.state.alerts,
+                    'area':this.state.area
+                }).then(res => 
+                    {   
+                        if(res.status!=500){
+                            alert('Ažuriranje je uspešno!')
+                        }
+                    }
+                );
+            }
+            this.props.handleClick(event);
         }
     }
 
     render(){
-        console.log(this.state.errorMessage.length)
         const listAreas = this.state.areas.length != 0 && this.state.areas.map(a=>{
             return <option key={a.id} value={a.name}></option>
         })
@@ -110,11 +133,15 @@ class Register extends Component{
                                                     name='area'
                                                     className='form-control form-control-sm col-9 d-inline'  
                                                     onKeyUp={this.searchAreas}
+                                                    defaultValue={this.state.area}
                                                 />
                                                 <datalist id='areas'>
                                                     {listAreas}
                                                 </datalist>
                                             </li>
+        const head = this.props.settings? <h2>Podešavanja</h2>:<h2>Registracija</h2>
+        const username = this.props.settings? <input type="text" readOnly name="username" defaultValue={this.state.username} className="form-control mr-sm-1" />:
+                                                            <input type="text" name="username" defaultValue={this.state.username} className="form-control mr-sm-1" />
         return(
         <div className="align-middle" style={{
             backgroundColor:'white', 
@@ -126,11 +153,11 @@ class Register extends Component{
                                                     }}/>
             <div onChange={this.handleChange}>
                 <div className="new-member-inner">
-                    <h2>Registracija</h2>
+                    {head}
                     <ul className="form">
                         <li>
                             <label>E-mail:</label>
-                            <input type="text" name="username" defaultValue={this.state.username} className="form-control mr-sm-1" />
+                            {username}
                         </li>								
                         <li>
                             <label>Lozinka:</label>
@@ -143,7 +170,7 @@ class Register extends Component{
                         <li>
                             <p className="form-check-label">Da li želite da dobijate upozorenja o vremenskim uslovima?</p>
                             <div className="text-center">
-                                <input type="checkbox" name="alerts" id="alerts" defaultValue={this.state.alerts} className="form-check-input" />
+                                <input type="checkbox" name="alerts" id="alerts" checked={this.state.alerts} onChange={this.check} className="form-check-input" />
                             </div>
                         </li>
                         {areas}

@@ -8,7 +8,8 @@ class Login extends Component{
         super()
         this.state={
             username:'',
-            password:''
+            password:'',
+            errorMessage:''
         }
         this.handleChange=this.handleChange.bind(this);
         this.handleSubmit=this.handleSubmit.bind(this);
@@ -21,7 +22,7 @@ class Login extends Component{
         })
     }
 
-    async handleSubmit(){
+    async handleSubmit(event){
         await authenticationService.login(this.state).then(res => 
             {   
                 // console.log("Res: "+JSON.stringify({
@@ -29,20 +30,26 @@ class Login extends Component{
                 //         roles: authenticationService.getRoles(res.value),
                 //         token: res.value
                 //     }))
-                
-                if(res.status!=500){
+                if(res.status==401){
+                    this.setState({
+                        errorMessage:"E-mail ili lozinka nisu ispravni.\nPokušajte ponovo."
+                    })
+                }
+                else if(res.status!=500){
                     localStorage.setItem('loggedUser',JSON.stringify({
                         username: this.state.username,
                         roles: authenticationService.getRoles(res.value),
                         token: res.value
                     }));
                     this.props.getLoggedUser();
+                    this.props.handleClick(event);
                 }
             }
         );
     }
 
     render(){
+        const errorMessage=this.state.errorMessage!=='' && <p className="font-10pt mt-0 mb-2 text-danger"><b>{this.state.errorMessage}</b></p>
         return(
         <div style={{
             backgroundColor:'white', 
@@ -64,10 +71,10 @@ class Login extends Component{
                             <input type="password" name="password" defaultValue={this.state.password} className="form-control mr-sm-1" />
                         </li>
                     </ul>
+                    {errorMessage}
                     <div className="text-center">
                         <button id="submitLogin" className="btn btn-primary" onClick={(e)=>{
-                                                                    this.handleSubmit(this.state)
-                                                                    this.props.handleClick(e)}}>Prijavi se</button>
+                                                                    this.handleSubmit(e)}}>Prijavi se</button>
                     </div>
                 </div>
             </div>

@@ -11,10 +11,10 @@ class LoggedIn extends Component{
                     <div className="user-menu">
                         <ul style={{padding:'0px'}}>
                             <li style={{padding:'0px'}}>
-                                <a href="#" className="link">Change password</a>
+                                <a href="#" className="link" onClick={()=>{this.props.setSettings(true)}}>Podešavanja</a>
                             </li>
                             <li style={{padding:'0px'}}>
-                                <a href="#" className="link" onClick={this.props.logout}>Logout</a>
+                                <a href="#" className="link" onClick={this.props.logout}>Odjavi me</a>
                             </li>
                         </ul>
                     </div>

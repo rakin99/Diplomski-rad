@@ -49,7 +49,6 @@ class AlertsIndicesContainer extends Component{
             if(this.props.loggedIn.id>0){
                 console.log("Update drugi IF")
                 await authenticationService.getLoggedUser().then(res=>{
-                    console.log(res.lastSearchArea)
                     this.getAlerts(res.lastSearchArea!==''?res.lastSearchArea:localStorage.getItem('areaName'));
                     this.getMosquito(res.lastSearchArea!==''?res.lastSearchArea:localStorage.getItem('areaName'));
                     this.getPollen(res.lastSearchArea!==''?res.lastSearchArea:localStorage.getItem('areaName')); 
