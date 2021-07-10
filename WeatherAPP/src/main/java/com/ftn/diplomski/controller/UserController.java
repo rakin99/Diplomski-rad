@@ -34,11 +34,12 @@ public class UserController {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<JwtDTO> login(@RequestBody LoginDTO dto) {
-		try {
+		JwtDTO jwt = userService.login(dto);
+		if(jwt!=null) {
+			System.out.println("\nProsao sam if");
 			return new ResponseEntity<JwtDTO>(userService.login(dto), HttpStatus.OK);
-        } catch (Exception ex) {
-            return ResponseEntity.status(401).build();
         }
+        return ResponseEntity.status(401).build();
 	}
 	
 	@PostMapping("/register")
@@ -48,6 +49,13 @@ public class UserController {
 		if(user==null) {
 			return ResponseEntity.status(409).build();
 		}
+		return new ResponseEntity<UserDTO>(user, HttpStatus.OK);
+	}
+	
+	@PostMapping("/edit")
+	public ResponseEntity<UserDTO> editUser(@RequestBody UserDTO dto, UriComponentsBuilder ucBuilder){
+		System.out.println("\nEdit User");
+		UserDTO user = userService.edit(dto);
 		return new ResponseEntity<UserDTO>(user, HttpStatus.OK);
 	}
 	

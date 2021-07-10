@@ -1,6 +1,5 @@
 package com.ftn.diplomski.configuration;
 
-import java.util.Date;
 
 import javax.annotation.PostConstruct;
 
@@ -32,7 +31,7 @@ public class AutoRequestConfiguration {
 	
 	@Scheduled(cron = "0 15 12 * * ?")
 	public void autoRequestForApis() {
-//		alertsService.saveAlertsForAllAreas();
+		alertsService.saveAlertsForAllAreas();
 		mosquitoService.saveMosquitoForAllAreas();
 		pollenService.savePollenForAllAreas();
 		mailService.preapareMail();

@@ -158,4 +158,16 @@ public class UserService implements UserInterface, UserDetailsService {
 	public List<User> findByArea(String area) {
 		return repository.findByArea(area);
 	}
+
+	@Override
+	public UserDTO edit(UserDTO dto) {
+		User user = findByUsername(dto.getUsername());
+		if(!dto.getPassword().trim().equals("") && !passwordEncoder.encode(dto.getPassword()).equals(user.getPassword())) {
+			user.setPassword(passwordEncoder.encode(dto.getPassword()));
+		}
+		user.setAlerts(dto.isAlerts());
+		user.setArea(dto.getArea());
+		user = save(user);
+		return new UserDTO(user);
+	}
 }
