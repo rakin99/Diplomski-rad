@@ -50,9 +50,9 @@ class AlertsIndicesContainer extends Component{
                 console.log("Update drugi IF")
                 await authenticationService.getLoggedUser().then(res=>{
                     console.log(res.lastSearchArea)
-                    this.getAlerts(res.lastSearchArea);
-                    this.getMosquito(res.lastSearchArea);
-                    this.getPollen(res.lastSearchArea); 
+                    this.getAlerts(res.lastSearchArea!==''?res.lastSearchArea:localStorage.getItem('areaName'));
+                    this.getMosquito(res.lastSearchArea!==''?res.lastSearchArea:localStorage.getItem('areaName'));
+                    this.getPollen(res.lastSearchArea!==''?res.lastSearchArea:localStorage.getItem('areaName')); 
                 })
             }else{
                 this.getAlertsIndices()

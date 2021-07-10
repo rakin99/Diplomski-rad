@@ -67,7 +67,8 @@ class App extends Component {
             // console.log("\nGet logged user!")
             this.setState({
               loggedIn:res,
-              loggedUser:res.username
+              loggedUser:res.username,
+              searchPlace:res.lastSearchPlace
             })
         }
     );
