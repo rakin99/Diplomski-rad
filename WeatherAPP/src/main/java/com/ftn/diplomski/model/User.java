@@ -53,7 +53,13 @@ public class User {
 
 	public User() {
 		super();
-		// TODO Auto-generated constructor stub
+		this.username = "";
+		this.password = "";
+		this.role = "";
+		this.alerts = false;
+		this.area = "";
+		this.lastSearchArea = "";
+		this.lastSearchPlace = "";
 	}
 
 	public Long getId() {
