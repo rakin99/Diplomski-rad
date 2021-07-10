@@ -15,6 +15,7 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ftn.diplomski.model.Alert;
 import com.ftn.diplomski.model.Alerts;
 import com.ftn.diplomski.model.User;
 import com.ftn.diplomski.service.AlertsInterface;
@@ -30,6 +31,7 @@ public class MailService implements MailInterface {
 	@Autowired
 	private UserInterface userService;
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public void preapareMail() {
 		List<User> users = userService.findAll();
@@ -37,10 +39,13 @@ public class MailService implements MailInterface {
 			if(user.isAlerts()) {
 				Alerts alerts = alertsService.getAlertsFromDataBase(user.getArea());
 				if(alerts.getAlerts().size()>0) {
-					int index = alerts.getAlerts().get(0).getDescription().indexOf("(sr):")+6;
-					String desc = alerts.getAlerts().get(0).getDescription().substring(index);
-					System.out.println("\nDes: "+desc);
-					sendMail(user.getUsername(), desc);
+					StringBuilder desc = new StringBuilder(100);
+					for(Alert a : alerts.getAlerts()) {
+						int index = a.getDescription().indexOf("(sr):")+6;
+						desc.append("\n\n"+a.getEffective_utc().toGMTString()+" - "+a.getExpires_utc().toGMTString()+"\n"+a.getDescription().substring(index));
+					}
+//					System.out.println("\n"+desc.toString());
+					sendMail(user.getUsername(), desc.toString());
 				}
 			}
 		}

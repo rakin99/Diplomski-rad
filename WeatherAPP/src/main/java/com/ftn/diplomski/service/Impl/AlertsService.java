@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import com.ftn.diplomski.model.Alert;
 import com.ftn.diplomski.model.Alerts;
 import com.ftn.diplomski.model.Area;
 import com.ftn.diplomski.model.Forecast;
@@ -78,14 +79,20 @@ public class AlertsService implements AlertsInterface {
 	    
 		RestTemplate restTemplate = new RestTemplate();
 	    ResponseEntity<String> result = restTemplate.exchange(uri, HttpMethod.GET, entityReq, String.class);
-
+	    
 	    GsonBuilder gsonBuilder = new GsonBuilder();
 	    gsonBuilder.registerTypeAdapter(Date.class, new DateDeserializer());
 	    Gson gson = gsonBuilder.create();
 		Alerts alerts = gson.fromJson(result.getBody(), Alerts.class);
 		Date d = new Date();
 		Date date = new Date(d.getYear(),d.getMonth(),d.getDate());
+		Date date1 = new Date(d.getYear(),d.getMonth(),d.getDate(),2,0);
+		Date date2 = new Date(d.getYear(),d.getMonth(),d.getDate()+1,2,0);
 		alerts.setDate(date);
+		for (Alert a : alerts.getAlerts()) {
+			a.setEffective_local(date1);
+			a.setExpires_local(date2);
+		}
 		alerts.setAlertsMemberAlerts();
 		alerts = save(alerts);
 //		return alerts;
@@ -98,6 +105,7 @@ public class AlertsService implements AlertsInterface {
 		Area area = areaService.findByName(areaName);
 //		System.out.println(area.getCoord().getLat()+" " + area.getCoord().getLon()+" " + new Date().getDate()+" " + (new Date().getMonth()+1)+" " + (new Date().getYear()+1900));
 		Alerts alerts = repository.getAlertsFromDataBase(area.getCoord().getLat(), area.getCoord().getLon(), new Date().getDate(), new Date().getMonth()+1, new Date().getYear()+1900);
+		
 		return alerts;
 	}
 
