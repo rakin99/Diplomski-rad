@@ -1,5 +1,6 @@
 package com.ftn.diplomski.service;
 
+import java.security.Principal;
 import java.util.List;
 
 import com.ftn.diplomski.model.User;
@@ -13,7 +14,11 @@ public interface UserInterface {
 	public User findById(Long id);
 	public User findByUsername(String username);
 	public List<User> findAll();
+	public List<User> findByArea(String area);
 	public void delete(Long id);
 	public JwtDTO login(LoginDTO dto);
 	public UserDTO register(UserDTO dto);
+	public void changeSearchPlace(Principal principal,String searchPlace);
+	public void changeSearchArea(Principal principal,String searchArea);
+	public UserDTO getLoggedUser(Principal principal);
 }

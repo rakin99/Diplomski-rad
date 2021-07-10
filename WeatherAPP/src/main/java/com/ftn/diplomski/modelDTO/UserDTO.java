@@ -18,6 +18,14 @@ public class UserDTO {
 	
 	public UserDTO() {
 		super();
+		this.id = (long) 0;
+		this.username = "";
+		this.password = "";
+		this.role = "";
+		this.alerts = false;
+		this.area = "";
+		this.lastSearchArea = "";
+		this.lastSearchPlace = "";
 	}
 	
 	public UserDTO(Long id, String username, String password, String role, boolean alerts, String area,

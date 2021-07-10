@@ -1,13 +1,17 @@
 package com.ftn.diplomski.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -45,5 +49,11 @@ public class UserController {
 			return ResponseEntity.status(409).build();
 		}
 		return new ResponseEntity<UserDTO>(user, HttpStatus.OK);
+	}
+	
+	@GetMapping("/get-logged-user")
+	public ResponseEntity<UserDTO> getLoggedUser(Principal principal){
+		System.out.println("\ngetLoggedUser!<-------------------");
+		return new ResponseEntity<UserDTO>(userService.getLoggedUser(principal), HttpStatus.OK); 
 	}
 }

@@ -1,5 +1,6 @@
 package com.ftn.diplomski.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import com.ftn.diplomski.modelDTO.MosquitoDTO;
 import com.ftn.diplomski.modelDTO.PollenDTO;
 import com.ftn.diplomski.service.MosquitoInterface;
 import com.ftn.diplomski.service.PollenInterface;
+import com.ftn.diplomski.service.UserInterface;
 
 @CrossOrigin(origins = "*", maxAge = 3600,methods = {	RequestMethod.DELETE,
 		RequestMethod.GET,
@@ -30,13 +32,18 @@ public class IndicesController {
 	@Autowired
 	private PollenInterface pollenService;
 	
+	@Autowired
+	private UserInterface userService;
+	
 	@GetMapping(value = "/mosquitoes")
-	public ResponseEntity<List<MosquitoDTO>> getMosquitoActivityPollution(@RequestParam String areaName){
+	public ResponseEntity<List<MosquitoDTO>> getMosquitoActivityPollution(@RequestParam String areaName,Principal principal){
+		userService.changeSearchArea(principal, areaName);
 		return new ResponseEntity<List<MosquitoDTO>>(mosquitoService.getMosquito(areaName),HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/pollen")
-	public ResponseEntity<List<PollenDTO>> getIndexPollenPollution(@RequestParam String areaName){
+	public ResponseEntity<List<PollenDTO>> getIndexPollenPollution(@RequestParam String areaName,Principal principal){
+		userService.changeSearchArea(principal, areaName);
 		return new ResponseEntity<List<PollenDTO>>(pollenService.getPollen(areaName),HttpStatus.OK);
 	}
 }

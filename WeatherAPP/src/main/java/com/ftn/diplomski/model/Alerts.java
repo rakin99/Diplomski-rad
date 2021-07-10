@@ -46,7 +46,7 @@ public class Alerts implements Serializable{
 	@Column(name = "state_code", nullable = false, unique = false)
 	private String state_code;
 	
-	@OneToMany(cascade={CascadeType.ALL}, fetch=FetchType.LAZY, mappedBy="alerts")
+	@OneToMany(cascade={CascadeType.ALL}, fetch=FetchType.EAGER, mappedBy="alerts")
 	private List<Alert> alerts = new ArrayList<Alert>();
 
 	public Alerts(Long id, String country_code, double lon, String timezone, double lat, String city_name,
