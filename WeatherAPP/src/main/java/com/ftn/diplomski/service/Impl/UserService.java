@@ -124,8 +124,8 @@ public class UserService implements UserInterface, UserDetailsService {
 
 	@Override
 	public void changeSearchPlace(Principal principal,String searchPlace) {
+		System.out.println("Change search place!");
 		if(principal!=null) {
-			System.out.println("\nE-mail: "+principal.getName());
 			User user = repository.findOneByUsername(principal.getName());
 			user.setLastSearchPlace(searchPlace);
 			repository.save(user);
@@ -136,8 +136,8 @@ public class UserService implements UserInterface, UserDetailsService {
 
 	@Override
 	public void changeSearchArea(Principal principal, String searchArea) {
+		System.out.println("Change search area!");
 		if(principal!=null) {
-			System.out.println("\nE-mail: "+principal.getName());
 			User user = repository.findOneByUsername(principal.getName());
 			user.setLastSearchArea(searchArea);
 			repository.save(user);

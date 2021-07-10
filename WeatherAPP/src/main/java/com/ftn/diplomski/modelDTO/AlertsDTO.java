@@ -45,4 +45,9 @@ public class AlertsDTO{
 	public void setAlerts(List<AlertDTO> alerts) {
 		this.alerts = alerts;
 	}
+
+	@Override
+	public String toString() {
+		return "AlertsDTO [alerts=" + alerts + "]";
+	}
 }

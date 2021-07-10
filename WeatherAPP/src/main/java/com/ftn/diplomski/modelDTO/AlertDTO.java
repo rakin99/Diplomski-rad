@@ -74,4 +74,10 @@ public class AlertDTO{
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	@Override
+	public String toString() {
+		return "AlertDTO [effective_local=" + effective_local + ", expires_local=" + expires_local + ", severity="
+				+ severity + ", title=" + title + ", description=" + description + "]";
+	}
 }
