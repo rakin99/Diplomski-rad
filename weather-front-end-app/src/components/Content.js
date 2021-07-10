@@ -85,14 +85,39 @@ class Content extends Component{
               </Modal>
               <div className='float-left w-75 text-white'>
                   <Switch>
-                      <PropsRoute path="/" exact component={CurrentWeatherContainer} searchPlace = {this.props.searchPlace}/>
-                      <PropsRoute path="/current-weather" component={CurrentWeatherContainer} searchPlace = {this.props.searchPlace}/>
-                      <PropsRoute path="/48h-weather" component={Weather48hContainer} searchPlace = {this.props.searchPlace}/>
-                      <PropsRoute path="/7-day-weather" component={Weather7DayContainer} searchPlace = {this.props.searchPlace}/>
-                      <PropsRoute path="/air-pollution" component={AirPollutionContainer} searchPlace = {this.props.searchPlace}/>
+                      <PropsRoute
+                          path="/" 
+                          exact 
+                          component={CurrentWeatherContainer} 
+                          searchPlace = {this.props.searchPlace}
+                          search={this.props.search}
+                        />
+                      <PropsRoute 
+                          path="/current-weather" 
+                          component={CurrentWeatherContainer} 
+                          searchPlace = {this.props.searchPlace}
+                          search={this.props.search}
+                        />
+                      <PropsRoute 
+                          path="/48h-weather" 
+                          component={Weather48hContainer} 
+                          searchPlace = {this.props.searchPlace}
+                        />
+                      <PropsRoute 
+                          path="/7-day-weather" 
+                          component={Weather7DayContainer} 
+                          searchPlace = {this.props.searchPlace}
+                        />
+                      <PropsRoute 
+                          path="/air-pollution" 
+                          component={AirPollutionContainer} 
+                          searchPlace = {this.props.searchPlace}
+                        />
                   </Switch>
               </div>
-              <AlertsIndicesContainer />
+              <AlertsIndicesContainer
+                loggedIn={this.props.loggedIn}
+              />
             </div>
         )
     }

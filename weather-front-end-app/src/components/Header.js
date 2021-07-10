@@ -6,7 +6,7 @@ import Navigation from "./Navigation"
 class Header extends Component{
 
     render(){
-        const logged = this.props.loggedIn.id>0 ? <LoggedIn loggedIn={this.props.loggedIn} logout={this.props.logout}/>:<LoggedOut
+        const logged = this.props.loggedUser!=='' ? <LoggedIn loggedUser={this.props.loggedUser} logout={this.props.logout}/>:<LoggedOut
                                                                                                                             handleClick={this.props.handleClick}/>
         return(
             <header className='header mb-1'>

@@ -28,8 +28,9 @@ class CurrentWeatherContainer extends React.Component{
             await authenticationService.getLoggedUser().then(res =>{
                 if(res.id>0){
                     this.search(res.lastSearchPlace);
+                    this.props.search(res.lastSearchPlace);
                 }else{
-                    this.search('Novi Sad');
+                    this.search(searchPlace);
                 }
             });
         }

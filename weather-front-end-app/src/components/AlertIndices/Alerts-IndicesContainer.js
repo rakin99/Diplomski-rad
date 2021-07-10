@@ -16,12 +16,13 @@ class AlertsIndicesContainer extends Component{
     constructor(){
         super();
         this.state = {
-            alerts:'',
+            alerts:[],
             mosquitoActivity:[],
             pollen:[],
             areas:[],
             area:'',
-            errorMessage:''
+            errorMessage:'',
+            loggedIn:''
         }
         this.searchAreas=this.searchAreas.bind(this);
         this.getAlertsIndices=this.getAlertsIndices.bind(this);
@@ -33,7 +34,30 @@ class AlertsIndicesContainer extends Component{
     }
 
     componentDidMount(){
+        this.setState({
+            loggedIn:this.props.loggedIn
+        })
         this.getAlertsIndices();
+    }
+
+    async componentDidUpdate(){
+        if(this.state.loggedIn.id!==this.props.loggedIn.id){
+            console.log("Update prvi IF")
+            this.setState({
+                loggedIn:this.props.loggedIn
+            })
+            if(this.props.loggedIn.id>0){
+                console.log("Update drugi IF")
+                await authenticationService.getLoggedUser().then(res=>{
+                    console.log(res.lastSearchArea)
+                    this.getAlerts(res.lastSearchArea);
+                    this.getMosquito(res.lastSearchArea);
+                    this.getPollen(res.lastSearchArea); 
+                })
+            }else{
+                this.getAlertsIndices()
+            }
+        }
     }
 
     async searchAreas(event){
@@ -74,18 +98,25 @@ class AlertsIndicesContainer extends Component{
 
     async getAlertsIndices(){
         const areaName = this.state.area!==''?this.state.area:localStorage.getItem('areaName');
-        
-        if(authenticationService.getUserFromStorage()!=null){
-            await authenticationService.getLoggedUser().then(res =>{
-                console.log(JSON.stringify(res))
-                if(res.id>0){
-                    this.getAlerts(res.lastSearchArea);
-                    this.getMosquito(res.lastSearchArea);
-                    this.getPollen(res.lastSearchArea);
-                }
-            });
+        if(this.props.loggedIn.id>0 && this.state.area===''){
+            console.log("Prolazim if")
+            await authenticationService.getLoggedUser().then(res=>{
+                this.getAlerts(res.lastSearchArea);
+                this.getMosquito(res.lastSearchArea);
+                this.getPollen(res.lastSearchArea); 
+            }) 
         }
-        if(areaName!=null){
+        else if(areaName!=null && authenticationService.getLoggedUser()==null){
+            await authenticationService.getLoggedUser().then(res=>{
+                if(res.id===0){
+                    console.log("Prolazim else1 if")
+                    this.getAlerts(areaName);
+                    this.getMosquito(areaName);
+                    this.getPollen(areaName);
+                }
+            })
+        }else if(areaName!=null && this.props.loggedIn.id!==undefined){
+            console.log("Prolazim else2 if")
             this.getAlerts(areaName);
             this.getMosquito(areaName);
             this.getPollen(areaName);
@@ -93,9 +124,8 @@ class AlertsIndicesContainer extends Component{
     }
 
     async getAlerts(areaName){
-        await alertsService.getAlerts(this.state.area!==''?this.state.area:areaName).then(res => 
+        await alertsService.getAlerts(areaName).then(res => 
             {   
-                // console.log(res)
                 if(res.status!=500){
                     localStorage.setItem('areaName',areaName);
                     this.setState(
@@ -115,7 +145,7 @@ class AlertsIndicesContainer extends Component{
     }
 
     async getMosquito(areaName){
-        await indicesService.getIndicesMosquito(this.state.area!==''?this.state.area:areaName).then(res => 
+        await indicesService.getIndicesMosquito(areaName).then(res => 
             {   
                 // console.log(res)
                 if(res.status!=500){
@@ -135,7 +165,7 @@ class AlertsIndicesContainer extends Component{
     }
 
     async getPollen(areaName){
-        await indicesService.getIndicesPollen(this.state.area!==''?this.state.area:areaName).then(res => 
+        await indicesService.getIndicesPollen(areaName).then(res => 
             {   
                 // console.log(res)
                 if(res.status!=500){
@@ -155,7 +185,6 @@ class AlertsIndicesContainer extends Component{
     }
 
     render(){
-        // console.log(JSON.stringify(this.state.area))
         const effective_local = (this.state.alerts!=='' && this.state.alerts.alerts!==undefined && this.state.alerts.alerts.length!==0) && timeConverter.convertFromString(this.state.alerts.alerts[0].effective_local);
         const expires_local = (this.state.alerts!=='' && this.state.alerts.alerts!==undefined && this.state.alerts.alerts.length!==0) && timeConverter.convertFromString(this.state.alerts.alerts[0].expires_local);
         const alerts = (this.state.alerts!=='' && this.state.alerts.alerts!==undefined && this.state.alerts.alerts.length!==0) && <h6 className='mt-3 mb-0'><b>{effective_local} - {expires_local}</b></h6>;

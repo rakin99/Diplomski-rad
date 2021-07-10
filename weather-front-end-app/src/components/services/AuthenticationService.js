@@ -14,7 +14,7 @@ class AuthenticationService{
     }
 
     logout(){
-      localStorage.setItem('loggedUser','null');
+      localStorage.setItem('loggedUser',null);
     }
 
     register(registerData){
@@ -41,18 +41,15 @@ class AuthenticationService{
     }
 
     getUserFromStorage(){
-      var user = localStorage.getItem('loggedUser');
-      if(user!=null){
-        return JSON.parse(user);
-      }
+      var user = JSON.parse(localStorage.getItem('loggedUser'));
       return user;
     }
 
     getConf() {
       var user = localStorage.getItem('loggedUser');
       var token = null;
-      // console.log(user)
-      if(user!=null){
+      if(user!=='null' && user!=null){
+        // console.log("Prolazim u IF confg")
         token = JSON.parse(user).token;
       }
       const conf={
