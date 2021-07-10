@@ -64,9 +64,10 @@ class App extends Component {
   async getLoggedUser(){
     await authenticationService.getLoggedUser().then(res => 
         {   
-            // console.log("Res: "+JSON.stringify(res))
+            // console.log("\nGet logged user!")
             this.setState({
-              loggedIn:res
+              loggedIn:res,
+              loggedUser:res.username
             })
         }
     );
@@ -85,10 +86,12 @@ class App extends Component {
             search = {this.search} 
             keyUp = {this.keyUp} 
             handleClick = {this.handleClick} 
-            loggedIn={this.state.loggedIn} 
+            loggedUser={this.state.loggedUser} 
             logout={this.logout}
             />
           <Content 
+            search={this.search}
+            loggedIn={this.state.loggedIn}
             searchPlace = {this.state.searchPlace} 
             login={this.state.login} 
             register={this.state.register} 

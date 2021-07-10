@@ -6,7 +6,7 @@ class LoggedIn extends Component{
         return(
             <ul className="user">
                 <li id="loggedIn" >
-                    <a href="#"><b id="login">{this.props.loggedIn.username}</b></a>
+                    <a href="#"><b id="login">{this.props.loggedUser}</b></a>
                     <div className="invisible1"></div>
                     <div className="user-menu">
                         <ul style={{padding:'0px'}}>
