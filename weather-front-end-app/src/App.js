@@ -14,17 +14,26 @@ class App extends Component {
       searchPlace:'',
       login:false,
       register:false,
-      loggedIn:''
+      loggedIn:'',
+      settings:false
     }
     this.search = this.search.bind(this);
     this.keyUp = this.keyUp.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.getLoggedUser=this.getLoggedUser.bind(this);
     this.logout=this.logout.bind(this);
+    this.setSettings=this.setSettings.bind(this);
   }
 
   componentDidMount(){
     this.getLoggedUser();
+  }
+
+  setSettings(value){
+    this.setState({
+      settings:value,
+      register:value
+    })
   }
 
   search(searchPlace){
@@ -43,7 +52,8 @@ class App extends Component {
     if(id===''){
       this.setState({
         login:false,
-        register:false
+        register:false,
+        settings:false
       })
     }
 		this.setState(prevState => {
@@ -67,7 +77,8 @@ class App extends Component {
             // console.log("\nGet logged user!")
             this.setState({
               loggedIn:res,
-              loggedUser:res.username
+              loggedUser:res.username,
+              searchPlace:res.lastSearchPlace
             })
         }
     );
@@ -88,6 +99,7 @@ class App extends Component {
             handleClick = {this.handleClick} 
             loggedUser={this.state.loggedUser} 
             logout={this.logout}
+            setSettings={this.setSettings}
             />
           <Content 
             search={this.search}
@@ -97,6 +109,8 @@ class App extends Component {
             register={this.state.register} 
             handleClick = {this.handleClick}
             getLoggedUser={this.getLoggedUser}
+            setSettings={this.setSettings}
+            settings={this.state.settings}
           />
           <Footer />
         </Router>

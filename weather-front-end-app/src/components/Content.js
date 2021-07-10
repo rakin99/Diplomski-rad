@@ -60,6 +60,7 @@ class Content extends Component{
                           // add={this.props.add} 
                           handleClick={this.props.handleClick}
                           changeChecked={this.changeChecked}
+                          settings={this.props.settings}
                           // newClient={this.props.newClient}
                           // countries={this.props.countries}
                         />

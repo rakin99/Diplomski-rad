@@ -10,7 +10,13 @@ class AuthenticationService{
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(loginData)
           };
-        return fetch(`${this.url}/login`,conf).then(res => res.json());
+        return fetch(`${this.url}/login`,conf).then(res => {
+                                                      if(res.status==401){
+                                                        return res
+                                                      }else if(res.status!=500){
+                                                        return res.json()
+                                                      }
+                                                    });
     }
 
     logout(){
@@ -26,6 +32,15 @@ class AuthenticationService{
           };
         return fetch(`${this.url}/register`,conf).then(res => res.json());
     }
+
+    edit(editData){
+      var conf={
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(editData)
+        };
+      return fetch(`${this.url}/edit`,conf).then(res => res.json());
+  }
 
     getRoles(token) {
         let jwtData = token.split('.')[1];
