@@ -36,6 +36,7 @@ class Login extends Component{
                     })
                 }
                 else if(res.status!=500){
+                    console.log(authenticationService.getRoles(res.value))
                     localStorage.setItem('loggedUser',JSON.stringify({
                         username: this.state.username,
                         roles: authenticationService.getRoles(res.value),

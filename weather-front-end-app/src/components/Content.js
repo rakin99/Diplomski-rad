@@ -8,7 +8,11 @@ import AlertsIndicesContainer from './AlertIndices/Alerts-IndicesContainer'
 import Login from './Login'
 import Modal from 'react-awesome-modal';
 import Register from './Register'
+import AuthenticationService from './services/AuthenticationService'
+import { Redirect } from 'react-router-dom'
+import Users from './Pages/Users/Users'
 
+var authenticationService = new AuthenticationService();
 class Content extends Component{
 
     constructor(){
@@ -45,24 +49,35 @@ class Content extends Component{
                 return renderMergedProps(component, routeProps, rest);
               }}/>
             );
-          }
+        }
+
+        const PrivateRoute = ({ component: Component, roles, ...rest }) => {
+          return(
+            <Route {...rest} render={props => {
+              const currentUser = authenticationService.getUserFromStorage();
+              if (currentUser===null ) {
+                  // not logged in so redirect to login page with the return url
+                  return <Redirect to={{ pathname: '/', state: { from: props.location } }} />
+              }
+              
+              // check if route is restricted by role
+              if(roles && roles.indexOf(currentUser.roles[0][0].authority) === -1){
+                return <Redirect to={{ pathname: '/' }} />
+              }
+              // authorised so return component
+              return <Component {...props} />
+            }} />
+          )
+        }
 
         const login = this.props.login && <Login 
-                          // handleSubmit={this.props.handleSubmit} 
-                          // add={this.props.add} 
                           handleClick={this.props.handleClick}
                           getLoggedUser={this.props.getLoggedUser}
-                          // newClient={this.props.newClient}
-                          // countries={this.props.countries}
                         />
         const register = this.props.register && <Register
-                          // handleSubmit={this.props.handleSubmit} 
-                          // add={this.props.add} 
                           handleClick={this.props.handleClick}
                           changeChecked={this.changeChecked}
                           settings={this.props.settings}
-                          // newClient={this.props.newClient}
-                          // countries={this.props.countries}
                         />
         return(
             <div className="main my_main">
@@ -86,6 +101,11 @@ class Content extends Component{
               </Modal>
               <div className='float-left w-75 text-white'>
                   <Switch>
+                      <PrivateRoute 
+                          component={Users} 
+                          roles="ADMIN" 
+                          path="/users"
+                        />
                       <PropsRoute
                           path="/" 
                           exact 
