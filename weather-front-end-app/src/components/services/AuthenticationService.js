@@ -34,11 +34,17 @@ class AuthenticationService{
     }
 
     edit(editData){
+      var user = localStorage.getItem('loggedUser');
+      var token = null;
+      if(user!=='null' && user!=null){
+        // console.log("Prolazim u IF confg")
+        token = JSON.parse(user).token;
+      }
       var conf={
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json','X-Auth-Token': token,'Access-Control-Allow-Methods':'PUT' },
           body: JSON.stringify(editData)
-        };
+                            };
       return fetch(`${this.url}/edit`,conf).then(res => res.json());
   }
 

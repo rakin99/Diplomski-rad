@@ -74,12 +74,14 @@ class App extends Component {
   async getLoggedUser(){
     await authenticationService.getLoggedUser().then(res => 
         {   
-            // console.log("\nGet logged user!")
             this.setState({
               loggedIn:res,
               loggedUser:res.username,
               searchPlace:res.lastSearchPlace
             })
+            if(res.id===0){
+              authenticationService.logout();
+            }
         }
     );
   }
