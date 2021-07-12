@@ -103,7 +103,7 @@ class Content extends Component{
                   <Switch>
                       <PrivateRoute 
                           component={Users} 
-                          roles="ADMIN" 
+                          roles="ROLE_ADMIN" 
                           path="/users"
                         />
                       <PropsRoute
