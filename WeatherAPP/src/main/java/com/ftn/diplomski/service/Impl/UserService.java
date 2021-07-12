@@ -74,13 +74,9 @@ public class UserService implements UserInterface, UserDetailsService {
 	}
 
 	@Override
-	public List<UserDTO> findAll() {
-		List<UserDTO> dtos = new ArrayList<UserDTO>();
-		List<User> users = repository.findAll();
-		for (User user : users) {
-			dtos.add(new UserDTO(user));
-		}
-		return dtos;
+	public List<User> findAll() {
+		
+		return repository.findAll();
 	}
 
 	@Override
@@ -173,5 +169,15 @@ public class UserService implements UserInterface, UserDetailsService {
 		user.setArea(dto.getArea());
 		user = save(user);
 		return new UserDTO(user);
+	}
+
+	@Override
+	public List<UserDTO> findAllDTOS() {
+		List<UserDTO> dtos = new ArrayList<UserDTO>();
+		List<User> users = findAll();
+		for (User user : users) {
+			dtos.add(new UserDTO(user));
+		}
+		return dtos;
 	}
 }

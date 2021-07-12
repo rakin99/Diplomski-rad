@@ -1,6 +1,7 @@
 package com.ftn.diplomski.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.ftn.diplomski.model.User;
 import com.ftn.diplomski.modelDTO.JwtDTO;
 import com.ftn.diplomski.modelDTO.LoginDTO;
 import com.ftn.diplomski.modelDTO.UserDTO;
@@ -74,7 +76,7 @@ public class UserController {
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	public ResponseEntity<List<UserDTO>> getAllUsers(){
 		System.out.println("\nGet all users!");
-		return new ResponseEntity<List<UserDTO>>(userService.findAll(), HttpStatus.OK); 
+		return new ResponseEntity<List<UserDTO>>(userService.findAllDTOS(), HttpStatus.OK); 
 	}
 	
 	@GetMapping("/{id}")

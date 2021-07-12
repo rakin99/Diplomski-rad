@@ -14,7 +14,8 @@ public interface UserInterface {
 	public UserDTO edit(UserDTO user,Principal principal);
 	public UserDTO findById(Long id);
 	public User findByUsername(String username);
-	public List<UserDTO> findAll();
+	public List<User> findAll();
+	public List<UserDTO> findAllDTOS();
 	public List<User> findByArea(String area);
 	public void delete(Long id);
 	public JwtDTO login(LoginDTO dto);
