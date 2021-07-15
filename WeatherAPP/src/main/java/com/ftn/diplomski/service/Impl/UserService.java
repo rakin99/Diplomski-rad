@@ -62,9 +62,9 @@ public class UserService implements UserInterface, UserDetailsService {
 	}
 
 	@Override
-	public User findById(Long id) {
+	public UserDTO findById(Long id) {
 		// TODO Auto-generated method stub
-		return repository.getById(id);
+		return new UserDTO(repository.getById(id));
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class UserService implements UserInterface, UserDetailsService {
 
 	@Override
 	public List<User> findAll() {
-		// TODO Auto-generated method stub
+		
 		return repository.findAll();
 	}
 
@@ -116,7 +116,7 @@ public class UserService implements UserInterface, UserDetailsService {
 		user.setPassword(passwordEncoder.encode(dto.getPassword()));
 		user.setAlerts(dto.isAlerts());
 		user.setArea(dto.getArea());
-		user.setRole("USER");
+		user.setRole("ROLE_USER");
 		
 		user = save(user);
 		return new UserDTO(user);
@@ -160,8 +160,8 @@ public class UserService implements UserInterface, UserDetailsService {
 	}
 
 	@Override
-	public UserDTO edit(UserDTO dto) {
-		User user = findByUsername(dto.getUsername());
+	public UserDTO edit(UserDTO dto,Principal principal) {
+		User user = findByUsername(principal.getName());
 		if(!dto.getPassword().trim().equals("") && !passwordEncoder.encode(dto.getPassword()).equals(user.getPassword())) {
 			user.setPassword(passwordEncoder.encode(dto.getPassword()));
 		}
@@ -169,5 +169,15 @@ public class UserService implements UserInterface, UserDetailsService {
 		user.setArea(dto.getArea());
 		user = save(user);
 		return new UserDTO(user);
+	}
+
+	@Override
+	public List<UserDTO> findAllDTOS() {
+		List<UserDTO> dtos = new ArrayList<UserDTO>();
+		List<User> users = findAll();
+		for (User user : users) {
+			dtos.add(new UserDTO(user));
+		}
+		return dtos;
 	}
 }

@@ -29,7 +29,7 @@ public class AutoRequestConfiguration {
 	@Autowired
 	private MailInterface mailService;
 	
-	@Scheduled(cron = "0 15 12 * * ?")
+	@Scheduled(cron = "0 00 00 * * ?")
 	public void autoRequestForApis() {
 		alertsService.saveAlertsForAllAreas();
 		mosquitoService.saveMosquitoForAllAreas();
