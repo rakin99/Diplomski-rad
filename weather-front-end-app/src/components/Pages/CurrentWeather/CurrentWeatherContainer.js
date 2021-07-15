@@ -35,7 +35,7 @@ class CurrentWeatherContainer extends React.Component{
                         this.search(res.lastSearchPlace!==''?res.lastSearchPlace:searchPlace);
                         this.props.search(res.lastSearchPlace!==''?res.lastSearchPlace:searchPlace);
                     }else{
-                        console.log("Prolazim u else")
+                        // console.log("Prolazim u else")
                         this.search(searchPlace);
                     }
                 }

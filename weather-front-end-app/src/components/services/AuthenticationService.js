@@ -79,6 +79,13 @@ class AuthenticationService{
       };
       return conf;
     }
+
+    getAllUsers() {
+      // var user = localStorage.getItem('loggedUser');
+      // console.log("Url: "+this.url)
+      // console.log("Confg: "+JSON.stringify(this.getConf()))
+      return fetch(`${this.url}`,this.getConf()).then(res => res.json());
+  }
   }
   
   export default AuthenticationService
