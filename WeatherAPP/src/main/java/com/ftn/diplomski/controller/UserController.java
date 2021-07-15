@@ -60,6 +60,7 @@ public class UserController {
 	}
 	
 	@PutMapping("/edit")
+	@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
 	public ResponseEntity<UserDTO> editUser(@RequestBody UserDTO dto, UriComponentsBuilder ucBuilder,Principal principal){
 		System.out.println("\nEdit User");
 		UserDTO user = userService.edit(dto,principal);
@@ -72,7 +73,7 @@ public class UserController {
 		return new ResponseEntity<UserDTO>(userService.getLoggedUser(principal), HttpStatus.OK); 
 	}
 	
-	@GetMapping()
+	@GetMapping
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	public ResponseEntity<List<UserDTO>> getAllUsers(){
 		System.out.println("\nGet all users!");
