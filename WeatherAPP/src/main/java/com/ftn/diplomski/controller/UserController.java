@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -75,9 +76,16 @@ public class UserController {
 	
 	@GetMapping
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	public ResponseEntity<List<UserDTO>> getAllUsers(){
+	public ResponseEntity<List<UserDTO>> getAllUsers(Pageable page){
 		System.out.println("\nGet all users!");
-		return new ResponseEntity<List<UserDTO>>(userService.findAllDTOS(), HttpStatus.OK); 
+		return new ResponseEntity<List<UserDTO>>(userService.findAllDTOS(page), HttpStatus.OK); 
+	}
+	
+	@GetMapping("/get-number-pages")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	public ResponseEntity<Long> getNumberPage(){
+		System.out.println("\nCount!");
+		return new ResponseEntity<Long>(userService.getNumberPage(), HttpStatus.OK); 
 	}
 	
 	@GetMapping("/{id}")

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -74,6 +76,12 @@ public class UserService implements UserInterface, UserDetailsService {
 	}
 
 	@Override
+	public Page<User> findAll(Pageable page) {
+		
+		return repository.findAll(page);
+	}
+	
+	@Override
 	public List<User> findAll() {
 		
 		return repository.findAll();
@@ -129,8 +137,6 @@ public class UserService implements UserInterface, UserDetailsService {
 			User user = repository.findOneByUsername(principal.getName());
 			user.setLastSearchPlace(searchPlace);
 			repository.save(user);
-		}else {
-			System.out.println("\nPrincipal je null!");
 		}
 	}
 
@@ -141,8 +147,6 @@ public class UserService implements UserInterface, UserDetailsService {
 			User user = repository.findOneByUsername(principal.getName());
 			user.setLastSearchArea(searchArea);
 			repository.save(user);
-		}else {
-			System.out.println("\nPrincipal je null!");
 		}
 	}
 
@@ -152,6 +156,16 @@ public class UserService implements UserInterface, UserDetailsService {
 			return new UserDTO(findByUsername(principal.getName()));
 		}
 		return new UserDTO();
+	}
+	
+	@Override
+	public Long getNumberPage() {
+		Long num = repository.count()/5;
+		Long mod = repository.count()%5;
+		if(mod>0) {
+			num ++;
+		}
+		return num;
 	}
 
 	@Override
@@ -172,9 +186,9 @@ public class UserService implements UserInterface, UserDetailsService {
 	}
 
 	@Override
-	public List<UserDTO> findAllDTOS() {
+	public List<UserDTO> findAllDTOS(Pageable page) {
 		List<UserDTO> dtos = new ArrayList<UserDTO>();
-		List<User> users = findAll();
+		Page<User> users = findAll(page);
 		for (User user : users) {
 			dtos.add(new UserDTO(user));
 		}
