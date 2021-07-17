@@ -1,4 +1,4 @@
-package com.ftn.diplomski.security;
+	package com.ftn.diplomski.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -54,7 +54,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
-		httpSecurity
+		httpSecurity.cors().and()
 			.csrf().disable()
 			.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -76,7 +76,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 						"/api/air-pollution/current-pollution",
 						"/api/air-pollution/forecast-pollution"
 						).permitAll() //, "/api/register"
-//				.antMatchers(HttpMethod.POST, "/api/**")
+//				.antMatchers(HttpMethod.GET, "/api/user")
 //					.hasAuthority("ROLE_ADMINISTRATOR") //only administrator can add and edit data
 				.anyRequest().authenticated();
 				 
