@@ -29,8 +29,9 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
 			FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		String authToken = httpRequest.getHeader("X-Auth-Token");
+//		System.out.println("\nToken: "+authToken);
 		String username = tokenUtils.getUsernameFromToken(authToken);
-
+//		System.out.println("Username: "+username);
 		if (username != null
 				&& SecurityContextHolder.getContext().getAuthentication() == null) {
 			UserDetails userDetails = this.userDetailsService
