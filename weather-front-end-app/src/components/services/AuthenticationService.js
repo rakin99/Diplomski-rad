@@ -20,7 +20,7 @@ class AuthenticationService{
     }
 
     logout(){
-      localStorage.setItem('loggedUser',null);
+      localStorage.removeItem('loggedUser');
     }
 
     register(registerData){
@@ -72,19 +72,19 @@ class AuthenticationService{
       if(user!=='null' && user!=null){
         // console.log("Prolazim u IF confg")
         token = JSON.parse(user).token;
+        // console.log(JSON.stringify(user))
       }
       const conf={
+        method: 'GET',
         headers: new Headers({'X-Auth-Token': token},
-                              {'Access-Control-Allow-Methods':'GET'}),
+                              {'Access-Control-Allow-Methods':'GET'}
+                              ),
       };
       return conf;
     }
 
     getAllUsers() {
-      // var user = localStorage.getItem('loggedUser');
-      // console.log("Url: "+this.url)
-      // console.log("Confg: "+JSON.stringify(this.getConf()))
-      return fetch(`${this.url}`,this.getConf()).then(res => res.json());
+      return fetch(this.url,this.getConf()).then(res => res.json());
   }
   }
   

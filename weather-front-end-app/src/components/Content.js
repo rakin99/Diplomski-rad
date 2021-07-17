@@ -10,7 +10,7 @@ import Modal from 'react-awesome-modal';
 import Register from './Register'
 import AuthenticationService from './services/AuthenticationService'
 import { Redirect } from 'react-router-dom'
-import Users from './Pages/Users/UsersContainer'
+import UsersContainer from './Pages/Users/UsersContainer'
 
 var authenticationService = new AuthenticationService();
 class Content extends Component{
@@ -102,7 +102,7 @@ class Content extends Component{
               <div className='float-left w-75 text-white'>
                   <Switch>
                       <PrivateRoute 
-                          component={Users} 
+                          component={UsersContainer} 
                           roles="ROLE_ADMIN" 
                           path="/users"
                         />
