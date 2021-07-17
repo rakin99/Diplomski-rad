@@ -42,12 +42,12 @@ class AlertsIndicesContainer extends Component{
 
     async componentDidUpdate(){
         if(this.state.loggedIn.id!==this.props.loggedIn.id){
-            console.log("Update prvi IF")
+            // console.log("Update prvi IF")
             this.setState({
                 loggedIn:this.props.loggedIn
             })
             if(this.props.loggedIn.id>0){
-                console.log("Update drugi IF")
+                // console.log("Update drugi IF")
                 await authenticationService.getLoggedUser().then(res=>{
                     this.getAlerts(res.lastSearchArea!==''?res.lastSearchArea:localStorage.getItem('areaName'));
                     this.getMosquito(res.lastSearchArea!==''?res.lastSearchArea:localStorage.getItem('areaName'));
@@ -98,7 +98,7 @@ class AlertsIndicesContainer extends Component{
     async getAlertsIndices(){
         const areaName = this.state.area!==''?this.state.area:localStorage.getItem('areaName');
         if(this.props.loggedIn.id>0 && this.state.area===''){
-            console.log("Prolazim if")
+            // console.log("Prolazim if")
             await authenticationService.getLoggedUser().then(res=>{
                 this.getAlerts(res.lastSearchArea);
                 this.getMosquito(res.lastSearchArea);
@@ -108,14 +108,14 @@ class AlertsIndicesContainer extends Component{
         else if(areaName!=null && authenticationService.getLoggedUser()==null){
             await authenticationService.getLoggedUser().then(res=>{
                 if(res.id===0){
-                    console.log("Prolazim else1 if")
+                    // console.log("Prolazim else1 if")
                     this.getAlerts(areaName);
                     this.getMosquito(areaName);
                     this.getPollen(areaName);
                 }
             })
         }else if(areaName!=null && this.props.loggedIn.id!==undefined){
-            console.log("Prolazim else2 if")
+            // console.log("Prolazim else2 if")
             this.getAlerts(areaName);
             this.getMosquito(areaName);
             this.getPollen(areaName);

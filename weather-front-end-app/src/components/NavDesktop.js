@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import {NavLink} from "react-router-dom";
+import AuthenticationService from './services/AuthenticationService';
 
+var authenticationService = new AuthenticationService();
 class NavDesktop extends Component{
 
     constructor(){
@@ -17,6 +19,12 @@ class NavDesktop extends Component{
     }
     
     render(){
+        const users = (authenticationService.getUserFromStorage()!=null &&  authenticationService.getUserFromStorage().roles[0][0].authority==='ROLE_ADMIN') && 
+                                                                    <li className="nav-item">
+                                                                        <NavLink to="/users" className="nav-link myNav-link" activeClassName="nav-link myNav-active">
+                                                                            <b>Korisnici</b>
+                                                                        </NavLink>
+                                                                    </li>
         return(
             <nav className = 'navbar navbar-expand-lg navbar-dark d-block'>
                 <ul className="nav nav-tabs myNav">
@@ -40,6 +48,7 @@ class NavDesktop extends Component{
                             <b>Zagađenje vazduha</b>
                         </NavLink>
                     </li>
+                    {users}
                     <li className="form-inline ml-1">
                         <input 
                             className="form-control mr-sm-1" 

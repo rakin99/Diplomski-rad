@@ -10,7 +10,7 @@ import Modal from 'react-awesome-modal';
 import Register from './Register'
 import AuthenticationService from './services/AuthenticationService'
 import { Redirect } from 'react-router-dom'
-import Users from './Pages/Users/Users'
+import Users from './Pages/Users/UsersContainer'
 
 var authenticationService = new AuthenticationService();
 class Content extends Component{
