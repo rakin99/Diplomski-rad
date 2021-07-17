@@ -10,55 +10,86 @@ class UsersContainer extends Component{
         this.state = {
             users:[],
             numberPage:0,
+            numberPages:0
         }
         this.getUsers = this.getUsers.bind(this);
         this.reduceNumberPage = this.reduceNumberPage.bind(this);
         this.increaseNumberPage = this.increaseNumberPage.bind(this);
+        this.setNumberPage = this.setNumberPage.bind(this);
+        this.getNumberPages = this.getNumberPages.bind(this);
+        this.deleteUser = this.deleteUser.bind(this);
     }
 
     componentDidMount(){
-        this.getUsers();
+        this.getUsers(this.state.numberPage);
+        this.getNumberPages();
     }
 
-    async getUsers(){
-        await authenticationService.getAllUsers().then(res =>{
-            console.log(res)
+    async getUsers(numberPage){
+        await authenticationService.getAllUsers(numberPage).then(res =>{
             this.setState({
                 users:res
             })
         })
     }
 
-    increaseNumberPage(){
-        console.log("increaseNumberPage: "+this.state.users.length/5)
-        // if(this.state.numberPage < 1){
-        //     // console.log("Prosao u if")
-        //     const numberPage = this.state.numberPage+1;
-        //     this.setState({
-        //         numberPage:numberPage
-        //     })
-        //     this.getUsers();
-        // }
-      }
-    
-    reduceNumberPage(){
-        // console.log("reduceNumberPage: "+this.state.numberPage)
-        if(this.state.numberPage>0){
-            // console.log("Ulazim u if")
-            const numberPage = 0===this.state.numberPage-1?this.state.numberPage:this.state.numberPage-1;
+    async getNumberPages(){
+        await authenticationService.getNumberPages().then(res =>{
             this.setState({
-                numberPage:numberPage
+                numberPages:res
             })
-            this.getUsers();
+        })
+    }
+
+    increaseNumberPage(){
+        if(this.state.numberPage < (this.state.numberPages-1)){
+            const number = this.state.numberPage+1;
+            this.setState({
+                numberPage:number
+            })
+            this.getUsers(number);
         }
     }
     
+    reduceNumberPage(){
+        if(this.state.numberPage>0){
+            const number = this.state.numberPage-1;
+            this.setState({
+                numberPage:number
+            })
+            this.getUsers(number);
+        }
+    }
+
+    setNumberPage(number){
+        const num = number - 1;
+        this.setState({
+            numberPage:num
+        })
+    }
+
+    async deleteUser(id){
+        console.log("Delete user with id: "+id)
+        await authenticationService.deleteUser(id).then(res =>{
+            if(res.status==200){
+                alert("Korisnik je uspešno obrisan!")
+                this.getNumberPages();
+                this.getUsers(this.state.numberPage==(this.state.numberPages-1)?(this.state.numberPage-1):this.state.numberPage);
+            }else{
+                alert("Došlo je do greške!")
+            }
+        })
+    }
+    
     render(){
-        // console.log("Users: "+JSON.stringify(this.state.users))
         const users = this.state.users.length>0 && <Users 
                                                         users={this.state.users}
                                                         reduceNumberPage = {this.reduceNumberPage}
+                                                        deleteUser = {this.deleteUser}
                                                         increaseNumberPage = {this.increaseNumberPage}
+                                                        setNumberPage = {this.setNumberPage}
+                                                        numberPage = {this.state.numberPage}
+                                                        numberPages = {this.state.numberPages}
                                                     />
         return(
             <div>

@@ -83,9 +83,28 @@ class AuthenticationService{
       return conf;
     }
 
-    getAllUsers() {
-      return fetch(this.url,this.getConf()).then(res => res.json());
-  }
+    getAllUsers(numberPage) {
+      return fetch(`${this.url}?page=${numberPage}&size=5`,this.getConf()).then(res => res.json());
+    }
+
+    deleteUser(id) {
+      var user = localStorage.getItem('loggedUser');
+      var token = null;
+      if(user!=='null' && user!=null){
+        token = JSON.parse(user).token;
+      }
+      const conf={
+        method: 'DELETE',
+        headers: new Headers({'X-Auth-Token': token},
+                              {'Access-Control-Allow-Methods':'DELETE'}
+                              ),
+      };
+      return fetch(`${this.url}/${id}`,conf);
+    }
+
+    getNumberPages() {
+      return fetch(`${this.url}/get-number-pages`,this.getConf()).then(res => res.json());
+    }
   }
   
   export default AuthenticationService

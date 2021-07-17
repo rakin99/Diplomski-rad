@@ -18,21 +18,25 @@ class Users extends Component{
                         </h2>
                     </div>
                 </div>
-                <div className='w-75 mt-3'>
+                <div className='mt-3'>
                     <table className="table mb-1 text-light text-center">
                         <thead>
                             <tr>
-                                <td >E-mail</td>
-                                <td >Uloga</td>
-                                <td >Upozorenja</td>
-                                <td >Okrug</td>
+                                <th >E-mail</th>
+                                <th >Uloga</th>
+                                <th >Upozorenja</th>
+                                <th >Okrug</th>
+                                <th></th>
                             </tr>
                         </thead>
-                        <UserRow users={this.props.users}/>
+                        <UserRow users={this.props.users} deleteUser = {this.props.deleteUser}/>
                     </table>
                     <UserPagination 
                         reduceNumberPage = {this.props.reduceNumberPage}
-                        increaseNumberPage = {this.props.increaseNumberPage}    
+                        increaseNumberPage = {this.props.increaseNumberPage}
+                        setNumberPage = {this.props.setNumberPage}
+                        numberPage = {this.props.numberPage}
+                        numberPages = {this.props.numberPages}  
                     />
                 </div>
             </div>
