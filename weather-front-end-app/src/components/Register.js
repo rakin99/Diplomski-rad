@@ -21,11 +21,11 @@ class Register extends Component{
         this.handleSubmit=this.handleSubmit.bind(this);
         this.searchAreas=this.searchAreas.bind(this);
         this.check=this.check.bind(this);
+        this.validateEmail = this.validateEmail.bind(this);
     }
 
     async searchAreas(event){
         const searchString = event.target.value;
-        // console.log("Search string: "+searchString);
         await areasService.getAreas(searchString).then(res => 
             {   
                 // console.log(res)
@@ -68,11 +68,18 @@ class Register extends Component{
         })
     }
 
+    validateEmail(email) {
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
+
     async handleSubmit(event){
         // console.log(JSON.stringify(this.state))
         var message=[];
         if(this.state.username.trim()===''){
             message.push("Unesite korisničko ime!")
+        }else if(this.state.username.trim()!=='' && !this.validateEmail(this.state.username.trim())){
+            message.push("E-mail adresa nije validna!")
         }
         if(this.state.password.trim()==='' && !this.props.settings){
             message.push("Unesite lozinku!")
