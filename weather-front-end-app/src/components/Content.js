@@ -11,6 +11,7 @@ import Register from './Register'
 import AuthenticationService from './services/AuthenticationService'
 import { Redirect } from 'react-router-dom'
 import UsersContainer from './Pages/Users/UsersContainer'
+import Notice from './Notice'
 
 var authenticationService = new AuthenticationService();
 class Content extends Component{
@@ -51,7 +52,7 @@ class Content extends Component{
             );
         }
 
-        const PrivateRoute = ({ component: Component, roles, ...rest }) => {
+        const PrivateRoute = ({ component, roles, ...rest }) => {
           return(
             <Route {...rest} render={props => {
               const currentUser = authenticationService.getUserFromStorage();
@@ -65,7 +66,7 @@ class Content extends Component{
                 return <Redirect to={{ pathname: '/' }} />
               }
               // authorised so return component
-              return <Component {...props} />
+              return renderMergedProps(component, props, rest);
             }} />
           )
         }
@@ -78,9 +79,10 @@ class Content extends Component{
                           handleClick={this.props.handleClick}
                           changeChecked={this.changeChecked}
                           settings={this.props.settings}
+                          setNotice = {this.props.setNotice}
                         />
         return(
-            <div className="main my_main">
+          <div className="main my_main">
               <Modal
                     visible={this.props.login}
                     width="470px"
@@ -99,12 +101,22 @@ class Content extends Component{
 					    >
 						    {register}
               </Modal>
+              <Notice
+                    notice = {this.props.notice.noticeRegister}
+                    message = {this.props.notice.message}
+                    setNotice = {this.props.setNotice}
+                    mode = "noticeRegister"
+                />
               <div className='float-left w-75 text-white'>
                   <Switch>
                       <PrivateRoute 
                           component={UsersContainer} 
                           roles="ROLE_ADMIN" 
                           path="/users"
+                          notice = {this.props.notice}
+                          setNotice = {this.props.setNotice}
+                          setSearchUser = {this.props.setSearchUser}
+                          searchUser = {this.props.searchUser}
                         />
                       <PropsRoute
                           path="/" 

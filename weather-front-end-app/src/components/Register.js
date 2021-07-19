@@ -96,7 +96,7 @@ class Register extends Component{
                 }).then(res => 
                     {   
                         if(res.status!=500){
-                            alert('Uspešno ste se registrovali!')
+                            this.props.setNotice("noticeRegister",true,"Uspešno ste se registrovali!")
                         }
                     }
                 );
@@ -109,7 +109,7 @@ class Register extends Component{
                 }).then(res => 
                     {   
                         if(res.status!=500){
-                            alert('Ažuriranje je uspešno!')
+                            this.props.setNotice("noticeRegister",true,"Ažuriranje je uspešno!")
                         }
                     }
                 );

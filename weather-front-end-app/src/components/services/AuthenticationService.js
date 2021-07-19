@@ -87,6 +87,10 @@ class AuthenticationService{
       return fetch(`${this.url}?page=${numberPage}&size=5`,this.getConf()).then(res => res.json());
     }
 
+    getUserByEamil(numberPage,email) {
+      return fetch(`${this.url}/get-user-by-email?page=${numberPage}&size=5&email=${email}`,this.getConf()).then(res => res.json());
+    }
+
     deleteUser(id) {
       var user = localStorage.getItem('loggedUser');
       var token = null;
@@ -102,8 +106,8 @@ class AuthenticationService{
       return fetch(`${this.url}/${id}`,conf);
     }
 
-    getNumberPages() {
-      return fetch(`${this.url}/get-number-pages`,this.getConf()).then(res => res.json());
+    getNumberPages(email) {
+      return fetch(`${this.url}/get-number-pages?email=${email}`,this.getConf()).then(res => res.json());
     }
   }
   

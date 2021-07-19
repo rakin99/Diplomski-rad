@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import Notice from "../../Notice";
 import AuthenticationService from "../../services/AuthenticationService"
 import Users from "./Users";
 
@@ -10,7 +11,7 @@ class UsersContainer extends Component{
         this.state = {
             users:[],
             numberPage:0,
-            numberPages:0
+            numberPages:0,
         }
         this.getUsers = this.getUsers.bind(this);
         this.reduceNumberPage = this.reduceNumberPage.bind(this);
@@ -20,21 +21,26 @@ class UsersContainer extends Component{
         this.deleteUser = this.deleteUser.bind(this);
     }
 
-    componentDidMount(){
-        this.getUsers(this.state.numberPage);
-        this.getNumberPages();
+    async componentDidMount(){
+        // this.getUsers(this.state.numberPage);
+        if(!this.props.searchUser.view){
+            this.props.setSearchUser('',true);
+        }else{
+            this.getUsers(this.state.numberPage)
+            this.getNumberPages(this.props.searchUser.value);
+        }
     }
 
     async getUsers(numberPage){
-        await authenticationService.getAllUsers(numberPage).then(res =>{
+        await authenticationService.getUserByEamil(numberPage,this.props.searchUser.value).then(res=>{
             this.setState({
                 users:res
             })
-        })
+        });
     }
 
-    async getNumberPages(){
-        await authenticationService.getNumberPages().then(res =>{
+    async getNumberPages(email){
+        await authenticationService.getNumberPages(email).then(res =>{
             this.setState({
                 numberPages:res
             })
@@ -69,14 +75,13 @@ class UsersContainer extends Component{
     }
 
     async deleteUser(id){
-        console.log("Delete user with id: "+id)
         await authenticationService.deleteUser(id).then(res =>{
             if(res.status==200){
-                alert("Korisnik je uspešno obrisan!")
-                this.getNumberPages();
+                this.props.setNotice("noticeDelete",true,"Korisnik je uspešno obrisan!")
+                this.getNumberPages(this.props.searchUser.value);
                 this.getUsers(this.state.numberPage==(this.state.numberPages-1)?(this.state.numberPage-1):this.state.numberPage);
             }else{
-                alert("Došlo je do greške!")
+                this.props.setNotice("noticeDelete",true,"Došlo je do greške!")
             }
         })
     }
@@ -93,6 +98,12 @@ class UsersContainer extends Component{
                                                     />
         return(
             <div>
+                <Notice
+                    notice = {this.props.notice.noticeDelete}
+                    message = {this.props.notice.message}
+                    setNotice = {this.props.setNotice}
+                    mode = "noticeDelete"
+                />
                 {users}
             </div>
         )

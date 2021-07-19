@@ -4,6 +4,7 @@ import Content from './components/Content';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import AuthenticationService from "./components/services/AuthenticationService";
+import { useLocation } from 'react-router-dom'
 
 var authenticationService = new AuthenticationService();
 class App extends Component {
@@ -15,7 +16,16 @@ class App extends Component {
       login:false,
       register:false,
       loggedIn:'',
-      settings:false
+      settings:false,
+      notice:{
+        noticeDelete:false,
+        noticeRegister:false,
+        message:''
+      },
+      searchUser:{
+        value:'',
+        view:false
+      }
     }
     this.search = this.search.bind(this);
     this.keyUp = this.keyUp.bind(this);
@@ -23,6 +33,8 @@ class App extends Component {
     this.getLoggedUser=this.getLoggedUser.bind(this);
     this.logout=this.logout.bind(this);
     this.setSettings=this.setSettings.bind(this);
+    this.setNotice = this.setNotice.bind(this);
+    this.setSearchUser = this.setSearchUser.bind(this);
   }
 
   componentDidMount(){
@@ -36,9 +48,31 @@ class App extends Component {
     })
   }
 
+  setSearchUser(stringSearch,isView){
+    this.setState({
+      searchUser:{
+        value:stringSearch,
+        view:isView
+      }
+    })
+  }
+
+  setNotice(name,val,mess){
+    this.setState({
+        notice:{
+          [name]:val,
+          message:mess
+        }
+    })
+}
+
   search(searchPlace){
-    localStorage.setItem('searchPlace',searchPlace);
-    this.setState({searchPlace:searchPlace})
+    if(this.state.searchUser.view){
+      this.setSearchUser(searchPlace,true)
+    }else{
+      localStorage.setItem('searchPlace',searchPlace);
+      this.setState({searchPlace:searchPlace})
+    }
   }
 
   keyUp(event){
@@ -96,14 +130,20 @@ class App extends Component {
       <div className="container">
         <Router>
           <Header 
-            search = {this.search} 
+            search = {this.search}
+            searchUser = {this.state.searchUser.view}
             keyUp = {this.keyUp} 
             handleClick = {this.handleClick} 
             loggedUser={this.state.loggedUser} 
             logout={this.logout}
             setSettings={this.setSettings}
+            setSearchUser = {this.setSearchUser}
             />
-          <Content 
+          <Content
+            searchUser = {this.state.searchUser}
+            setSearchUser = {this.setSearchUser}
+            setNotice = {this.setNotice}
+            notice = {this.state.notice}
             search={this.search}
             loggedIn={this.state.loggedIn}
             searchPlace = {this.state.searchPlace} 

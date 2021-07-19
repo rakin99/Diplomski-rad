@@ -17,7 +17,7 @@ class Header extends Component{
         return(
             <header className='header mb-1'>
                 {logged}
-                <Navigation search = {this.props.search} keyUp = {this.props.keyUp}/>
+                <Navigation search = {this.props.search} keyUp = {this.props.keyUp} searchUser = {this.props.searchUser} setSearchUser = {this.props.setSearchUser}/>
             </header>
         )
     }

@@ -21,30 +21,31 @@ class NavDesktop extends Component{
     render(){
         const users = (authenticationService.getUserFromStorage()!=null &&  authenticationService.getUserFromStorage().roles[0][0].authority==='ROLE_ADMIN') && 
                                                                     <li className="nav-item">
-                                                                        <NavLink to="/users" className="nav-link myNav-link" activeClassName="nav-link myNav-active">
+                                                                        <NavLink to="/users" onClick={()=>this.props.setSearchUser('',true)} className="nav-link myNav-link" activeClassName="nav-link myNav-active">
                                                                             <b>Korisnici</b>
                                                                         </NavLink>
                                                                     </li>
+        const textPlaceholder = this.props.searchUser?"E-mail korisnika...":"Naziv mesta..."
         return(
             <nav className = 'navbar navbar-expand-lg navbar-dark d-block'>
                 <ul className="nav nav-tabs myNav">
                     <li className="nav-item">
-                        <NavLink exact to="/current-weather/" className="nav-link myNav-link" activeClassName="nav-link myNav-active">
+                        <NavLink exact to="/current-weather/" onClick={()=>this.props.setSearchUser(false)} className="nav-link myNav-link" activeClassName="nav-link myNav-active">
                             <b>Trenutna prognoza</b>
                         </NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink to="/48h-weather" className="nav-link myNav-link" activeClassName="nav-link myNav-active">
+                        <NavLink to="/48h-weather" onClick={()=>this.props.setSearchUser(false)} className="nav-link myNav-link" activeClassName="nav-link myNav-active">
                             <b>48h prognoza</b>
                         </NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink to="/7-day-weather" className="nav-link myNav-link" activeClassName="nav-link myNav-active">
+                        <NavLink to="/7-day-weather" onClick={()=>this.props.setSearchUser(false)} className="nav-link myNav-link" activeClassName="nav-link myNav-active">
                             <b>Za 7 dana</b>
                         </NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink to="/air-pollution" className="nav-link myNav-link" activeClassName="nav-link myNav-active">
+                        <NavLink to="/air-pollution" onClick={()=>this.props.setSearchUser(false)} className="nav-link myNav-link" activeClassName="nav-link myNav-active">
                             <b>Zagađenje vazduha</b>
                         </NavLink>
                     </li>
@@ -56,7 +57,7 @@ class NavDesktop extends Component{
                             onKeyUp={this.props.keyUp}
                             name={"mesto"} 
                             type="search" 
-                            placeholder="Naziv mesta..." 
+                            placeholder={textPlaceholder} 
                             defaultValue={this.state.mesto}
                         />
                         <button className="btn btn-light" onClick={() =>{this.props.search(this.state.mesto)}}>Traži</button>
