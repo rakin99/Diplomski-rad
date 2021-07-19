@@ -125,6 +125,8 @@ public class UserService implements UserInterface, UserDetailsService {
 		user.setAlerts(dto.isAlerts());
 		user.setArea(dto.getArea());
 		user.setRole("ROLE_USER");
+		user.setLastSearchArea("Šumadijski okrug");
+		user.setLastSearchPlace("Srbija");
 		
 		user = save(user);
 		return new UserDTO(user);
@@ -159,9 +161,9 @@ public class UserService implements UserInterface, UserDetailsService {
 	}
 	
 	@Override
-	public Long getNumberPage() {
-		Long num = repository.count()/5;
-		Long mod = repository.count()%5;
+	public Long getNumberPage(String email) {
+		Long num = repository.countByEmail(email)/5;
+		Long mod = repository.countByEmail(email)%5;
 		if(mod>0) {
 			num ++;
 		}
@@ -189,6 +191,16 @@ public class UserService implements UserInterface, UserDetailsService {
 	public List<UserDTO> findAllDTOS(Pageable page) {
 		List<UserDTO> dtos = new ArrayList<UserDTO>();
 		Page<User> users = findAll(page);
+		for (User user : users) {
+			dtos.add(new UserDTO(user));
+		}
+		return dtos;
+	}
+
+	@Override
+	public List<UserDTO> findByEmail(Pageable page, String email) {
+		Page<User> users = repository.findByEmail(email,page);
+		List<UserDTO> dtos = new ArrayList<UserDTO>();
 		for (User user : users) {
 			dtos.add(new UserDTO(user));
 		}
