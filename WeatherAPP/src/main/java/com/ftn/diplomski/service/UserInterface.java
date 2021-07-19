@@ -27,5 +27,6 @@ public interface UserInterface {
 	public void changeSearchPlace(Principal principal,String searchPlace);
 	public void changeSearchArea(Principal principal,String searchArea);
 	public UserDTO getLoggedUser(Principal principal);
-	public Long getNumberPage();
+	public Long getNumberPage(String email);
+	public List<UserDTO> findByEmail(Pageable page, String email);
 }

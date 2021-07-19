@@ -81,11 +81,18 @@ public class UserController {
 		return new ResponseEntity<List<UserDTO>>(userService.findAllDTOS(page), HttpStatus.OK); 
 	}
 	
+	@GetMapping("/get-user-by-email")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	public ResponseEntity<List<UserDTO>> getUserByEmail(Pageable page,@RequestParam String email){
+		System.out.println("\nGet user by email!");
+		return new ResponseEntity<List<UserDTO>>(userService.findByEmail(page, email), HttpStatus.OK); 
+	}
+	
 	@GetMapping("/get-number-pages")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	public ResponseEntity<Long> getNumberPage(){
+	public ResponseEntity<Long> getNumberPage(@RequestParam String email){
 		System.out.println("\nCount!");
-		return new ResponseEntity<Long>(userService.getNumberPage(), HttpStatus.OK); 
+		return new ResponseEntity<Long>(userService.getNumberPage(email), HttpStatus.OK); 
 	}
 	
 	@GetMapping("/{id}")
