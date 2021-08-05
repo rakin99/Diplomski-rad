@@ -1,7 +1,7 @@
 import React, {Component, useState} from "react"
-import AuthenticationService from "./services/AuthenticationService";
+import UserService from "./services/UserService";
 
-var authenticationService = new AuthenticationService();
+var authenticationService = new UserService();
 class Login extends Component{
 
     constructor(){

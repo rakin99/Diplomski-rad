@@ -1,4 +1,4 @@
-class AuthenticationService{
+class UserService{
     constructor(){
       this.url='http://localhost:8080/api/user';
     }
@@ -33,7 +33,7 @@ class AuthenticationService{
         return fetch(`${this.url}/register`,conf).then(res => res.json());
     }
 
-    edit(editData){
+  edit(editData){
       var user = localStorage.getItem('loggedUser');
       var token = null;
       if(user!=='null' && user!=null){
@@ -47,6 +47,21 @@ class AuthenticationService{
                             };
       return fetch(`${this.url}/edit`,conf).then(res => res.json());
   }
+
+  adminEdit(editData){
+    var user = localStorage.getItem('loggedUser');
+    var token = null;
+    if(user!=='null' && user!=null){
+      // console.log("Prolazim u IF confg")
+      token = JSON.parse(user).token;
+    }
+    var conf={
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json','X-Auth-Token': token,'Access-Control-Allow-Methods':'PUT' },
+        body: JSON.stringify(editData)
+                          };
+    return fetch(`${this.url}/admin-edit`,conf).then(res => res.json());
+}
 
     getRoles(token) {
         let jwtData = token.split('.')[1];
@@ -111,4 +126,4 @@ class AuthenticationService{
     }
   }
   
-  export default AuthenticationService
+  export default UserService

@@ -2,10 +2,10 @@ import React from "react"
 import WeatherService from "../../services/WeatherService"
 import CurrentWeather from "./CurrentWeather"
 import ErrorMessage from "../../ErrorMessage";
-import AuthenticationService from "../../services/AuthenticationService";
+import UserService from "../../services/UserService";
 
 var weatherService = new WeatherService();
-var authenticationService = new AuthenticationService();
+var authenticationService = new UserService();
 class CurrentWeatherContainer extends React.Component{
 
     constructor(){

@@ -1,6 +1,6 @@
-import AuthenticationService from "./AuthenticationService";
+import UserService from "./UserService";
 
-var authenticationService = new AuthenticationService();
+var authenticationService = new UserService();
 class WeatherService{
   constructor(){
     this.url='http://localhost:8080/api/weather';

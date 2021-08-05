@@ -1,12 +1,12 @@
 import { Component } from "react";
-import {BrowserRouter as Router} from "react-router-dom";
+import {BrowserRouter as Router, Redirect} from "react-router-dom";
 import Content from './components/Content';
 import Footer from './components/Footer';
 import Header from './components/Header';
-import AuthenticationService from "./components/services/AuthenticationService";
+import UserService from "./components/services/UserService";
 import { useLocation } from 'react-router-dom'
 
-var authenticationService = new AuthenticationService();
+var authenticationService = new UserService();
 class App extends Component {
 
   constructor(){
@@ -24,7 +24,8 @@ class App extends Component {
       },
       searchUser:{
         value:'',
-        view:false
+        view:false,
+        editUser:false
       }
     }
     this.search = this.search.bind(this);
@@ -48,11 +49,12 @@ class App extends Component {
     })
   }
 
-  setSearchUser(stringSearch,isView){
+  setSearchUser(stringSearch,isView,edit){
     this.setState({
       searchUser:{
         value:stringSearch,
-        view:isView
+        view:isView,
+        editUser:edit
       }
     })
   }
@@ -68,7 +70,7 @@ class App extends Component {
 
   search(searchPlace){
     if(this.state.searchUser.view){
-      this.setSearchUser(searchPlace,true)
+      this.setSearchUser(searchPlace,true,false)
     }else{
       localStorage.setItem('searchPlace',searchPlace);
       this.setState({searchPlace:searchPlace})

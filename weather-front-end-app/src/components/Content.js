@@ -8,12 +8,12 @@ import AlertsIndicesContainer from './AlertIndices/Alerts-IndicesContainer'
 import Login from './Login'
 import Modal from 'react-awesome-modal';
 import Register from './Register'
-import AuthenticationService from './services/AuthenticationService'
+import UserService from './services/UserService'
 import { Redirect } from 'react-router-dom'
 import UsersContainer from './Pages/Users/UsersContainer'
 import Notice from './Notice'
 
-var authenticationService = new AuthenticationService();
+var authenticationService = new UserService();
 class Content extends Component{
 
     constructor(){
@@ -80,6 +80,10 @@ class Content extends Component{
                           changeChecked={this.changeChecked}
                           settings={this.props.settings}
                           setNotice = {this.props.setNotice}
+                          register = {this.props.register}
+                          isChecked = {this.state.isChecked}
+                          searchUser = {this.props.searchUser}
+                          setSearchUser = {this.props.setSearchUser}
                         />
         return(
           <div className="main my_main">
@@ -92,15 +96,7 @@ class Content extends Component{
 					    >
 						    {login}
               </Modal>
-              <Modal
-                    visible={this.props.register}
-                    width="470px"
-                    height={!this.state.isChecked ? "430px":"340px"}
-                    effect="fadeInUp"
-                    onClickAway={this.props.handleClick}
-					    >
-						    {register}
-              </Modal>
+              {register}
               <Notice
                     notice = {this.props.notice.noticeRegister}
                     message = {this.props.notice.message}
@@ -117,6 +113,20 @@ class Content extends Component{
                           setNotice = {this.props.setNotice}
                           setSearchUser = {this.props.setSearchUser}
                           searchUser = {this.props.searchUser}
+                          setSettings = {this.props.setSettings}
+                          settings={this.props.settings}
+                        />
+                      <PrivateRoute 
+                          component={Register} 
+                          roles="ROLE_ADMIN" 
+                          path="/users/:email"
+                          setSearchUser = {this.props.setSearchUser}
+                          handleClick={this.props.handleClick}
+                          changeChecked={this.changeChecked}
+                          settings={this.props.settings}
+                          setNotice = {this.props.setNotice}
+                          register = {this.props.register}
+                          isChecked = {this.state.isChecked}
                         />
                       <PropsRoute
                           path="/" 

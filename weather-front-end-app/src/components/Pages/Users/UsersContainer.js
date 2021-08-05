@@ -1,9 +1,10 @@
 import React, { Component } from "react"
+import { Redirect } from "react-router-dom";
 import Notice from "../../Notice";
-import AuthenticationService from "../../services/AuthenticationService"
+import UserService from "../../services/UserService"
 import Users from "./Users";
 
-var authenticationService = new AuthenticationService();
+var authenticationService = new UserService();
 class UsersContainer extends Component{
     
     constructor(){
@@ -24,7 +25,7 @@ class UsersContainer extends Component{
     async componentDidMount(){
         // this.getUsers(this.state.numberPage);
         if(!this.props.searchUser.view){
-            this.props.setSearchUser('',true);
+            this.props.setSearchUser('',true,false);
         }else{
             this.getUsers(this.state.numberPage)
             this.getNumberPages(this.props.searchUser.value);
@@ -32,7 +33,7 @@ class UsersContainer extends Component{
     }
 
     async getUsers(numberPage){
-        await authenticationService.getUserByEamil(numberPage,this.props.searchUser.value).then(res=>{
+        await authenticationService.getUserByEamil(numberPage,(this.props.searchUser.view && !this.props.searchUser.editUser)?this.props.searchUser.value:'').then(res=>{
             this.setState({
                 users:res
             })
@@ -87,7 +88,8 @@ class UsersContainer extends Component{
     }
     
     render(){
-        const users = this.state.users.length>0 && <Users 
+        const users = this.state.users.length>0 && <Users
+                                                        setSettings = {this.props.setSettings}
                                                         users={this.state.users}
                                                         reduceNumberPage = {this.reduceNumberPage}
                                                         deleteUser = {this.deleteUser}
@@ -95,7 +97,10 @@ class UsersContainer extends Component{
                                                         setNumberPage = {this.setNumberPage}
                                                         numberPage = {this.state.numberPage}
                                                         numberPages = {this.state.numberPages}
+                                                        searchUser = {this.props.searchUser}
+                                                        setSearchUser = {this.props.setSearchUser}
                                                     />
+        const redirect = !this.props.settings && <Redirect to="/users" />
         return(
             <div>
                 <Notice
@@ -105,6 +110,7 @@ class UsersContainer extends Component{
                     mode = "noticeDelete"
                 />
                 {users}
+                {redirect}
             </div>
         )
     }

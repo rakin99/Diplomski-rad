@@ -29,7 +29,12 @@ class Users extends Component{
                                 <th></th>
                             </tr>
                         </thead>
-                        <UserRow users={this.props.users} deleteUser = {this.props.deleteUser}/>
+                        <UserRow 
+                            setSearchUser = {this.props.setSearchUser} 
+                            users={this.props.users} 
+                            deleteUser = {this.props.deleteUser} 
+                            setSettings = {this.props.setSettings}
+                        />
                     </table>
                     <UserPagination 
                         reduceNumberPage = {this.props.reduceNumberPage}

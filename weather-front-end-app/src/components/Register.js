@@ -1,13 +1,14 @@
 import React, {Component, useState} from "react"
 import AreaService from "./services/AreaService";
-import AuthenticationService from "./services/AuthenticationService";
+import UserService from "./services/UserService";
+import Modal from 'react-awesome-modal';
 
-var authenticationService = new AuthenticationService();
+var userService = new UserService();
 var areasService = new AreaService();
 class Register extends Component{
 
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         this.state={
             username:'',
             password:'',
@@ -38,8 +39,19 @@ class Register extends Component{
     }
 
     async componentDidMount(){
-        if(this.props.settings){
-            await authenticationService.getLoggedUser().then(res=>{
+        if(this.props.searchUser.editUser){
+            await userService.getUserByEamil(0,this.props.searchUser.value).then(res=>{
+                console.log(res)
+                const user = res[0];
+                this.setState({
+                    username:user.username,
+                    alerts:user.alerts,
+                    area:user.area
+                })
+            });
+        }
+        else if(this.props.settings){
+            await userService.getLoggedUser().then(res=>{
                 this.setState({
                     username:res.username,
                     alerts:res.alerts,
@@ -95,7 +107,8 @@ class Register extends Component{
         })
         if(message.length==0){
             if(!this.props.settings){
-                authenticationService.register({
+                console.log("Register")
+                userService.register({
                     'username':this.state.username,
                     'password':this.state.password,
                     'alerts':this.state.alerts,
@@ -107,8 +120,23 @@ class Register extends Component{
                         }
                     }
                 );
+            }else if(this.props.searchUser.editUser){
+                console.log("Edit user")
+                userService.adminEdit({
+                    'username':this.state.username,
+                    'password':this.state.password,
+                    'alerts':this.state.alerts,
+                    'area':this.state.area
+                }).then(res => 
+                    {   
+                        if(res.status!=500){
+                            this.props.setNotice("noticeRegister",true,"Ažuriranje je uspešno!")
+                        }
+                    }
+                );
             }else{
-                authenticationService.edit({
+                console.log("Settings")
+                userService.edit({
                     'username':this.state.username,
                     'password':this.state.password,
                     'alerts':this.state.alerts,
@@ -150,47 +178,59 @@ class Register extends Component{
         const username = this.props.settings? <input type="text" readOnly name="username" defaultValue={this.state.username} className="form-control mr-sm-1" />:
                                                             <input type="text" name="username" defaultValue={this.state.username} className="form-control mr-sm-1" />
         return(
-        <div className="align-middle" style={{
-            backgroundColor:'white', 
-            padding:'10px 10px 10px 10px'
-            }}>
-            <a className="close" href="#" onClick={(e)=>{
-                                                    this.props.handleClick(e)
-                                                    this.props.changeChecked(true)
-                                                    }}/>
-            <div onChange={this.handleChange}>
-                <div className="new-member-inner">
-                    {head}
-                    <ul className="form">
-                        <li>
-                            <label>E-mail:</label>
-                            {username}
-                        </li>								
-                        <li>
-                            <label>Lozinka:</label>
-                            <input type="password" name="password" defaultValue={this.state.password} className="form-control mr-sm-1" />
-                        </li>
-                        <li>
-                            <label>Ponovite lozinku:</label>
-                            <input type="password" name="repeatPassword" defaultValue={this.state.repeatPassword} className="form-control mr-sm-1" />
-                        </li>
-                        <li>
-                            <p className="form-check-label">Da li želite da dobijate upozorenja o vremenskim uslovima?</p>
+            <Modal
+                    visible={this.props.register}
+                    width="470px"
+                    height={!this.props.isChecked ? "430px":"340px"}
+                    effect="fadeInUp"
+                    onClickAway={(e)=>{
+                        this.props.handleClick(e)
+                        this.props.setSearchUser('',false,false)
+                    }}
+					    >
+                <div className="align-middle" style={{
+                    backgroundColor:'white', 
+                    padding:'10px 10px 10px 10px'
+                    }}>
+                    <a className="close" href="#" onClick={(e)=>{
+                                                            this.props.handleClick(e)
+                                                            this.props.changeChecked(true)
+                                                            this.props.setSearchUser('',false,false)
+                                                            }}/>
+                    <div onChange={this.handleChange}>
+                        <div className="new-member-inner">
+                            {head}
+                            <ul className="form">
+                                <li>
+                                    <label>E-mail:</label>
+                                    {username}
+                                </li>								
+                                <li>
+                                    <label>Lozinka:</label>
+                                    <input type="password" name="password" defaultValue={this.state.password} className="form-control mr-sm-1" />
+                                </li>
+                                <li>
+                                    <label>Ponovite lozinku:</label>
+                                    <input type="password" name="repeatPassword" defaultValue={this.state.repeatPassword} className="form-control mr-sm-1" />
+                                </li>
+                                <li>
+                                    <p className="form-check-label">Da li želite da dobijate upozorenja o vremenskim uslovima?</p>
+                                    <div className="text-center">
+                                        <input type="checkbox" name="alerts" id="alerts" checked={this.state.alerts} onChange={this.check} className="form-check-input" />
+                                    </div>
+                                </li>
+                                {areas}
+                            </ul>
+                            {errorMessage}
                             <div className="text-center">
-                                <input type="checkbox" name="alerts" id="alerts" checked={this.state.alerts} onChange={this.check} className="form-check-input" />
+                                <button className="btn btn-primary" onClick={(e) => {
+                                                                            this.handleSubmit(e)
+                                                                        }}>Potvrdi</button>
                             </div>
-                        </li>
-                        {areas}
-                    </ul>
-                    {errorMessage}
-                    <div className="text-center">
-                        <button className="btn btn-primary" onClick={(e) => {
-                                                                    this.handleSubmit(e)
-                                                                }}>Potvrdi</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </Modal>
         )
     }
 }

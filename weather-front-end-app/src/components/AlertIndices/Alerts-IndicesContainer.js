@@ -4,13 +4,13 @@ import AreaService from '../services/AreaService';
 import IndicesService from '../services/IndicesService';
 import TimeConverter from '../services/TimeConverter';
 import ErrorMessage from "../ErrorMessage";
-import AuthenticationService from '../services/AuthenticationService';
+import UserService from '../services/UserService';
 
 var areasService = new AreaService();
 var alertsService = new AlertsService();
 var indicesService = new IndicesService();
 var timeConverter = new TimeConverter();
-var authenticationService = new AuthenticationService();
+var authenticationService = new UserService();
 class AlertsIndicesContainer extends Component{
     
     constructor(){
@@ -198,7 +198,7 @@ class AlertsIndicesContainer extends Component{
         const indexPollen = this.state.pollen.length!=0 && <span><h6 className='mb-0'><b>Polen:</b></h6> {pollen}</span>;
         const errorMessage = this.state.errorMessage !== '' && <ErrorMessage h={6} message = {this.state.errorMessage} />
         return(
-            <div className='float-right w-25'>
+            <div className='float-right w-25 pl-1'>
                 <div className='alerts-indices-div'>
                     <input list="areas" className='form-control form-control-sm col-9 d-inline' value={this.state.area} onKeyUp={this.searchAreas} onChange={this.setArea} onFocus={this.searchAreas}/>
                     <button className='ml-1 btn-light rounded' onClick={this.getAlertsIndices}>✓</button>
