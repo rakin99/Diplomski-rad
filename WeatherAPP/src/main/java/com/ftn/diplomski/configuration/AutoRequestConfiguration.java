@@ -37,11 +37,11 @@ public class AutoRequestConfiguration {
 		mailService.preapareMail();
 	}
 
-//    @PostConstruct
-//    public void initRequestForApis() {
-//    	alertsService.saveAlertsForAllAreas();
-//		mosquitoService.saveMosquitoForAllAreas();
-//		pollenService.savePollenForAllAreas();
+    @PostConstruct
+    public void initRequestForApis() {
+    	alertsService.saveAlertsForAllAreas();
+		mosquitoService.saveMosquitoForAllAreas();
+		pollenService.savePollenForAllAreas();
 //		mailService.preapareMail();
-//    }
+    }
 }
