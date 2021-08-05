@@ -176,8 +176,8 @@ public class UserService implements UserInterface, UserDetailsService {
 	}
 
 	@Override
-	public UserDTO edit(UserDTO dto,Principal principal) {
-		User user = findByUsername(principal.getName());
+	public UserDTO edit(UserDTO dto,String username) {
+		User user = findByUsername(username);
 		if(!dto.getPassword().trim().equals("") && !passwordEncoder.encode(dto.getPassword()).equals(user.getPassword())) {
 			user.setPassword(passwordEncoder.encode(dto.getPassword()));
 		}

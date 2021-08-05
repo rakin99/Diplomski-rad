@@ -64,7 +64,15 @@ public class UserController {
 	@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
 	public ResponseEntity<UserDTO> editUser(@RequestBody UserDTO dto, UriComponentsBuilder ucBuilder,Principal principal){
 		System.out.println("\nEdit User");
-		UserDTO user = userService.edit(dto,principal);
+		UserDTO user = userService.edit(dto,principal.getName());
+		return new ResponseEntity<UserDTO>(user, HttpStatus.OK);
+	}
+	
+	@PutMapping("/admin-edit")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	public ResponseEntity<UserDTO> adminEditUser(@RequestBody UserDTO dto, UriComponentsBuilder ucBuilder){
+		System.out.println("\nEdit User");
+		UserDTO user = userService.edit(dto,dto.getUsername());
 		return new ResponseEntity<UserDTO>(user, HttpStatus.OK);
 	}
 	

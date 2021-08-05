@@ -14,7 +14,7 @@ import com.ftn.diplomski.modelDTO.UserDTO;
 public interface UserInterface {
 
 	public User save(User user);
-	public UserDTO edit(UserDTO user,Principal principal);
+	public UserDTO edit(UserDTO user,String username);
 	public UserDTO findById(Long id);
 	public User findByUsername(String username);
 	public List<User> findAll();
