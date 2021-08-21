@@ -12,6 +12,7 @@ class App extends Component {
   constructor(){
     super();
     this.state = {
+      collapsed:false,
       searchPlace:'',
       login:false,
       register:false,
@@ -36,6 +37,7 @@ class App extends Component {
     this.setSettings=this.setSettings.bind(this);
     this.setNotice = this.setNotice.bind(this);
     this.setSearchUser = this.setSearchUser.bind(this);
+    this.collapse = this.collapse.bind(this);
   }
 
   componentDidMount(){
@@ -81,6 +83,15 @@ class App extends Component {
     if(event.keyCode==13){
       this.search(event.target.value)
     }
+  }
+
+  collapse(){
+    this.setState(prevState=>{
+      const updateState = !prevState.collapsed
+      return{
+        collapsed:updateState
+      }
+    })
   }
 
   handleClick(event){
@@ -140,6 +151,8 @@ class App extends Component {
             logout={this.logout}
             setSettings={this.setSettings}
             setSearchUser = {this.setSearchUser}
+            collapsed = {this.state.collapsed}
+            collapse = {this.collapse}
             />
           <Content
             searchUser = {this.state.searchUser}

@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import LoggedIn from "./LoggedIn"
 import LoggedOut from "./LoggedOut"
 import Navigation from "./Navigation"
+import NavMobile from "./NavMobile"
 
 class Header extends Component{
 
@@ -14,10 +15,23 @@ class Header extends Component{
                                                     <LoggedOut
                                                         handleClick={this.props.handleClick}
                                                     />
+        const mobileNav = this.props.collapsed && <NavMobile collapse = {this.props.collapse} search = {this.props.search} keyUp = {this.props.keyUp} searchUser = {this.props.searchUser} setSearchUser = {this.props.setSearchUser}/>
         return(
             <header className='header mb-1'>
+                <div className="float-left">
+                    <button
+                        className="menu ml-2 mt-2"
+                        onClick = {this.props.collapse}
+                        id="navbarDropdown"
+                    >
+                        <div class="bar1"></div>
+                        <div class="bar2"></div>
+                        <div class="bar3"></div>
+                    </button>
+                    {mobileNav}
+                </div>
                 {logged}
-                <Navigation search = {this.props.search} keyUp = {this.props.keyUp} searchUser = {this.props.searchUser} setSearchUser = {this.props.setSearchUser}/>
+                <Navigation collapsed = {this.props.collapsed} search = {this.props.search} keyUp = {this.props.keyUp} searchUser = {this.props.searchUser} setSearchUser = {this.props.setSearchUser}/>
             </header>
         )
     }
