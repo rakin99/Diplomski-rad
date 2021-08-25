@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import TimeConverter from '../../services/TimeConverter';
+import Mobile48h from './Mobile48h';
 import Table48h from './Table48h';
 
 class Content48h extends Component{
@@ -23,9 +24,15 @@ class Content48h extends Component{
                     </div>
                 </div>
                 <Table48h 
+                    
                     hourly={this.props.weather48h.hourly} 
                     increaseNumberPage={this.props.increaseNumberPage} 
                     reduceNumberPage={this.props.reduceNumberPage}
+                />
+                <Mobile48h  
+                            hourly={this.props.weather48h.hourly} 
+                            increaseNumberPage={this.props.increaseNumberPage} 
+                            reduceNumberPage={this.props.reduceNumberPage}
                 />
             </div>
         )

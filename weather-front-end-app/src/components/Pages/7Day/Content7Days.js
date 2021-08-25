@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Mobile7Days from './Mobile7Days'
 import Table7Days from './Table7Days'
 
 class Content7Days extends Component{
@@ -16,6 +17,7 @@ class Content7Days extends Component{
                 <Table7Days 
                     daily={this.props.weather7Days.daily}
                 />
+                <Mobile7Days daily={this.props.weather7Days.daily}/>
             </div>
         )
     }

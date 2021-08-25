@@ -17,7 +17,7 @@ class Table7Days extends Component{
                     </th>
         })
         return(
-            <div className="w-95 mt-3">
+            <div className="mt-3 w-95" id='desktop7Days'>
                 <table className="table mb-1">
                     <thead className="text-light">
                         <tr>
