@@ -3,7 +3,7 @@ import React from 'react';
 function Footer(){
     return(
         <footer className='background-footer'>
-            <h1 style={{textAlign:'center'}}>Footer</h1>
+            <p className="text-right font-9pt mr-5">&#169; 2021 Dejan Rakin.</p>
         </footer>
     )
 }
