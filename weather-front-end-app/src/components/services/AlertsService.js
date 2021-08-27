@@ -3,7 +3,7 @@ import UserService from "./UserService";
 var authenticationService = new UserService();
 class AlertsService{
     constructor(){
-      this.url='http://localhost:8080/api/alerts'
+      this.url='/api/alerts'
     }
   
     getAlerts(areaName){

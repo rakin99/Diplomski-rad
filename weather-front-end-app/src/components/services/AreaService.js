@@ -1,7 +1,7 @@
 
 class AreaService{
     constructor(){
-      this.url='http://localhost:8080/api/area'
+      this.url='/api/area'
     }
   
     getAreas(searchString){

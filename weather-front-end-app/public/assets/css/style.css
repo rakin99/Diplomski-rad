@@ -187,6 +187,7 @@ body{
     /* background-image: linear-gradient(rgb(138, 203, 233), rgb(62, 154, 230), rgb(138, 203, 233)); */
     background-image: linear-gradient(#98C1D9, #E0FBFC, #98C1D9);
     font-family: 'Montserrat', cursive;
+    width: auto;
 }
 
 .main{
@@ -319,7 +320,7 @@ body{
 .mobileNav{
     list-style-type: none;
     opacity: 0.8;
-    display: inline;
+    display: block;
 }
 
 #mobile48h{
@@ -330,15 +331,16 @@ body{
     display: none;
 }
 
-@media only screen and (min-width: 550px) and (max-width: 1200px){
+@media only screen and (min-width: 1000px) and (max-width: 1200px){
     header{
-        height:100px;
+        height:220px;
     }
     .menu{
         display: block;
     }
     .main{
-        height: 1200px;
+        height: 593px;
+        padding-top: 28px;
     }
     .desktopNav{
         display: none;
@@ -385,17 +387,219 @@ body{
     #mobile7Days{
         display: block;
     }
+    .container{
+        margin: 0px;
+        max-width: max-content;
+    }
 }
 
-@media only screen and (min-width: 320px) and (max-width: 550px){
+@media only screen and (min-width: 800px) and (max-width: 1000px){
     header{
-        height:100px;
+        height:220px;
     }
     .menu{
         display: block;
     }
     .main{
-        height: 1350px;
+        height: 728px;
+        padding-top: 28px;
+    }
+    .desktopNav{
+        display: none;
+    }
+    header .wrapper{
+        margin-bottom:0;
+        width:100%;
+    }
+    header .logo{
+        margin-left:12px;
+    }
+    .header .user{
+        box-shadow: 0 0 1px 1px rgb(138, 203, 233);
+        border-radius: 5px;
+        background-color: rgb(138, 203, 233);
+        margin-top:10px;
+        float: right;
+        list-style-type: none;
+        opacity: 0.8;
+        margin-right: 15px;
+        padding-left: 10px;
+    }
+    header .user li{
+        float:none;
+        border:0;
+        margin:0;
+        padding:0;
+    }
+    header .user li .user-menu{
+        right:-2px;
+    }
+    body{
+        height:auto;
+    }
+    #desktop48h{
+        display: none;
+    }
+    #desktop7Days{
+        display: none;
+    }
+    #mobile48h{
+        display: block;
+    }
+    #mobile7Days{
+        display: block;
+    }
+    .container{
+        margin: 0px;
+        max-width: max-content;
+    }
+    .mobileAirPollution{
+        text-align: left;
+        margin: 0px;
+    }
+}
+
+@media only screen and (min-width: 650px) and (max-width: 800px){
+    header{
+        height:220px;
+    }
+    .menu{
+        display: block;
+    }
+    .main{
+        height: 828px;
+        padding-top: 28px;
+    }
+    .desktopNav{
+        display: none;
+    }
+    header .wrapper{
+        margin-bottom:0;
+        width:100%;
+    }
+    header .logo{
+        margin-left:12px;
+    }
+    .header .user{
+        box-shadow: 0 0 1px 1px rgb(138, 203, 233);
+        border-radius: 5px;
+        background-color: rgb(138, 203, 233);
+        margin-top:10px;
+        float: right;
+        list-style-type: none;
+        opacity: 0.8;
+        margin-right: 15px;
+        padding-left: 10px;
+    }
+    header .user li{
+        float:none;
+        border:0;
+        margin:0;
+        padding:0;
+    }
+    header .user li .user-menu{
+        right:-2px;
+    }
+    body{
+        height:auto;
+    }
+    #desktop48h{
+        display: none;
+    }
+    #desktop7Days{
+        display: none;
+    }
+    #mobile48h{
+        display: block;
+    }
+    #mobile7Days{
+        display: block;
+    }
+    .container{
+        margin: 0px;
+        max-width: max-content;
+    }
+    #navAirPollution{
+        text-align: left;
+    }
+    .mobileAirPollution{
+        text-align: left;
+        margin: 0px;
+    }
+}
+
+@media only screen and (min-width: 550px) and (max-width: 650px){
+    header{
+        height:220px;
+    }
+    .menu{
+        display: block;
+    }
+    .main{
+        height: 983px;
+        padding-top: 28px;
+    }
+    .desktopNav{
+        display: none;
+    }
+    header .wrapper{
+        margin-bottom:0;
+        width:100%;
+    }
+    header .logo{
+        margin-left:12px;
+    }
+    .header .user{
+        box-shadow: 0 0 1px 1px rgb(138, 203, 233);
+        border-radius: 5px;
+        background-color: rgb(138, 203, 233);
+        margin-top:10px;
+        float: right;
+        list-style-type: none;
+        opacity: 0.8;
+        margin-right: 15px;
+        padding-left: 10px;
+    }
+    header .user li{
+        float:none;
+        border:0;
+        margin:0;
+        padding:0;
+    }
+    header .user li .user-menu{
+        right:-2px;
+    }
+    body{
+        height:auto;
+    }
+    #desktop48h{
+        display: none;
+    }
+    #desktop7Days{
+        display: none;
+    }
+    #mobile48h{
+        display: block;
+    }
+    #mobile7Days{
+        display: block;
+    }
+    .container{
+        margin: 0px;
+        max-width: max-content;
+    }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 550px){
+    header{
+        height:220px;
+    }
+    .menu{
+        display: block;
+    }
+    .main{
+        height: 1183px;
+        padding-top: 28px;
     }
     .desktopNav{
         display: none;
@@ -411,5 +615,41 @@ body{
     }
     #desktop7Days{
         display: none;
+    }
+    .container{
+        margin: 0px;
+        max-width: max-content;
+    }
+}
+
+@media only screen and (min-width: 320px) and (max-width: 400px){
+    header{
+        height:220px;
+    }
+    .menu{
+        display: block;
+    }
+    .main{
+        height: 1628px;
+        padding-top: 28px;
+    }
+    .desktopNav{
+        display: none;
+    }
+    #desktop48h{
+        display: none;
+    }
+    #mobile48h{
+        display: block;
+    }
+    #mobile7Days{
+        display: block;
+    }
+    #desktop7Days{
+        display: none;
+    }
+    .container{
+        margin: 0px;
+        max-width: max-content;
     }
 }

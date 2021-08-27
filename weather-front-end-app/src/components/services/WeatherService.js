@@ -3,7 +3,7 @@ import UserService from "./UserService";
 var authenticationService = new UserService();
 class WeatherService{
   constructor(){
-    this.url='http://localhost:8080/api/weather';
+    this.url='/api/weather';
   }
 
   getCurrentWeather(searchPlace){

@@ -1,6 +1,6 @@
 class UserService{
     constructor(){
-      this.url='http://localhost:8080/api/user';
+      this.url='/api/user';
     }
   
     login(loginData){

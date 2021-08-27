@@ -3,7 +3,7 @@ import UserService from "./UserService";
 var authenticationService = new UserService();
 class IndicesService{
     constructor(){
-      this.url='http://localhost:8080/api/indices'
+      this.url='/api/indices'
     }
   
     getIndicesMosquito(areaName){

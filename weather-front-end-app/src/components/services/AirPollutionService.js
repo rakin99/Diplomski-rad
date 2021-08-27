@@ -3,7 +3,7 @@ import UserService from "./UserService";
 var authenticationService = new UserService();
 class AirPollutionService{
     constructor(){
-      this.url='http://localhost:8080/api/air-pollution'
+      this.url='/api/air-pollution'
     }
   
     getAirPollution(searchPlace){

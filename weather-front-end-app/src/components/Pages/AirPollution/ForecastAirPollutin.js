@@ -4,7 +4,7 @@ import TimeConverter from '../../services/TimeConverter';
 function ForecastAirPollution(props){
     const timeConverter = new TimeConverter();
     return(
-        <div className='ml-5 mt-5 text-center font-10pt'>
+        <div className='ml-5 mt-5 text-center font-10pt mobileAirPollution'>
             <h6 className="mb-0">{timeConverter.convertTime(props.forecast.dt)} - {timeConverter.convertTimeToDayAndMonth(props.forecast.dt)}</h6>
             <div className="row ml-5">
                 <div className="col-sm-1 ml-5 mt-4">
