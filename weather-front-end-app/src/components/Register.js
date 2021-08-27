@@ -181,7 +181,7 @@ class Register extends Component{
             <Modal
                     visible={this.props.register}
                     width="470px"
-                    height={!this.props.isChecked ? "430px":"340px"}
+                    height="340px"
                     effect="fadeInUp"
                     onClickAway={(e)=>{
                         this.props.handleClick(e)
@@ -216,7 +216,7 @@ class Register extends Component{
                                 <li>
                                     <p className="form-check-label">Da li želite da dobijate upozorenja o vremenskim uslovima?</p>
                                     <div className="text-center">
-                                        <input type="checkbox" name="alerts" id="alerts" checked={this.state.alerts} onChange={this.check} className="form-check-input" />
+                                        <input type="checkbox" name="alerts" id="alerts" checked={this.state.alerts} onChange={this.check} />
                                     </div>
                                 </li>
                                 {areas}
@@ -225,7 +225,7 @@ class Register extends Component{
                             <div className="text-center">
                                 <button className="btn btn-primary" onClick={(e) => {
                                                                             this.handleSubmit(e)
-                                                                        }}>Potvrdi</button>
+                                                                        }} id="submitUser">Potvrdi</button>
                             </div>
                         </div>
                     </div>

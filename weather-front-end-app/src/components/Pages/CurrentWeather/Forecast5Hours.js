@@ -2,6 +2,7 @@ import React from 'react'
 import OneHourForecast from './OneHourForecast';
 
 function Forecast5Hours(props){
+    console.log(props)
     const hoursForecast = props.forecast5Hours.hourly.map(hf => {
         return <OneHourForecast key={hf.dt} hourForecast={hf} />
     });
