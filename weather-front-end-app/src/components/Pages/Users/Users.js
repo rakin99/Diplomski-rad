@@ -10,7 +10,7 @@ class Users extends Component{
 
     render(){
         return(
-            <div className='h-50 pt-4 pl-5 d-inline-block'>
+            <div className='h-50 pt-4 d-inline-block divMobileUsers'>
                 <div className="row">
                     <div>
                         <h2 className='col-sm-12'>
@@ -23,10 +23,10 @@ class Users extends Component{
                         <thead>
                             <tr>
                                 <th >E-mail</th>
-                                <th >Uloga</th>
-                                <th >Upozorenja</th>
-                                <th >Okrug</th>
-                                <th></th>
+                                <th className='mobileUserRole'>Uloga</th>
+                                <th className='mobileUserAlerts'>Upozorenja</th>
+                                <th className='mobileUserArea'>Okrug</th>
+                                <th className='mobileUserDelete'></th>
                             </tr>
                         </thead>
                         <UserRow 
