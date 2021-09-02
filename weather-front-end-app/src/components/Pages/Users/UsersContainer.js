@@ -73,6 +73,7 @@ class UsersContainer extends Component{
         this.setState({
             numberPage:num
         })
+        this.getUsers(num);
     }
 
     async deleteUser(id){

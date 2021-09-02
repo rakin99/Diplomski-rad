@@ -186,15 +186,15 @@ class AlertsIndicesContainer extends Component{
     render(){
         const effective_local = (this.state.alerts!=='' && this.state.alerts.alerts!==undefined && this.state.alerts.alerts.length!==0) && timeConverter.convertFromString(this.state.alerts.alerts[0].effective_local);
         const expires_local = (this.state.alerts!=='' && this.state.alerts.alerts!==undefined && this.state.alerts.alerts.length!==0) && timeConverter.convertFromString(this.state.alerts.alerts[0].expires_local);
-        const alerts = (this.state.alerts!=='' && this.state.alerts.alerts!==undefined && this.state.alerts.alerts.length!==0) && <h6 className='mt-2 mb-0'><b>{effective_local} - {expires_local}</b></h6>;
-        const alert = (this.state.alerts!=='' && this.state.alerts.alerts!==undefined && this.state.alerts.alerts.length!==0) && this.state.alerts.alerts[0].description.substring(this.state.alerts.alerts[0].description.indexOf('(sr):')+6);
+        const alerts = (this.state.alerts!=='' && this.state.alerts.alerts!==undefined && this.state.alerts.alerts.length!==0) ? <h6 className='mt-2 mb-0'><b>{effective_local} - {expires_local}</b></h6>:<h6 className='mt-2 mb-0'><b>{timeConverter.convertFromString(new Date().toISOString())}</b></h6>;
+        const alert = (this.state.alerts!=='' && this.state.alerts.alerts!==undefined && this.state.alerts.alerts.length!==0) ? this.state.alerts.alerts[0].description.substring(this.state.alerts.alerts[0].description.indexOf('(sr):')+6):'Ne postoje vremenska upozorenja za današnji dan.';
         const pollen = this.state.pollen.length!=0 && this.state.pollen.map(p=>{
             return <p key={p.id} className='mt-0 mb-0'>{p.text}</p>
         })
         const areas = this.state.areas.length != 0 && this.state.areas.map(a=>{
                                                                                 return <option key={a.id} value={a.name}></option>
                                                                             })
-        const mosquitoActivity = this.state.mosquitoActivity.length!=0 && <span className='mt-0'><h6 className='mb-0'><b>Aktivnost komaraca:</b></h6> <p className='mt-0 mb-1'>{this.state.mosquitoActivity[0].text}</p></span> ;
+        const mosquitoActivity = this.state.mosquitoActivity.length>0 && <span className='mt-0'><h6 className='mb-0'><b>Aktivnost komaraca:</b></h6><p className='mt-0 mb-1'>{this.state.mosquitoActivity[0].text}</p></span>;
         const indexPollen = this.state.pollen.length!=0 && <span className='mt-0'><h6 className='mt-1 mb-0'><b>Polen:</b></h6> {pollen}</span>;
         const errorMessage = this.state.errorMessage !== '' && <ErrorMessage h={6} message = {this.state.errorMessage} />
         return(
