@@ -127,6 +127,16 @@ class AlertsIndicesContainer extends Component{
             {   
                 if(res.status!=500){
                     localStorage.setItem('areaName',areaName);
+                    // console.log(JSON.stringify(res))
+                    const alert={
+                        effective_local:new Date().toISOString(),
+                        expires_local:new Date().toISOString(),
+                        description:'Serbian(sr): Ne postoje vremenska upozorenja za današnji dan.'
+                    }
+                    if(res.alerts.length==0){
+                        // console.log('Pusujem prazan alert')
+                        res.alerts.push(alert);
+                    }
                     this.setState(
                         {
                             alerts:res,
@@ -186,8 +196,8 @@ class AlertsIndicesContainer extends Component{
     render(){
         const effective_local = (this.state.alerts!=='' && this.state.alerts.alerts!==undefined && this.state.alerts.alerts.length!==0) && timeConverter.convertFromString(this.state.alerts.alerts[0].effective_local);
         const expires_local = (this.state.alerts!=='' && this.state.alerts.alerts!==undefined && this.state.alerts.alerts.length!==0) && timeConverter.convertFromString(this.state.alerts.alerts[0].expires_local);
-        const alerts = (this.state.alerts!=='' && this.state.alerts.alerts!==undefined && this.state.alerts.alerts.length!==0) ? <h6 className='mt-2 mb-0'><b>{effective_local} - {expires_local}</b></h6>:<h6 className='mt-2 mb-0'><b>{timeConverter.convertFromString(new Date().toISOString())}</b></h6>;
-        const alert = (this.state.alerts!=='' && this.state.alerts.alerts!==undefined && this.state.alerts.alerts.length!==0) ? this.state.alerts.alerts[0].description.substring(this.state.alerts.alerts[0].description.indexOf('(sr):')+6):'Ne postoje vremenska upozorenja za današnji dan.';
+        const alerts = (this.state.alerts!=='' && this.state.alerts.alerts!==undefined && this.state.alerts.alerts.length!==0) && <h6 className='mt-2 mb-0'><b>{effective_local} {effective_local===expires_local ? '':'- '+expires_local}</b></h6>;
+        const alert = (this.state.alerts!=='' && this.state.alerts.alerts!==undefined && this.state.alerts.alerts.length!==0) && this.state.alerts.alerts[0].description.substring(this.state.alerts.alerts[0].description.indexOf('(sr):')+6);
         const pollen = this.state.pollen.length!=0 && this.state.pollen.map(p=>{
             return <p key={p.id} className='mt-0 mb-0'>{p.text}</p>
         })
@@ -197,15 +207,17 @@ class AlertsIndicesContainer extends Component{
         const mosquitoActivity = this.state.mosquitoActivity.length>0 && <span className='mt-0'><h6 className='mb-0'><b>Aktivnost komaraca:</b></h6><p className='mt-0 mb-1'>{this.state.mosquitoActivity[0].text}</p></span>;
         const indexPollen = this.state.pollen.length!=0 && <span className='mt-0'><h6 className='mt-1 mb-0'><b>Polen:</b></h6> {pollen}</span>;
         const errorMessage = this.state.errorMessage !== '' && <ErrorMessage h={6} message = {this.state.errorMessage} />
+        const areaInformation = this.state.area==='' && <p>Izborom okruga iz padajuće liste možete dobiti informacije o vremenskim uslovima i indeksu aktivnosti polena i komaraca.</p>
         return(
             <section className='float-right w-25 pl-1 d-inline-block'>
                 <div className='alerts-indices-div'>
-                    <input list="areas" className='form-control form-control-sm col-9 d-inline' value={this.state.area} onKeyUp={this.searchAreas} onChange={this.setArea} onFocus={this.searchAreas}/>
+                    <input list="areas" className='form-control form-control-sm col-9 d-inline' placeholder='Izaberite okrug' value={this.state.area} onKeyUp={this.searchAreas} onChange={this.setArea} onFocus={this.searchAreas}/>
                     <button className='ml-1 btn-light rounded' onClick={this.getAlertsIndices}>✓</button>
                     <button className='ml-1 btn-light rounded' onClick={this.clearInput}>X</button>
                     <datalist id='areas'>
                         {areas}
                     </datalist>
+                    {areaInformation}
                     {alerts}
                     <p className='mt-0 mb-1'>{alert}</p>
                     {mosquitoActivity}
