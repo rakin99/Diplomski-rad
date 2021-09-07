@@ -26,6 +26,7 @@ import com.ftn.diplomski.model.User;
 import com.ftn.diplomski.modelDTO.JwtDTO;
 import com.ftn.diplomski.modelDTO.LoginDTO;
 import com.ftn.diplomski.modelDTO.UserDTO;
+import com.ftn.diplomski.service.MailInterface;
 import com.ftn.diplomski.service.UserInterface;
 import com.ftn.diplomski.service.Impl.UserService;
 
@@ -39,6 +40,9 @@ public class UserController {
 
 	@Autowired
 	private UserInterface userService;
+	
+	@Autowired
+	private MailInterface mailService;
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<JwtDTO> login(@RequestBody LoginDTO dto) {
@@ -57,6 +61,7 @@ public class UserController {
 		if(user==null) {
 			return ResponseEntity.status(409).build();
 		}
+		mailService.registrationConfirm(user.getUsername(), dto.getPassword());
 		return new ResponseEntity<UserDTO>(user, HttpStatus.OK);
 	}
 	

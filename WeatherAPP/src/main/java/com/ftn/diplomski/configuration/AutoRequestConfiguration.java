@@ -42,6 +42,6 @@ public class AutoRequestConfiguration {
     	alertsService.saveAlertsForAllAreas();
 		mosquitoService.saveMosquitoForAllAreas();
 		pollenService.savePollenForAllAreas();
-//		mailService.preapareMail();
+		mailService.preapareMail();
     }
 }

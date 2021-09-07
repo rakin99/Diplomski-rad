@@ -106,4 +106,63 @@ public class MailService implements MailInterface {
 	      }
 	}
 
+	@Override
+	public void registrationConfirm(String recipients, String userPassword) {
+		
+		final String username = "vremenska.upozorenja@gmail.com";//change accordingly
+	    final String password = "qbtlmyrekrxmfjwl";//fonypknjzvxfbfcg qbtlmyrekrxmfjwl
+
+	      // Assuming you are sending email through relay.jangosmtp.net
+	//025793117|qacuhygtjzorzokq
+	        Properties props = new Properties();
+	        props.put("mail.smtp.auth", "true");
+	        //props.put("mail.smtp.starttls.enable", "true");
+	        props.put("mail.smtp.host", "smtp.gmail.com");
+	        props.put("mail.smtp.port", "587");
+	        props.put("mail.imaps.ssl.trust", "*");   
+	        props.put("mail.smtp.starttls.enable", "true");
+
+	      // Get the Session object.
+	      Session session = Session.getInstance(props,
+	         new javax.mail.Authenticator() {
+	            protected PasswordAuthentication getPasswordAuthentication() {
+	               return new PasswordAuthentication(username, password);
+	    }
+	         });
+
+	      try {
+	    // Create a default MimeMessage object.
+	    Message message = new MimeMessage(session);
+	 
+	    // Set From: header field of the header.
+	    message.setFrom(new InternetAddress(username));
+	 
+
+	        // Set To: header field of the header.
+        message.setRecipients(Message.RecipientType.TO,
+                   InternetAddress.parse(recipients));
+        
+	    message.setSubject("Potvrda registracije.");
+	    
+	    message.setSentDate(new Date());
+	    
+	    // Now set the actual message
+	    message.setText(
+	    		"Dobrodošli na naš sajt." +
+				"\nUspešno ste se registrovali." +
+	    		"\n\nZa prijavu na naš sajt koristite sledeće kredencijale:" +
+				"\n\n\tKorisničko ime: " + recipients + "\n" +
+	    		"\tLozinka: " + userPassword +
+				"\n\nUživajte u našem sajtu i srdačan pozdrav!"
+	    		);
+
+	    Transport.send(message);
+
+	    System.out.println("\n\nSent message successfully....");
+
+	      } catch (MessagingException e) {
+	         throw new RuntimeException(e);
+	      }
+	}
+
 }
