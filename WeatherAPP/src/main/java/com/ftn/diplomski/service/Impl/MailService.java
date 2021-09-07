@@ -112,8 +112,6 @@ public class MailService implements MailInterface {
 		final String username = "vremenska.upozorenja@gmail.com";//change accordingly
 	    final String password = "qbtlmyrekrxmfjwl";//fonypknjzvxfbfcg qbtlmyrekrxmfjwl
 
-	      // Assuming you are sending email through relay.jangosmtp.net
-	//025793117|qacuhygtjzorzokq
 	        Properties props = new Properties();
 	        props.put("mail.smtp.auth", "true");
 	        //props.put("mail.smtp.starttls.enable", "true");
