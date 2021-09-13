@@ -33,6 +33,16 @@ class UserService{
         return fetch(`${this.url}/register`,conf).then(res => res.json());
     }
 
+    registrationConfirm(registerData){
+      // console.log(registerData);
+      var conf={
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(registerData)
+        };
+      return fetch(`${this.url}/registration-confirm`,conf).then(res => res.json());
+  }
+
   edit(editData){
       var user = localStorage.getItem('loggedUser');
       var token = null;

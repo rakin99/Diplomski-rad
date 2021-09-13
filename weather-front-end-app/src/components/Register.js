@@ -117,6 +117,12 @@ class Register extends Component{
                     {   
                         if(res.status!=500){
                             this.props.setNotice("noticeRegister",true,"Uspešno ste se registrovali!")
+                            userService.registrationConfirm({
+                                'username':this.state.username,
+                                'password':this.state.password,
+                                'alerts':this.state.alerts,
+                                'area':this.state.area
+                            }).then(this.props.handleClick(event));
                         }
                     }
                 );
