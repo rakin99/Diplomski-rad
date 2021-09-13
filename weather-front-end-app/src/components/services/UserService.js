@@ -30,7 +30,7 @@ class UserService{
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(registerData)
           };
-        return fetch(`${this.url}/register`,conf).then(res => res.json());
+        return fetch(`${this.url}/register`,conf).then(res => res.status==200 ? res.json():res)
     }
 
     registrationConfirm(registerData){

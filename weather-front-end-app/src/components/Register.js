@@ -115,7 +115,13 @@ class Register extends Component{
                     'area':this.state.area
                 }).then(res => 
                     {   
-                        if(res.status!=500){
+                        if(res.status==409){
+                            message.push('Korisnik sa ' + this.state.username + ' e-mail adresom već postoji.\n Unesite drugu e-mail adresu.')
+                            this.setState({
+                                errorMessage:message
+                            })
+                        }
+                        else if(res.status!=500){
                             this.props.setNotice("noticeRegister",true,"Uspešno ste se registrovali!")
                             userService.registrationConfirm({
                                 'username':this.state.username,
@@ -155,7 +161,6 @@ class Register extends Component{
                     }
                 );
             }
-            this.props.handleClick(event);
         }
     }
 
