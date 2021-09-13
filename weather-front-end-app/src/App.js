@@ -96,7 +96,8 @@ class App extends Component {
 
   handleClick(event){
     const id = event.target.id;
-    if(id===''){
+    console.log("Id: "+id)
+    if(id==='' || id==='submitUser'){
       this.setState({
         login:false,
         register:false,
