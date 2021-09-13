@@ -63,7 +63,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers(
 						"/api/user/login",
 						"/api/user/register",
-						"/api/user/edit",
+						"/api/user/registration-confirm",
 						"/api/user/get-logged-user",
 						"/api/weather/current-weather",
 						"/api/weather/forecast-5-hours",

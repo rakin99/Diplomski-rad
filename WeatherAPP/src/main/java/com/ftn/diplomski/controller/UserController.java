@@ -61,8 +61,14 @@ public class UserController {
 		if(user==null) {
 			return ResponseEntity.status(409).build();
 		}
-		mailService.registrationConfirm(user.getUsername(), dto.getPassword());
 		return new ResponseEntity<UserDTO>(user, HttpStatus.OK);
+	}
+	
+	@PostMapping("/registration-confirm")
+	public ResponseEntity<UserDTO> registrationConfirm(@RequestBody UserDTO dto, UriComponentsBuilder ucBuilder){
+		System.out.println("\nregistrationConfirm");
+		mailService.registrationConfirm(dto.getUsername(), dto.getPassword());
+		return new ResponseEntity<UserDTO>(dto, HttpStatus.OK);
 	}
 	
 	@PutMapping("/edit")
