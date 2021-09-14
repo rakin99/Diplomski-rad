@@ -16,6 +16,7 @@ class Register extends Component{
             alerts:false,
             area:'',
             areas:[],
+            role:'',
             errorMessage:[]
         }
         this.handleChange=this.handleChange.bind(this);
@@ -46,7 +47,8 @@ class Register extends Component{
                 this.setState({
                     username:user.username,
                     alerts:user.alerts,
-                    area:user.area
+                    area:user.area,
+                    role:user.role
                 })
             });
         }
@@ -64,6 +66,7 @@ class Register extends Component{
     handleChange(event){
         if(event.target.type!=='checkbox'){
             const {name,value} = event.target;
+            console.log(name+" "+value)
             this.setState({
                 [name]:value
             })
@@ -138,7 +141,8 @@ class Register extends Component{
                     'username':this.state.username,
                     'password':this.state.password,
                     'alerts':this.state.alerts,
-                    'area':this.state.area
+                    'area':this.state.area,
+                    'role':this.state.role
                 }).then(res => 
                     {   
                         if(res.status!=500){
@@ -188,6 +192,14 @@ class Register extends Component{
         const head = this.props.settings? <h2>Podešavanja</h2>:<h2>Registracija</h2>
         const username = this.props.settings? <input type="text" readOnly name="username" defaultValue={this.state.username} className="form-control mr-sm-1" />:
                                                             <input type="text" name="username" defaultValue={this.state.username} className="form-control mr-sm-1" />
+        const role = (this.props.settings && this.state.role!=='') && 
+                            <li>
+                                <label>Izaberite ulogu:</label>
+                                <select value={this.state.role} onChange={this.handleChange} className="form-control mr-sm-1" name="role">
+                                    <option value={this.state.role==='ROLE_USER'?'ROLE_USER':'ROLE_ADMIN'}>{this.state.role==='ROLE_USER'?'USER':'ADMIN'}</option>
+                                    <option value={this.state.role==='ROLE_USER'?'ROLE_ADMIN':'ROLE_USER'}>{this.state.role==='ROLE_USER'?'ADMIN':'USER'}</option>
+                                </select>
+                            </li>
         return(
             <Modal
                     visible={this.props.register}
@@ -224,6 +236,7 @@ class Register extends Component{
                                     <label>Ponovite lozinku:</label>
                                     <input type="password" name="repeatPassword" defaultValue={this.state.repeatPassword} className="form-control mr-sm-1" />
                                 </li>
+                                {role}
                                 <li>
                                     <p className="form-check-label">Da li želite da dobijate upozorenja o vremenskim uslovima?</p>
                                     <div className="text-center">
