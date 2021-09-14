@@ -2,11 +2,11 @@ package com.ftn.diplomski.model;
 
 public class AirInformation {
 
-	private MainAirPollutin main;
+	private MainAirPollution main;
 	private Components components;
 	private Long dt;
 	
-	public AirInformation(MainAirPollutin main, Components components, Long dt) {
+	public AirInformation(MainAirPollution main, Components components, Long dt) {
 		super();
 		this.main = main;
 		this.components = components;
@@ -15,16 +15,16 @@ public class AirInformation {
 	
 	public AirInformation() {
 		super();
-		this.main = new MainAirPollutin();
+		this.main = new MainAirPollution();
 		this.components = new Components();
 		this.dt = (long) 0;
 	}
 
-	public MainAirPollutin getMain() {
+	public MainAirPollution getMain() {
 		return main;
 	}
 
-	public void setMain(MainAirPollutin main) {
+	public void setMain(MainAirPollution main) {
 		this.main = main;
 	}
 

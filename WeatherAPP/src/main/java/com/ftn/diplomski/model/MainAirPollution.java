@@ -1,15 +1,15 @@
 package com.ftn.diplomski.model;
 
-public class MainAirPollutin {
+public class MainAirPollution {
 
 	private int aqi;
 
-	public MainAirPollutin(int aqi) {
+	public MainAirPollution(int aqi) {
 		super();
 		this.aqi = aqi;
 	}
 	
-	public MainAirPollutin() {
+	public MainAirPollution() {
 		super();
 		this.aqi = 0;
 	}

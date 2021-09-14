@@ -1,6 +1,6 @@
 package com.ftn.diplomski.modelDTO;
 
-import com.ftn.diplomski.model.MainAirPollutin;
+import com.ftn.diplomski.model.MainAirPollution;
 
 public class MainAirPollutinDTO {
 
@@ -11,7 +11,7 @@ public class MainAirPollutinDTO {
 		this.aqi = aqi;
 	}
 	
-	public MainAirPollutinDTO(MainAirPollutin ma) {
+	public MainAirPollutinDTO(MainAirPollution ma) {
 		this(ma.getAqi());
 	}
 	
