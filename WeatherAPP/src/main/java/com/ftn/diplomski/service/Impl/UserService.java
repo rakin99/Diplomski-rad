@@ -183,6 +183,7 @@ public class UserService implements UserInterface, UserDetailsService {
 		}
 		user.setAlerts(dto.isAlerts());
 		user.setArea(dto.getArea());
+		user.setRole(dto.getRole());
 		user = save(user);
 		return new UserDTO(user);
 	}
