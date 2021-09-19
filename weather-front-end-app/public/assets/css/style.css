@@ -671,6 +671,12 @@ body{
         display: inline;
         padding-left: .0rem!important;
     }
+    .no-padding{
+        padding-left: 1rem!important;
+    }
+    .display-none{
+        display: none;
+    }
 }
 
 @media only screen and (min-width: 320px) and (max-width: 400px){
@@ -698,6 +704,9 @@ body{
     }
     #desktop7Days{
         display: none;
+    }
+    .no-padding{
+        padding-left: 0rem!important;
     }
     .container{
         margin: 0px;

@@ -9,7 +9,7 @@ function ContentCW(props){
     });
     const time = timeConverter.convertTime(props.currentWeather.dt);
     return(
-        <div className='h-50 pt-4 pl-5 d-inline-block'>
+        <div className='h-50 pt-4 pl-5 d-inline-block no-padding'>
             <h2 className='w-50 float-left'>
                 <b>{props.currentWeather.name}</b>
             </h2>

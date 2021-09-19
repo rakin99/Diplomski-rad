@@ -9,8 +9,8 @@ function ContentCAP(props){
     const airDesc = ['vrlo dobar','dobar','umeren','loš','vrlo loš'];
     const colorText = ['darkgreen','lightgreen','yellow','orange','red']
     return(
-        <div className='h-50 pt-4 pl-5'>
-            <div className="row">
+        <div className='h-50 pt-4 pl-5 no-padding'>
+            <div className="row ">
                 <div className="col-sm-6">
                     <h2>
                         <b>{props.currentAirPollution.cityName}</b>
@@ -22,13 +22,13 @@ function ContentCAP(props){
                     </div>
                 </div>
             </div>
-             <div className='pl-4 mt-3'>
+             <div className='pl-4 mt-3 no-padding'>
                 <h4>
                     Kvalitet vazduha: 
                     <b className={colorText[props.currentAirPollution.list[0].main.aqi-1]}> {airDesc[props.currentAirPollution.list[0].main.aqi-1]}</b>
                 </h4>
             </div>
-            <div className='pl-4 mt-3 row'>
+            <div className='pl-4 mt-3 row no-padding'>
                 <div className="ml-4 mt-3 col-sm-5">
                     <h6>
                         <b>Ugljen monoksid (CO): </b>
@@ -42,7 +42,7 @@ function ContentCAP(props){
                     </h6>
                 </div>
             </div>
-            <div className='pl-4 mt-2 row'>
+            <div className='pl-4 mt-2 row no-padding'>
                 <div className="ml-4 col-sm-5">
                     <h6>
                         <b>Azot dioksid (NO<sub>2</sub>): </b>
@@ -56,7 +56,7 @@ function ContentCAP(props){
                     </h6>
                 </div>
             </div>
-            <div className='pl-4 mt-2 row'>
+            <div className='pl-4 mt-2 row no-padding'>
                 <div className="ml-4 col-sm-5">
                     <h6>
                         <b>Sumpor dioksid (SO<sub>2</sub>): </b>
@@ -70,7 +70,7 @@ function ContentCAP(props){
                     </h6>
                 </div>
             </div>
-            <div className='pl-4 mt-2 row'>
+            <div className='pl-4 mt-2 row no-padding'>
                 <div className="ml-4 col-sm-5">
                     <h6>
                         <b>Grube čestice (PM<sub>10</sub>): </b>

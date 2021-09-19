@@ -6,7 +6,7 @@ class Content7Days extends Component{
 
     render(){
         return(
-            <div className='h-50 pt-4 pl-5 d-inline-block'>
+            <div className='h-50 pt-4 pl-5 d-inline-block no-padding'>
                 <div className="row">
                     <div className="col-sm-6">
                         <h2>
