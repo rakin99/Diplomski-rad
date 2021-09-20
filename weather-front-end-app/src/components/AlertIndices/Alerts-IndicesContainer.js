@@ -207,7 +207,7 @@ class AlertsIndicesContainer extends Component{
         const mosquitoActivity = this.state.mosquitoActivity.length>0 && <span className='mt-0'><h6 className='mb-0'><b>Aktivnost komaraca:</b></h6><p className='mt-0 mb-1'>{this.state.mosquitoActivity[0].text}</p></span>;
         const indexPollen = this.state.pollen.length!=0 && <span className='mt-0'><h6 className='mt-1 mb-0'><b>Polen:</b></h6> {pollen}</span>;
         const errorMessage = this.state.errorMessage !== '' && <ErrorMessage h={6} message = {this.state.errorMessage} />
-        const areaInformation = this.state.area==='' && <p>Izborom okruga iz padajuće liste možete dobiti informacije o vremenskim uslovima i indeksu aktivnosti polena i komaraca.</p>
+        const areaInformation = (this.state.area==='' && this.state.alerts.alerts===undefined) && <p>Izborom okruga iz padajuće liste možete dobiti informacije o vremenskim uslovima i indeksu aktivnosti polena i komaraca.</p>
         return(
             <section className='float-right w-25 pl-1 d-inline-block'>
                 <div className='alerts-indices-div'>

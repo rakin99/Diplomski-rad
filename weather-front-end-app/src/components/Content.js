@@ -57,15 +57,11 @@ class Content extends Component{
             <Route {...rest} render={props => {
               const currentUser = authenticationService.getUserFromStorage();
               if (currentUser===null ) {
-                  // not logged in so redirect to login page with the return url
                   return <Redirect to={{ pathname: '/', state: { from: props.location } }} />
               }
-              
-              // check if route is restricted by role
               if(roles && roles.indexOf(currentUser.roles[0][0].authority) === -1){
                 return <Redirect to={{ pathname: '/' }} />
               }
-              // authorised so return component
               return renderMergedProps(component, props, rest);
             }} />
           )
